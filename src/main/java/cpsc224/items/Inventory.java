@@ -17,4 +17,20 @@ public class Inventory {
         return maxConsumables;
     }
 
+    public void increaseMaxInventory(int increaseAmt){
+        this.maxInventory+= increaseAmt;
+    }
+
+    public void decreaseMaxInventory(int decreaseAmt){
+        this.maxInventory-= decreaseAmt;
+    }
+
+    public void increaseMaxConsumables(int increaseAmt){
+        this.maxConsumables+= increaseAmt;
+    }
+
+    public void decreaseMaxConsumables(int decreaseAmt){
+        this.maxConsumables-= decreaseAmt;
+    }
+
 }

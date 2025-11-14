@@ -7,10 +7,10 @@ import cpsc224.effects.Effect;
 public class Consumable {
     
     private List<Effect> effects;
-
+    
     public List<Effect> getEffects() {
         return effects;
     }
 
-
+    
 }
