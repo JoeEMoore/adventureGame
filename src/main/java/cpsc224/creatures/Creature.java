@@ -7,7 +7,7 @@ import java.util.List;
 import cpsc224.effects.Effect;
 import cpsc224.items.Inventory;
 
-public abstract class Creature {
+public class Creature {
     private int health;
     private int maxHealth;
     private String name;
