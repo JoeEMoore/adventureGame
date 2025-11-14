@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import cpsc224.weapons.Weapon;
+import cpsc224.items.consumables.Consumable;
+import cpsc224.items.weapons.Weapon;
 
 public class Inventory {
 
