@@ -10,6 +10,10 @@ public abstract class Effect {
         this.turns = turns;
     }
 
+    public int getTurns() {
+        return turns;
+    }
+
     public void applyEffect(Creature creature) {
         apply(creature);
         turns--;
