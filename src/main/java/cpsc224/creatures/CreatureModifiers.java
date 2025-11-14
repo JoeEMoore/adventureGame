@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 import cpsc224.DamageType;
 
-public class CreatureModifiers {
+public class CreatureModifiers implements Cloneable {
 
     private double damage;
     private double evasion;
-    private HashMap<DamageType, Double> resistances = new HashMap<>();;
+    private HashMap<DamageType, Double> resistances = new HashMap<>();
 
 
     public CreatureModifiers(double damage, double evasion, double[] resistanceArr) {
@@ -62,5 +62,18 @@ public class CreatureModifiers {
     public void multiplyResistance(DamageType dt, double amount) {
         double newAmount = resistances.get(dt) * amount;
         resistances.put(dt, newAmount);
+    }
+
+    @Override
+    public CreatureModifiers clone() {
+        final CreatureModifiers clone;
+        try {
+            clone = (CreatureModifiers) super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new RuntimeException("clone failed", e);
+        }
+
+        return clone;
     }
 }
