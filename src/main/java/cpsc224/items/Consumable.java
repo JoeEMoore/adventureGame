@@ -1,4 +1,4 @@
-package Items;
+package cpsc224.items;
 
 import java.util.List;
 
