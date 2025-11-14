@@ -15,6 +15,11 @@ public class Inventory {
     private List<Weapon> weapons = new ArrayList<Weapon>();
     private List<Consumable> consumables = new ArrayList<Consumable>();
 
+    public Inventory() {
+        maxWeapons = 1;
+        maxConsumables = 0;
+    }
+
     public Inventory(int maxWeapons, int maxConsumables) {
         this.maxWeapons = maxWeapons;
         this.maxConsumables = maxConsumables;

@@ -5,6 +5,7 @@ import cpsc224.DamageType;
 import java.util.ArrayList;
 import java.util.List;
 import cpsc224.effects.Effect;
+import cpsc224.items.Inventory;
 
 public abstract class Creature {
     private int health;
@@ -13,12 +14,14 @@ public abstract class Creature {
     private CreatureModifiers modifiers;
     private CreatureModifiers turnModifiers;
     private List<Effect> effects = new ArrayList<>(); 
+    private Inventory inventory;
 
-    public Creature(CreatureModifiers modifiers, String creatureName, int maxHealth) {
-        this.modifiers = modifiers;
-        this.health = maxHealth;
+    public Creature(String creatureName, int maxHealth, CreatureModifiers modifiers, Inventory inventory) {
         this.name = creatureName;
         this.maxHealth = maxHealth;
+        this.health = maxHealth;
+        this.modifiers = modifiers;
+        this.inventory = inventory;
 
         resetTurnModifiers();
     }
@@ -54,6 +57,10 @@ public abstract class Creature {
 
     public CreatureModifiers getTurnModifiers() {
         return turnModifiers;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void addHealth(int amount) {
