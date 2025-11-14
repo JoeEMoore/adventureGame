@@ -46,12 +46,20 @@ public class CreatureModifiers implements Cloneable {
         damage *= amount;
     }
 
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+
     public void addEvasion(double amount) {
         evasion += amount;
     }
 
     public void multiplyEvasion(double amount) {
         evasion *= amount;
+    }
+
+    public void setEvasion(double evasion) {
+        this.evasion = evasion;
     }
 
     public void addResistance(DamageType dt, double amount) {
@@ -64,14 +72,15 @@ public class CreatureModifiers implements Cloneable {
         resistances.put(dt, newAmount);
     }
 
+    public void setResistance(DamageType dt, double resistance) {
+        resistances.put(dt, resistance);
+    }
+
     @Override
     public CreatureModifiers clone() {
-        final CreatureModifiers clone;
-        try {
-            clone = (CreatureModifiers) super.clone();
-        }
-        catch (CloneNotSupportedException e) {
-            throw new RuntimeException("clone failed", e);
+        final CreatureModifiers clone = new CreatureModifiers(damage, evasion, new double[0]);
+        for (DamageType dt : DamageType.values()) {
+            clone.setResistance(dt, resistances.get(dt));
         }
 
         return clone;

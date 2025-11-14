@@ -11,4 +11,8 @@ public abstract class Effect {
     }
 
     public abstract void apply(Creature creature);
+
+    public void decrementTurns() {
+        turns--;
+    }
 }
