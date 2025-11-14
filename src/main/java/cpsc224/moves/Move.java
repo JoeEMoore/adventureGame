@@ -8,25 +8,41 @@ import cpsc224.effects.Effect;
 
 public class Move {
 
+    private final String name;
+    private final int damage;
+    private final DamageType damageType;
     private final int maxUses;
     private int uses;
-    private int damage;
-    private DamageType damageType;
-    private double accuracy;
-    private boolean canTargetAllies;
-    private boolean canTargetEnemies;
-    private List<Effect> effects;
+    private final double accuracy;
+    private final boolean canTargetAllies;
+    private final boolean canTargetEnemies;
+    private final List<Effect> effects;
 
-    public Move(int maxUses, int uses, int damage, DamageType damageType, double accuracy, boolean canTargetAllies,
+    public Move(String name, int damage, DamageType damageType, int maxUses, double accuracy, boolean canTargetAllies,
             boolean canTargetEnemies, List<Effect> effects) {
-        this.maxUses = maxUses;
-        this.uses = uses;
+
+        this.name = name;
         this.damage = damage;
         this.damageType = damageType;
+        this.maxUses = maxUses;
         this.accuracy = accuracy;
         this.canTargetAllies = canTargetAllies;
         this.canTargetEnemies = canTargetEnemies;
         this.effects = effects;
+
+        uses = maxUses;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+    
+    public DamageType getDamageType() {
+        return damageType;
     }
 
     public int getMaxUses() {
@@ -44,15 +60,6 @@ public class Move {
     public void resetUses() {
         uses = maxUses;
     }
-
-    public int getDamage() {
-        return damage;
-    }
-    
-    public DamageType getDamageType() {
-        return damageType;
-    }
-
 
     public double getAccuracy() {
         return accuracy;
