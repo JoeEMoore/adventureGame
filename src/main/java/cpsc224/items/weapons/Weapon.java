@@ -1,4 +1,4 @@
-package cpsc224.weapons;
+package cpsc224.items.weapons;
 
 import cpsc224.moves.Move;
 
@@ -8,9 +8,9 @@ public class Weapon {
     private int tier;
     private Move move;
 
-    public Weapon(int tier, String name, Move move) {
-        this.tier = tier;
+    public Weapon(String name, int tier, Move move) {
         this.name = name;
+        this.tier = tier;
         this.move = move;
     }
 

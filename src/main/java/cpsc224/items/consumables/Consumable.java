@@ -1,4 +1,4 @@
-package cpsc224.items;
+package cpsc224.items.consumables;
 
 import java.util.Collection;
 import java.util.List;
