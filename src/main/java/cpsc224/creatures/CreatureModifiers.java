@@ -41,7 +41,7 @@ public class CreatureModifiers implements Cloneable {
     }
 
     public double getResistance(DamageType dt) {
-        return resistances.get(dt);
+        return resistances.getOrDefault(dt, 1.0);
     }
 
     public void addDamage(double amount) {
