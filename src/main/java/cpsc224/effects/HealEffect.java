@@ -11,7 +11,7 @@ public class HealEffect extends InstantEffect {
     }
 
     @Override
-    public void apply(Creature creature) {
+    protected void apply(Creature creature) {
         // TODO
     }
 

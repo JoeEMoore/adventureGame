@@ -10,9 +10,11 @@ public abstract class Effect {
         this.turns = turns;
     }
 
-    public abstract void apply(Creature creature);
-
-    public void decrementTurns() {
+    public void applyEffect(Creature creature) {
+        apply(creature);
         turns--;
     }
+
+    protected abstract void apply(Creature creature);
+
 }
