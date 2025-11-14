@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 import cpsc224.DamageType;
 
-public class CreatureModifiers {
+public class CreatureModifiers implements Cloneable {
 
     private double damage;
     private double evasion;
-    private HashMap<DamageType, Double> resistances = new HashMap<>();;
+    private HashMap<DamageType, Double> resistances = new HashMap<>();
 
 
     public CreatureModifiers(double damage, double evasion, double[] resistanceArr) {
@@ -46,12 +46,20 @@ public class CreatureModifiers {
         damage *= amount;
     }
 
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+
     public void addEvasion(double amount) {
         evasion += amount;
     }
 
     public void multiplyEvasion(double amount) {
         evasion *= amount;
+    }
+
+    public void setEvasion(double evasion) {
+        this.evasion = evasion;
     }
 
     public void addResistance(DamageType dt, double amount) {
@@ -62,5 +70,19 @@ public class CreatureModifiers {
     public void multiplyResistance(DamageType dt, double amount) {
         double newAmount = resistances.get(dt) * amount;
         resistances.put(dt, newAmount);
+    }
+
+    public void setResistance(DamageType dt, double resistance) {
+        resistances.put(dt, resistance);
+    }
+
+    @Override
+    public CreatureModifiers clone() {
+        final CreatureModifiers clone = new CreatureModifiers(damage, evasion, new double[0]);
+        for (DamageType dt : DamageType.values()) {
+            clone.setResistance(dt, resistances.get(dt));
+        }
+
+        return clone;
     }
 }

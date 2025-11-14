@@ -67,15 +67,15 @@ public abstract class Creature {
 
 
     public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {
-    this.turnModifiers.addDamage(damage);
-    this.turnModifiers.addEvasion(evasion);
-    this.turnModifiers.addResistance(type, resistance);
+        this.turnModifiers.addDamage(damage);
+        this.turnModifiers.addEvasion(evasion);
+        this.turnModifiers.addResistance(type, resistance);
 
     
    
 }
 
     public void resetTurnModifiers(){
-        this.turnModifiers = new CreatureModifiers(0, 0, new double[0]);
+        this.turnModifiers = modifiers.clone();
     }
 }

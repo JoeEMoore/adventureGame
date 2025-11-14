@@ -11,7 +11,7 @@ public class PoisonEffect extends Effect {
     }
 
     @Override
-    public void apply(Creature creature) {
+    protected void apply(Creature creature) {
         // TODO
     }
 
