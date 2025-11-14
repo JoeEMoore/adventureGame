@@ -1,7 +1,10 @@
 package cpsc224.creatures;
 
+import cpsc224.DamageType;
+
 public abstract class Creature {
     private int health;
+    private String name;
     private CreatureModifiers modifiers;
     private CreatureModifiers turnModifiers;
 
@@ -9,8 +12,16 @@ public abstract class Creature {
         this.modifiers = modifiers;
         this.health = health;
 
-        
+        //creature spawns with no turn modifiers
         this.turnModifiers = new CreatureModifiers(0, 0, new double[0]);
+    }
+
+    public void setName(String creatureName){
+        name = creatureName;
+    }
+
+    public String getName(){
+        return name;
     }
 
     public int getHealth() {
@@ -31,5 +42,18 @@ public abstract class Creature {
 
     public void takeDamage(int amount) {
         this.health -= amount;
+    }
+
+    public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {
+    this.turnModifiers.addDamage(damage);
+    this.turnModifiers.addEvasion(evasion);
+    this.turnModifiers.addResistance(type, resistance);
+
+    
+   
+}
+
+    public void resetTurnModifiers(){
+        this.turnModifiers = new CreatureModifiers(0, 0, new double[0]);
     }
 }
