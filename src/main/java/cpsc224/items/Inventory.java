@@ -27,6 +27,14 @@ public class Inventory {
         return maxConsumables;
     }
 
+    public void incrementMaxWeapons() {
+        maxWeapons++;
+    }
+
+    public void incrementMaxConsumables() {
+        maxConsumables++;
+    }
+
     public Collection<Weapon> getWeapons() {
         return weapons;
     }
@@ -56,7 +64,7 @@ public class Inventory {
     }
 
     public Weapon setWeapon(int slot, Weapon newWeapon) {
-        // don't allow adding consumables that will exceed max amount
+        // don't allow adding weapons that will exceed max amount
         if (slot >= maxWeapons)
             return newWeapon;
         
