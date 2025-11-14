@@ -27,7 +27,6 @@ public class Inventory {
         return maxConsumables;
     }
 
-<<<<<<< HEAD
     public Collection<Weapon> getWeapons() {
         return weapons;
     }
@@ -84,22 +83,6 @@ public class Inventory {
 
         consumables.set(slot, newConsumable);
         return oldConsumable;
-=======
-    public void increaseMaxInventory(int increaseAmt){
-        this.maxInventory+= increaseAmt;
-    }
-
-    public void decreaseMaxInventory(int decreaseAmt){
-        this.maxInventory-= decreaseAmt;
-    }
-
-    public void increaseMaxConsumables(int increaseAmt){
-        this.maxConsumables+= increaseAmt;
-    }
-
-    public void decreaseMaxConsumables(int decreaseAmt){
-        this.maxConsumables-= decreaseAmt;
->>>>>>> 2ade4f7e9026f2a6a46b8cf5744db3959f88ce34
     }
 
 }
