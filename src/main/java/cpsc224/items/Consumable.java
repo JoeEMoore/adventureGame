@@ -1,5 +1,6 @@
 package cpsc224.items;
 
+import java.util.Collection;
 import java.util.List;
 
 import cpsc224.effects.Effect;
@@ -7,10 +8,8 @@ import cpsc224.effects.Effect;
 public class Consumable {
     
     private List<Effect> effects;
-    
-    public List<Effect> getEffects() {
+
+    public Collection<Effect> getEffects() {
         return effects;
     }
-
-    
 }
