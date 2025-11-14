@@ -3,9 +3,6 @@ package cpsc224.weapons;
 import cpsc224.moves.Move;
 
 public class Weapon {
-    
-    
-
 
     private String name;
     private int tier;
