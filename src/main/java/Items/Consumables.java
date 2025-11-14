@@ -6,12 +6,7 @@ import cpsc224.effects.Effect;
 
 public class Consumables {
     
-    private List<Effects> effects;
-
-
-    public Consumable(List<Effect> effects) {
-        this.effects = effects;
-    }
+    private List<Effect> effects;
 
     public List<Effect> getEffects() {
         return effects;
