@@ -2,23 +2,38 @@ package cpsc224.creatures;
 
 import cpsc224.DamageType;
 
+import java.util.ArrayList;
+import java.util.List;
+import cpsc224.effects.Effect;
+
 public abstract class Creature {
     private int health;
+    private int maxHealth;
     private String name;
     private CreatureModifiers modifiers;
     private CreatureModifiers turnModifiers;
+    private List<Effect> effects; 
 
-    public Creature(CreatureModifiers modifiers, int health) {
+    public Creature(CreatureModifiers modifiers, String creatureName, int maxHealth) {
         this.modifiers = modifiers;
-        this.health = health;
+        this.health = maxHealth;
+        this.name = creatureName;
+        this.maxHealth = maxHealth;
 
         //creature spawns with no turn modifiers
         this.turnModifiers = new CreatureModifiers(0, 0, new double[0]);
+
+        this.effects = new ArrayList<>();
     }
 
-    public void setName(String creatureName){
-        name = creatureName;
+    public void addEffect(Effect effect) {
+        effects.add(effect);
     }
+    
+
+
+    
+
 
     public String getName(){
         return name;
@@ -37,12 +52,19 @@ public abstract class Creature {
     }
 
     public void addHealth(int amount) {
+        if(health + amount <= maxHealth)
         this.health += amount;
+        else{
+            this.health = maxHealth;
+        }
     }
 
     public void takeDamage(int amount) {
         this.health -= amount;
     }
+
+   
+
 
     public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {
     this.turnModifiers.addDamage(damage);
