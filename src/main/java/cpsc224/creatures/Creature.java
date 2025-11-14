@@ -1,22 +1,22 @@
 package cpsc224.creatures;
 
-import cpsc224.DamageType;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.items.Inventory;
 
 public class Creature {
-    private int health;
-    private int maxHealth;
+    private double health;
+    private double maxHealth;
     private String name;
     private CreatureModifiers modifiers;
     private CreatureModifiers turnModifiers;
     private List<Effect> effects = new ArrayList<>(); 
     private Inventory inventory;
 
-    public Creature(String creatureName, int maxHealth, CreatureModifiers modifiers, Inventory inventory) {
+    public Creature(String creatureName, double maxHealth, CreatureModifiers modifiers, Inventory inventory) {
         this.name = creatureName;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
@@ -47,7 +47,7 @@ public class Creature {
         return name;
     }
 
-    public int getHealth() {
+    public double getHealth() {
         return health;
     }
 
@@ -70,17 +70,21 @@ public class Creature {
             this.health = maxHealth;
     }
 
-    public void takeDamage(int amount) {
-        this.health -= amount;
+    public void applyDamage(double damage, DamageType type) {
+        health -= damage * turnModifiers.getResistance(type);
+    }
+
+    public void applyPercentDamage(double percent, DamageType type) {
+        applyDamage(health * percent, type);
     }
 
     public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {
-        this.turnModifiers.addDamage(damage);
-        this.turnModifiers.addEvasion(evasion);
-        this.turnModifiers.addResistance(type, resistance); 
+        turnModifiers.addDamage(damage);
+        turnModifiers.addEvasion(evasion);
+        turnModifiers.addResistance(type, resistance); 
    }
 
     public void resetTurnModifiers(){
-        this.turnModifiers = modifiers.clone();
+        turnModifiers = modifiers.clone();
     }
 }

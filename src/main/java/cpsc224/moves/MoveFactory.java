@@ -3,7 +3,7 @@ package cpsc224.moves;
 import java.util.ArrayList;
 import java.util.List;
 
-import cpsc224.DamageType;
+import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 
 public class MoveFactory {

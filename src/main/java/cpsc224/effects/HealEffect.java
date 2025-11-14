@@ -12,7 +12,7 @@ public class HealEffect extends InstantEffect {
 
     @Override
     public void apply(Creature creature) {
-        // TODO
+        creature.addHealth(healAmount);
     }
 
 }

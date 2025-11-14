@@ -2,19 +2,23 @@ package cpsc224.creatures;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import cpsc224.DamageType;
+import cpsc224.damagetypes.DamageType;
 
 
 public class CreatureModifiersTests {
 
     @Test
     public void cloneCreatesDeepCopy() {
-        CreatureModifiers cm = new CreatureModifiers(10, 0.8, new double[] {1.0, 1.0, 1.0, 1.0});
+        CreatureModifiers cm = new CreatureModifiers(10, 0.8, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         CreatureModifiers cm2 = cm.clone();
 
         assertEquals(cm.getDamage(), cm2.getDamage());

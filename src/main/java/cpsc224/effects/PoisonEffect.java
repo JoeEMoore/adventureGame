@@ -1,6 +1,7 @@
 package cpsc224.effects;
 
 import cpsc224.creatures.Creature;
+import cpsc224.damagetypes.DamageType;
 
 public class PoisonEffect extends Effect {
 
@@ -12,7 +13,7 @@ public class PoisonEffect extends Effect {
 
     @Override
     protected void apply(Creature creature) {
-        // TODO
+        creature.applyPercentDamage(PERCENT_DAMAGE, DamageType.Pure); // Could create a poison type
     }
 
 }

@@ -1,8 +1,13 @@
 package cpsc224.creatures;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
-import cpsc224.DamageType;
+import cpsc224.damagetypes.DamageType;
+import cpsc224.damagetypes.DamageTypeUtils;
 
 public class CreatureModifiers implements Cloneable {
 
@@ -11,18 +16,19 @@ public class CreatureModifiers implements Cloneable {
     private HashMap<DamageType, Double> resistances = new HashMap<>();
 
 
-    public CreatureModifiers(double damage, double evasion, double[] resistanceArr) {
+    public CreatureModifiers(double damage, double evasion, Queue<Double> resistances) {
         this.damage = damage;
         this.evasion = evasion;
 
         // Sets each damage type resistance amount to its respective value
         // in resistanceArr. Defaults to 1.0 if there are less values in
-        // resistanceArr than there are damage types
-        for (int i = 0; i < DamageType.values().length; i++) {
-            if (i < resistanceArr.length)
-                resistances.put(DamageType.values()[i], resistanceArr[i]);
+        // resistanceArr than there are damage types.
+        Collection<DamageType> types = DamageTypeUtils.getDamageTypes();
+        for (DamageType type : types) {
+            if (resistances.size() > 0)
+                this.resistances.put(type, resistances.poll());
             else
-                resistances.put(DamageType.values()[i], 1.0);
+                this.resistances.put(type, 1.0);
         }
     }
 
@@ -62,14 +68,22 @@ public class CreatureModifiers implements Cloneable {
         this.evasion = evasion;
     }
 
-    public void addResistance(DamageType dt, double amount) {
+    public boolean addResistance(DamageType dt, double amount) {
+        if (resistances.get(dt) == null)
+            return false;
+
         double newAmount = resistances.get(dt) + amount;
         resistances.put(dt, newAmount);
+        return true;
     }
 
-    public void multiplyResistance(DamageType dt, double amount) {
+    public boolean multiplyResistance(DamageType dt, double amount) {
+        if (resistances.get(dt) == null)
+            return false;
+
         double newAmount = resistances.get(dt) * amount;
         resistances.put(dt, newAmount);
+        return true;
     }
 
     public void setResistance(DamageType dt, double resistance) {
@@ -78,8 +92,8 @@ public class CreatureModifiers implements Cloneable {
 
     @Override
     public CreatureModifiers clone() {
-        final CreatureModifiers clone = new CreatureModifiers(damage, evasion, new double[0]);
-        for (DamageType dt : DamageType.values()) {
+        final CreatureModifiers clone = new CreatureModifiers(damage, evasion, new LinkedList<Double>());
+        for (DamageType dt : DamageTypeUtils.getDamageTypes()) {
             clone.setResistance(dt, resistances.get(dt));
         }
 

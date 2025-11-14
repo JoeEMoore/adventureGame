@@ -3,13 +3,13 @@ package cpsc224.moves;
 import java.util.Collection;
 import java.util.List;
 
-import cpsc224.DamageType;
+import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 
 public class Move {
 
     private final String name;
-    private final int damage;
+    private final double damage;
     private final DamageType damageType;
     private final int maxUses;
     private int uses;
@@ -18,7 +18,7 @@ public class Move {
     private final boolean canTargetEnemies;
     private final List<Effect> effects;
 
-    public Move(String name, int damage, DamageType damageType, int maxUses, double accuracy, boolean canTargetAllies,
+    public Move(String name, double damage, DamageType damageType, int maxUses, double accuracy, boolean canTargetAllies,
             boolean canTargetEnemies, List<Effect> effects) {
 
         this.name = name;
@@ -37,7 +37,7 @@ public class Move {
         return name;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return damage;
     }
     
