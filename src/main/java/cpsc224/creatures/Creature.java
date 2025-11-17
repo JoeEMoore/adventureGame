@@ -51,6 +51,10 @@ public class Creature {
         return health;
     }
 
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
     public double getMaxHealth() {
         return maxHealth;
     }
