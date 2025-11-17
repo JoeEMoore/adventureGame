@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import cpsc224.creatures.CreatureFactory;
+import cpsc224.creatures.Player;
+import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.panels.FightPanel;
 
 public class Application {
@@ -16,8 +18,12 @@ public class Application {
 
         rand = new Random();
 
+        Player player = CreatureFactory.createPlayer();
+        player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
+
         JFrame frame = new JFrame();
-        frame.add(new FightPanel(CreatureFactory.createPlayer(), CreatureFactory.createTroll(), rand.nextLong()));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new FightPanel(player, CreatureFactory.createTroll(), rand.nextLong()));
         frame.setMinimumSize(new Dimension(600, 400));
         frame.pack();
         frame.setVisible(true);

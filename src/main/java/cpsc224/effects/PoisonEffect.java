@@ -9,6 +9,7 @@ public class PoisonEffect extends Effect {
 
     public PoisonEffect(int turns) {
         super(turns);
+        name = "Poison";
     }
 
     @Override

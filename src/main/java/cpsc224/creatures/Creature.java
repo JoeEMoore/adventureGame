@@ -1,6 +1,7 @@
 package cpsc224.creatures;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
@@ -34,13 +35,24 @@ public class Creature {
         effects.clear();
     }
 
-    public void calculateEffects() {
-        for (Effect e : effects) {
+    public Collection<Effect> getEffects() {
+        return effects;
+    }
+
+    public Collection<String> calculateEffects() {
+        List<String> results = new ArrayList<>();
+        for (int i = 0; i < effects.size(); i++) {
+            Effect e = effects.get(i);
             e.applyEffect(this);
 
-            if (e.getTurns() <= 0)
-                effects.remove(e);
+            if (e.getTurns() <= 0) {
+                effects.remove(i);
+                i--;
+            }
+
+            results.add(e.getName());
         }
+        return results;
     }
 
     public String getName(){
@@ -85,7 +97,7 @@ public class Creature {
             health = 0;
         else
             health -= damageDealt;
-            
+
         return damageDealt;
     }
 

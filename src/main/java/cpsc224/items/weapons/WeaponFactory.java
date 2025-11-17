@@ -5,7 +5,7 @@ import cpsc224.moves.MoveFactory;
 
 public class WeaponFactory {
 
-    // *** PLAYER WEAPONS ***
+    // *** PLAYER STARTER WEAPONS ***
 
     public static Weapon createDullSword() {
         final String name = "Dull Sword";
@@ -16,7 +16,7 @@ public class WeaponFactory {
     }
 
 
-    // *** NON-PLAYER WEAPONS ***
+    // *** CREATURE-SPECIFIC WEAPONS ***
 
     public static Weapon createRatClaws() {
         final String name = "Rat Claws";
@@ -26,4 +26,20 @@ public class WeaponFactory {
         return new Weapon(name, tier, move);
     }
 
+    // *** OTHER WEAPONS ***
+    public static Weapon createWoodClub() {
+        final String name = "Wood Club";
+        final int tier = 1;
+        final Move move = MoveFactory.createSmashMove();
+
+        return new Weapon(name, tier, move);
+    }
+
+    public static Weapon createToxicStaff() {
+        final String name = "Toxic Staff";
+        final int tier = 1;
+        final Move move = MoveFactory.createToxicBoltMove();
+
+        return new Weapon(name, tier, move);
+    }
 }

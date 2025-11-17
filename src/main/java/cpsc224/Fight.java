@@ -31,7 +31,7 @@ public class Fight {
 
         double damageDealt = target.applyDamage(move.getDamage(), move.getDamageType());
         
-        for (Effect e : move.getEffects()) {
+        for (Effect e : move.createEffects()) {
             target.addEffect(e);
         }
 

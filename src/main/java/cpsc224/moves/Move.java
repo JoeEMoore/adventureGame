@@ -1,10 +1,13 @@
 package cpsc224.moves;
 
+import java.text.CollationElementIterator;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
+import cpsc224.effects.EffectFactory;
 
 public class Move {
 
@@ -16,10 +19,11 @@ public class Move {
     private final double accuracy;
     private final boolean canTargetAllies;
     private final boolean canTargetEnemies;
-    private final List<Effect> effects;
+
+    private EffectFactory effectsFactory;
 
     public Move(String name, double damage, DamageType damageType, int maxUses, double accuracy, boolean canTargetAllies,
-            boolean canTargetEnemies, List<Effect> effects) {
+            boolean canTargetEnemies) {
 
         this.name = name;
         this.damage = damage;
@@ -28,8 +32,8 @@ public class Move {
         this.accuracy = accuracy;
         this.canTargetAllies = canTargetAllies;
         this.canTargetEnemies = canTargetEnemies;
-        this.effects = effects;
-
+        
+        effectsFactory = () -> {return new ArrayList<>();};
         uses = maxUses;
     }
 
@@ -73,8 +77,11 @@ public class Move {
         return canTargetEnemies;
     }
 
-    public Collection<Effect> getEffects() {
-        return effects;
+    public void setEffects(EffectFactory effectsFactory) {
+        this.effectsFactory = effectsFactory;
     }
 
+    public Collection<Effect> createEffects() {
+        return effectsFactory.createEffects();
+    }
 }

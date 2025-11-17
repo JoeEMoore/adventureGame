@@ -8,6 +8,7 @@ public class HealEffect extends InstantEffect {
 
     public HealEffect(int healAmount) {
         this.healAmount = healAmount;
+        name = "Heal";
     }
 
     @Override

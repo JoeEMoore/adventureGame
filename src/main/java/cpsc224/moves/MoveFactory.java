@@ -1,10 +1,13 @@
 package cpsc224.moves;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
+import cpsc224.effects.PoisonEffect;
 
 public class MoveFactory {
 
@@ -16,9 +19,8 @@ public class MoveFactory {
         final double accuracy = 0.8;
         final boolean canTargetAllies = false;
         final boolean canTargetEnemies = true;
-        final List<Effect> effects = new ArrayList<>();
 
-        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies, effects);
+        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
     }
 
 
@@ -30,9 +32,36 @@ public class MoveFactory {
         final double accuracy = 0.8;
         final boolean canTargetAllies = false;
         final boolean canTargetEnemies = true;
-        final List<Effect> effects = new ArrayList<>();
 
-        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies, effects);
+        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+    }
+
+    public static Move createSmashMove() {
+        final String name = "Smash";
+        final int damage = 20;
+        final DamageType dt = DamageType.Blunt;
+        final int maxUses = -1;
+        final double accuracy = 0.6;
+        final boolean canTargetAllies = false;
+        final boolean canTargetEnemies = true;
+
+        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+    }
+
+    public static Move createToxicBoltMove() {
+        final String name = "Toxic Bolt";
+        final int damage = 10;
+        final DamageType dt = DamageType.Magic;
+        final int maxUses = -1;
+        final double accuracy = 0.8;
+        final boolean canTargetAllies = false;
+        final boolean canTargetEnemies = true;
+
+        Move move = new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+        move.setEffects(() -> {
+            return Arrays.asList(new PoisonEffect(2));
+        });
+        return move;
     }
 
 }

@@ -5,6 +5,7 @@ import cpsc224.creatures.Creature;
 public abstract class Effect {
 
     protected int turns;
+    protected String name;
 
     public Effect(int turns) {
         this.turns = turns;
@@ -12,6 +13,10 @@ public abstract class Effect {
 
     public int getTurns() {
         return turns;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void applyEffect(Creature creature) {
