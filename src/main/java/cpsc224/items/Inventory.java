@@ -78,9 +78,12 @@ public class Inventory {
         Weapon oldWeapon = null;
         try {
             oldWeapon = weapons.get(slot);
-        } catch (IndexOutOfBoundsException e) { }
+            weapons.set(slot, newWeapon);
+        } catch (IndexOutOfBoundsException e) {
+            weapons.add(newWeapon);
+        }
 
-        weapons.set(slot, newWeapon);
+
         return oldWeapon;
     }
 
@@ -93,9 +96,11 @@ public class Inventory {
         Consumable oldConsumable = null;
         try {
             oldConsumable = consumables.get(slot);
-        } catch (IndexOutOfBoundsException e) { }
+            consumables.set(slot, newConsumable);
+        } catch (IndexOutOfBoundsException e) {
+            consumables.add(newConsumable);
+        }
 
-        consumables.set(slot, newConsumable);
         return oldConsumable;
     }
 

@@ -51,6 +51,10 @@ public class Creature {
         return health;
     }
 
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
     public CreatureModifiers getModifiers() {
         return modifiers;
     }
