@@ -32,23 +32,36 @@ public class FightPanel extends JPanel {
     private JLabel enemyName;
 
     private JPanel creaturePanel;
+    private JLabel infoLabel;
 
     JButton[] weaponButtons = new JButton[4];
 
-    public FightPanel(Player player, Creature enemy) {
+    public FightPanel(Player player, Creature enemy, long seed) {
         this.player = player;
         this.enemy = enemy;
-        fight = new Fight(player, enemy);
+
+        fight = new Fight(player, enemy, seed);
 
         // Weapon buttons
         JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = player.getInventory().getWeapon(i);
             weaponButtons[i] = new JButton();
-            if (weapon != null)
+            if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
-            else
+                weaponButtons[i].addActionListener(e -> {
+                    double damageDealt = fight.performAttack(player, enemy, weapon);
+                    enemyHealth.setValue((int)enemy.getHealth());
+
+                    if (damageDealt == 0)
+                        infoLabel.setText(enemy.getName() + " dodged the attack");
+                    else
+                        infoLabel.setText(player.getName() + " dealt " + damageDealt + " damage to " + enemy.getName());
+                });
+            } else {
                 weaponButtons[i].setText("None");
+                weaponButtons[i].setEnabled(false);
+            }
 
             buttonPanel.add(weaponButtons[i]);
         }
@@ -81,12 +94,12 @@ public class FightPanel extends JPanel {
         creaturePanel.add(enemyPanel);
         creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
 
+        infoLabel = new JLabel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createGlue());
+        this.add(infoLabel);
         this.add(creaturePanel);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
     }
-
-
 
 }

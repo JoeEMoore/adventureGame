@@ -74,8 +74,10 @@ public class Creature {
             this.health = maxHealth;
     }
 
-    public void applyDamage(double damage, DamageType type) {
-        health -= damage * turnModifiers.getResistance(type);
+    public double applyDamage(double damage, DamageType type) {
+        double damageDealt = damage * turnModifiers.getResistance(type);
+        health -= damageDealt;
+        return damageDealt;
     }
 
     public void applyPercentDamage(double percent, DamageType type) {

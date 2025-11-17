@@ -28,4 +28,14 @@ public class CreatureFactory {
         return new Creature(name, health, cm, inv);
     }
 
+    public static Creature createTroll() {
+        final String name = "Troll";
+        final int health = 150;
+        final CreatureModifiers cm = new CreatureModifiers(2, .05, new LinkedList<>(Arrays.asList(0.7, 1.5, 0.8, 2.0)));
+        final Inventory inv = new Inventory(1, 0);
+        inv.setWeapon(0, WeaponFactory.createRatClaws());
+
+        return new Creature(name, health, cm, inv);
+    }
+
 }
