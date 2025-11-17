@@ -23,12 +23,17 @@ public class FightPanel extends JPanel {
     private Creature enemy;
     private Fight fight;
 
-    private JPanel playerPanel;
+    private JPanel playerHealthPanel;
     private JProgressBar playerHealth;
+    private JLabel playerHealthNumber;
+    private JPanel enemyHealthPanel;
+    private JProgressBar enemyHealth;
+    private JLabel enemyHealthNumber;
+
+    private JPanel playerPanel;
     private JLabel playerName;
 
     private JPanel enemyPanel;
-    private JProgressBar enemyHealth;
     private JLabel enemyName;
 
     private JPanel creaturePanel;
@@ -52,6 +57,7 @@ public class FightPanel extends JPanel {
                 weaponButtons[i].addActionListener(e -> {
                     double damageDealt = fight.performAttack(player, enemy, weapon);
                     enemyHealth.setValue((int)enemy.getHealth());
+                    enemyHealthNumber.setText(String.valueOf(enemy.getHealth()));
 
                     if (damageDealt == 0)
                         infoLabel.setText(enemy.getName() + " dodged the attack");
@@ -66,25 +72,35 @@ public class FightPanel extends JPanel {
             buttonPanel.add(weaponButtons[i]);
         }
 
-        playerPanel = new JPanel();
-        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-        playerPanel.setMaximumSize(new Dimension(200, 100));
         playerHealth = new JProgressBar(0, (int)player.getMaxHealth());
         playerHealth.setValue((int)player.getHealth());
+        playerHealthNumber = new JLabel(String.valueOf(player.getHealth()));
+        playerHealthPanel = new JPanel();
+        playerHealthPanel.add(playerHealth);
+        playerHealthPanel.add(playerHealthNumber);
+
+        enemyHealth = new JProgressBar(0, (int)enemy.getMaxHealth());
+        enemyHealth.setValue((int)enemy.getHealth());
+        enemyHealthNumber = new JLabel(String.valueOf(enemy.getHealth()));
+        enemyHealthPanel = new JPanel();
+        enemyHealthPanel.add(enemyHealth);
+        enemyHealthPanel.add(enemyHealthNumber);
+
+        playerPanel = new JPanel();
+        playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+        playerPanel.setMaximumSize(new Dimension(200, 100));  
         playerName = new JLabel(player.getName());
         playerName.setAlignmentX(LEFT_ALIGNMENT);
         playerPanel.add(playerName);
-        playerPanel.add(playerHealth);
+        playerPanel.add(playerHealthPanel);
         playerPanel.add(buttonPanel);
 
         enemyPanel = new JPanel();
         enemyPanel.setLayout(new BoxLayout(enemyPanel, BoxLayout.Y_AXIS));
         enemyPanel.setMaximumSize(new Dimension(200, 100));
-        enemyHealth = new JProgressBar(0, (int)enemy.getMaxHealth());
-        enemyHealth.setValue((int)enemy.getHealth());
         enemyName = new JLabel(enemy.getName());
         enemyPanel.add(enemyName);
-        enemyPanel.add(enemyHealth);
+        enemyPanel.add(enemyHealthPanel);
 
         creaturePanel = new JPanel();
         creaturePanel.setLayout(new BoxLayout(creaturePanel, BoxLayout.X_AXIS));

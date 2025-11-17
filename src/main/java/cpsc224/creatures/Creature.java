@@ -76,7 +76,12 @@ public class Creature {
 
     public double applyDamage(double damage, DamageType type) {
         double damageDealt = damage * turnModifiers.getResistance(type);
-        health -= damageDealt;
+
+        if (health - damageDealt < 0)
+            health = 0;
+        else
+            health -= damageDealt;
+            
         return damageDealt;
     }
 
