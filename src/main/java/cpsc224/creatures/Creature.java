@@ -28,6 +28,12 @@ public class Creature {
     }
 
     public void addEffect(Effect effect) {
+        if (effect.isAppliedInstantly())
+            effect.applyEffect(this);
+
+        if (effect.getTurns() <= 0)
+            return;
+        
         effects.add(effect);
     }
 
@@ -113,7 +119,7 @@ public class Creature {
         turnModifiers.addResistance(type, resistance); 
    }
 
-    public void resetTurnModifiers(){
+    private void resetTurnModifiers(){
         turnModifiers = baseModifiers.clone();
     }
 }

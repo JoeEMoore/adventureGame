@@ -6,9 +6,16 @@ public abstract class Effect {
 
     protected int turns;
     protected String name;
+    protected boolean isAppliedInstantly;
 
     public Effect(int turns) {
         this.turns = turns;
+        isAppliedInstantly = false;
+    }
+
+    public Effect(int turns, boolean isAppliedInstantly) {
+        this.turns = turns;
+        this.isAppliedInstantly = isAppliedInstantly;
     }
 
     public int getTurns() {
@@ -24,6 +31,9 @@ public abstract class Effect {
         turns--;
     }
 
-    protected abstract void apply(Creature creature);
+    public boolean isAppliedInstantly() {
+        return isAppliedInstantly;
+    }
 
+    protected abstract void apply(Creature creature);
 }
