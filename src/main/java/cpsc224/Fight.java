@@ -22,14 +22,15 @@ public class Fight {
     }
 
     public double performAttack(Creature source, Creature target, Weapon weapon) {
-        double hitChance = (1D - target.getModifiers().getEvasion()) * weapon.getMove().getAccuracy();
+        double hitChance = (1D - target.getTurnModifiers().getEvasion()) * weapon.getMove().getAccuracy();
 
         if (rand.nextDouble(1D) > hitChance)
             return 0;
         
         Move move = weapon.getMove();
 
-        double damageDealt = target.applyDamage(move.getDamage(), move.getDamageType());
+        double damage = move.getDamage() * source.getTurnModifiers().getDamage();
+        double damageDealt = target.applyDamage(damage, move.getDamageType());
         
         for (Effect e : move.createEffects()) {
             target.addEffect(e);

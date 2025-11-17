@@ -12,16 +12,16 @@ public class Creature {
     private double health;
     private double maxHealth;
     private String name;
-    private CreatureModifiers modifiers;
+    private CreatureModifiers baseModifiers;
     private CreatureModifiers turnModifiers;
     private List<Effect> effects = new ArrayList<>(); 
     private Inventory inventory;
 
-    public Creature(String creatureName, double maxHealth, CreatureModifiers modifiers, Inventory inventory) {
+    public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory) {
         this.name = creatureName;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
-        this.modifiers = modifiers;
+        this.baseModifiers = baseModifiers;
         this.inventory = inventory;
 
         resetTurnModifiers();
@@ -40,6 +40,8 @@ public class Creature {
     }
 
     public Collection<String> calculateEffects() {
+        turnModifiers = baseModifiers.clone();
+
         List<String> results = new ArrayList<>();
         for (int i = 0; i < effects.size(); i++) {
             Effect e = effects.get(i);
@@ -71,8 +73,8 @@ public class Creature {
         return maxHealth;
     }
 
-    public CreatureModifiers getModifiers() {
-        return modifiers;
+    public CreatureModifiers getBaseModifiers() {
+        return baseModifiers;
     }
 
     public CreatureModifiers getTurnModifiers() {
@@ -112,6 +114,6 @@ public class Creature {
    }
 
     public void resetTurnModifiers(){
-        turnModifiers = modifiers.clone();
+        turnModifiers = baseModifiers.clone();
     }
 }
