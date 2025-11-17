@@ -37,4 +37,8 @@ public class Fight {
 
         return damageDealt;
     }
+
+    public double creatureTurn(Creature creature, Creature enemy) {
+        return performAttack(creature, enemy, creature.getInventory().getWeapon(0));
+    }
 }

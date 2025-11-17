@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.Timer;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -16,8 +17,6 @@ import cpsc224.creatures.Player;
 import cpsc224.items.weapons.Weapon;
 
 public class FightPanel extends JPanel {
-
-    //private final Dimension CREATURE_PANEL_MAX_DIMENSION = new Dimension(200, 100);
 
     private Player player;
     private Creature enemy;
@@ -54,15 +53,18 @@ public class FightPanel extends JPanel {
             weaponButtons[i] = new JButton();
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
-                weaponButtons[i].addActionListener(e -> {
-                    double damageDealt = fight.performAttack(player, enemy, weapon);
-                    enemyHealth.setValue((int)enemy.getHealth());
-                    enemyHealthNumber.setText(String.valueOf(enemy.getHealth()));
+                weaponButtons[i].addActionListener(weaponEvent -> {
 
-                    if (damageDealt == 0)
-                        infoLabel.setText(enemy.getName() + " dodged the attack");
-                    else
-                        infoLabel.setText(player.getName() + " dealt " + damageDealt + " damage to " + enemy.getName());
+                    enableWeaponButtons(false);
+
+                    double playerDamage = fight.performAttack(player, enemy, weapon);
+                    displayAttackInfo(player, enemy, playerDamage, enemyHealth, enemyHealthNumber);
+                    
+                    if (enemy.getHealth() > 0) {
+                        Timer timer = enemyAttackTimer(2000);
+                        timer.setRepeats(false);
+                        timer.start();
+                    }
                 });
             } else {
                 weaponButtons[i].setText("None");
@@ -116,6 +118,29 @@ public class FightPanel extends JPanel {
         this.add(infoLabel);
         this.add(creaturePanel);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
+    }
+
+    private void displayAttackInfo(Creature source, Creature target, double damage, JProgressBar targetHealth, JLabel targetHealthNumber) {
+        targetHealth.setValue((int)target.getHealth());
+        targetHealthNumber.setText(String.valueOf(target.getHealth()));
+
+        if (damage == 0)
+            infoLabel.setText(target.getName() + " dodged the attack");
+        else
+            infoLabel.setText(source.getName() + " dealt " + damage + " damage to " + target.getName());
+    }
+
+    private void enableWeaponButtons(boolean b) {
+        for (JButton button : weaponButtons)
+            button.setEnabled(b);
+    }
+
+    private Timer enemyAttackTimer(int delay) {
+        return new Timer(delay, enemyEvent -> {
+            double enemyDamage = fight.creatureTurn(enemy, player);
+            displayAttackInfo(enemy, player, enemyDamage, playerHealth, playerHealthNumber);
+            enableWeaponButtons(true);
+        });      
     }
 
 }
