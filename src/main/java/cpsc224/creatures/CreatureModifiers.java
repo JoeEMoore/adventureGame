@@ -154,10 +154,6 @@ public class CreatureModifiers implements Cloneable {
         resistances.put(dt, resistance);
     }
 
-    /**
-     * Creates a deep copy of this modifier class.
-     * @return a copy of this modifier class.
-     */
     @Override
     public CreatureModifiers clone() {
         final CreatureModifiers clone = new CreatureModifiers(damage, evasion, new LinkedList<Double>());

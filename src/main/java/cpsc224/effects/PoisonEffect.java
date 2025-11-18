@@ -5,10 +5,17 @@ import java.text.DecimalFormat;
 import cpsc224.creatures.Creature;
 import cpsc224.damagetypes.DamageType;
 
+/**
+ * An effect that deals percent damage to a creature.
+ */
 public class PoisonEffect extends Effect {
 
     public static final double PERCENT_DAMAGE = 0.05;
 
+    /**
+     * Creates a poison effect with a number of turns.
+     * @param turns the number of turns
+     */
     public PoisonEffect(int turns) {
         super(turns);
         name = "Poison";
