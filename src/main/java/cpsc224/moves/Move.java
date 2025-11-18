@@ -55,7 +55,8 @@ public class Move {
     }
 
     public void decrementUses() {
-        uses--;
+        if (uses > 0)
+            uses--;
     }
 
     public void resetUses() {
