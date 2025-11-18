@@ -3,6 +3,9 @@ package cpsc224.items.weapons;
 import cpsc224.moves.Move;
 import cpsc224.moves.MoveFactory;
 
+/**
+ * A factory class to create weapons.
+ */
 public class WeaponFactory {
 
     // *** PLAYER STARTER WEAPONS ***

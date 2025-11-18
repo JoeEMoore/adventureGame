@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import cpsc224.items.Inventory;
 import cpsc224.items.weapons.WeaponFactory;
 
+/**
+ * A factory class to create creatures.
+ */
+
 public class CreatureFactory {
 
     public static Player createPlayer() {

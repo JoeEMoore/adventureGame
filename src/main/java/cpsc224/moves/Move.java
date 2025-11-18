@@ -1,13 +1,11 @@
 package cpsc224.moves;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
-import cpsc224.effects.EffectFactory;
+import cpsc224.effects.EffectsFactory;
 
 public class Move {
 
@@ -19,7 +17,7 @@ public class Move {
     private final double accuracy;
     private final boolean targetsAllies;
 
-    private EffectFactory effectsFactory;
+    private EffectsFactory effectsFactory;
 
     public Move(String name, double damage, DamageType damageType, int maxUses, double accuracy, boolean targetAllies) {
 
@@ -71,7 +69,7 @@ public class Move {
         return targetsAllies;
     }
 
-    public void setEffects(EffectFactory effectsFactory) {
+    public void setEffects(EffectsFactory effectsFactory) {
         this.effectsFactory = effectsFactory;
     }
 

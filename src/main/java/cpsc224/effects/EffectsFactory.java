@@ -2,7 +2,7 @@ package cpsc224.effects;
 
 import java.util.Collection;
 
-public interface EffectFactory {
+public interface EffectsFactory {
 
     Collection<Effect> createEffects();
 
