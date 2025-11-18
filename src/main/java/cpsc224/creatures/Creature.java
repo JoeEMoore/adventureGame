@@ -46,7 +46,7 @@ public class Creature {
     }
 
     public Collection<String> calculateEffects() {
-        turnModifiers = baseModifiers.clone();
+        resetTurnModifiers();
 
         List<String> results = new ArrayList<>();
         for (int i = 0; i < effects.size(); i++) {
@@ -109,12 +109,6 @@ public class Creature {
     public double applyPercentDamage(double percent, DamageType type) {
         return applyDamage(health * percent, type);
     }
-
-    public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {
-        turnModifiers.addDamage(damage);
-        turnModifiers.addEvasion(evasion);
-        turnModifiers.addResistance(type, resistance); 
-   }
 
     private void resetTurnModifiers(){
         turnModifiers = baseModifiers.clone();
