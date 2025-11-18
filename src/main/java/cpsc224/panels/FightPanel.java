@@ -108,7 +108,9 @@ public class FightPanel extends JPanel {
             displayMoveInfo(fight.creatureTurn(enemy, player));
 
             playerPanel.displayEffectInfo(player.calculateEffects());
-            playerPanel.enableWeaponButtons(true);
+
+            if (player.getHealth() > 0)
+                playerPanel.enableWeaponButtons(true);
         });   
         timer.setRepeats(false);
         timer.start();   
