@@ -5,24 +5,20 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
-import cpsc224.effects.Effect;
-import cpsc224.effects.PoisonEffect;
-import cpsc224.items.Inventory;
 import cpsc224.items.weapons.Weapon;
 
+/**
+ * A panel to visualize a fight.
+ */
 public class FightPanel extends JPanel {
 
     public static final Color HEALTH_COLOR = new Color(224, 45, 45);
@@ -39,6 +35,12 @@ public class FightPanel extends JPanel {
     private JLabel infoLabel;
 
 
+    /**
+     * Creates a panel for the specified player and enemy.
+     * @param player the player
+     * @param enemy the enemy
+     * @param seed the game seed
+     */
     public FightPanel(Player player, Creature enemy, long seed) {
         this.player = player;
         this.enemy = enemy;
@@ -57,26 +59,28 @@ public class FightPanel extends JPanel {
 
                     playerPanel.enableWeaponButtons(false);
 
+                    // targets either enemy or ally based on move and gets the result as a string
                     String result;
                     if (weapon.getMove().targetsAllies())
-                        result = fight.performAttack(player, player, weapon);
+                        result = fight.performMove(player, player, weapon);
                     else
-                        result = fight.performAttack(player, enemy, weapon);
+                        result = fight.performMove(player, enemy, weapon);
                     
-                    displayAttackInfo(result);
+                    // display info as a result of the move
+                    displayMoveInfo(result);
                     playerPanel.displayEffectInfo(new ArrayList<>());
                     enemyPanel.displayEffectInfo(new ArrayList<>());
                     
+                    // enemy attacks after delay
                     if (enemy.getHealth() > 0) {
-                        Timer timer = enemyAttackTimer(2000);
-                        timer.setRepeats(false);
-                        timer.start();
+                        enemyAttackTimer(3000);
                     }
                 });
             }
         }
         
 
+        // the panel containing the player and enemy panels
         creaturePanel = new JPanel();
         creaturePanel.setLayout(new BoxLayout(creaturePanel, BoxLayout.X_AXIS));
         creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
@@ -85,6 +89,7 @@ public class FightPanel extends JPanel {
         creaturePanel.add(enemyPanel);
         creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
 
+        // add everything to this panel
         infoLabel = new JLabel();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(Box.createGlue());
@@ -93,21 +98,34 @@ public class FightPanel extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 10)));
     }
 
-    private Timer enemyAttackTimer(int delay) {
-        return new Timer(delay, e -> {
+    /**
+     * The enemy's attack.
+     * @param delay the delay in milliseconds for the enemies attack
+     */
+    private void enemyAttackTimer(int delay) {
+        Timer timer = new Timer(delay, e -> {
             enemyPanel.displayEffectInfo(enemy.calculateEffects());
-            displayAttackInfo(fight.creatureTurn(enemy, player));
+            displayMoveInfo(fight.creatureTurn(enemy, player));
 
             playerPanel.displayEffectInfo(player.calculateEffects());
             playerPanel.enableWeaponButtons(true);
-        });      
+        });   
+        timer.setRepeats(false);
+        timer.start();   
     }
 
-    private void displayAttackInfo(String text) {
+    /**
+     * Displays info about the move.
+     * @param text the move info
+     */
+    private void displayMoveInfo(String text) {
         infoLabel.setText(text);
         updateDisplay();
     }
 
+    /**
+     * Updates the fight display.
+     */
     private void updateDisplay() {
         playerPanel.updateDisplay();
         enemyPanel.updateDisplay();

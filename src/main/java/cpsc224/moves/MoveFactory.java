@@ -1,12 +1,8 @@
 package cpsc224.moves;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
-import cpsc224.effects.Effect;
 import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
 

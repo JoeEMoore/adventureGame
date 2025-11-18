@@ -10,6 +10,9 @@ import cpsc224.creatures.Player;
 import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.panels.FightPanel;
 
+/**
+ * A turn-based fighting game.
+ */
 public class Application {
 
     static Random rand;

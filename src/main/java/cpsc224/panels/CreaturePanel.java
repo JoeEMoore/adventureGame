@@ -2,7 +2,6 @@ package cpsc224.panels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.swing.Box;
@@ -12,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
-import javax.swing.Timer;
 
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
@@ -20,6 +18,9 @@ import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.weapons.Weapon;
 
+/**
+ * A panel to visualize the state of a creature in a fight.
+ */
 public class CreaturePanel extends JPanel{
 
     private Creature creature;
@@ -34,6 +35,10 @@ public class CreaturePanel extends JPanel{
     JPanel buttonPanel;
     JButton[] weaponButtons;
 
+    /**
+     * Creates a panel for the specified creature.
+     * @param creature the creature
+     */
     public CreaturePanel(Creature creature) {
         this.creature = creature;
 
@@ -53,13 +58,14 @@ public class CreaturePanel extends JPanel{
                 weaponButtons[i].setText("None");
                 weaponButtons[i].setEnabled(false);
             }
-
             buttonPanel.add(weaponButtons[i]);
         }
 
+        // enable buttons if this is a player
         if (!(creature instanceof Player))
             enableWeaponButtons(false);
 
+        // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
         healthBar.setForeground(FightPanel.HEALTH_COLOR);
@@ -68,6 +74,7 @@ public class CreaturePanel extends JPanel{
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
 
+        // add everything to this panel
         nameLabel = new JLabel(creature.getName());
         infoTextArea = new JTextArea();
         infoTextArea.setEditable(false);
@@ -78,6 +85,10 @@ public class CreaturePanel extends JPanel{
         add(infoTextArea);
     }
 
+    /**
+     * Displayes the effects in the creature's text area.
+     * @param info the text area to display the effects
+     */
     public void displayEffectInfo(Collection<String> info) {
         String text = "";
         for (String result : info) {
@@ -88,6 +99,9 @@ public class CreaturePanel extends JPanel{
         updateDisplay();
     }
 
+    /**
+     * Updates the panel to account for changes in the fight.
+     */
     public void updateDisplay() {
 
         healthBar.setValue((int)creature.getHealth());
@@ -96,6 +110,9 @@ public class CreaturePanel extends JPanel{
         updateHealthBar();
     }
 
+    /**
+     * Updates the health bar to account for changes in the fight.
+     */
     private void updateHealthBar() {
         String toolTipText = "";
         healthBar.setForeground(FightPanel.HEALTH_COLOR);
@@ -107,6 +124,10 @@ public class CreaturePanel extends JPanel{
         healthBar.setToolTipText("<html><p width=\"100\">" + toolTipText + "</p></html>");
     }
 
+    /**
+     * Enables or disables all of the buttons with assigned weapons.
+     * @param b true if the buttons should be enabled
+     */
     public void enableWeaponButtons(boolean b) {
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = creature.getInventory().getWeapon(i);
@@ -115,30 +136,10 @@ public class CreaturePanel extends JPanel{
         }
     }
 
-    public JPanel getHealthPanel() {
-        return healthPanel;
-    }
-
-    public JProgressBar getHealthBar() {
-        return healthBar;
-    }
-
-    public JLabel getHealthNumber() {
-        return healthNumber;
-    }
-
-    public JLabel getNameLabel() {
-        return nameLabel;
-    }
-
-    public JTextArea getInfoTextArea() {
-        return infoTextArea;
-    }
-
-    public JPanel getButtonPanel() {
-        return buttonPanel;
-    }
-
+    /**
+     * Gets the weapon buttons.
+     * @return the weapon buttons as an array
+     */
     public JButton[] getWeaponButtons() {
         return weaponButtons;
     }
