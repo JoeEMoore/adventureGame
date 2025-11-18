@@ -29,6 +29,14 @@ public class WeaponFactory {
         return new Weapon(name, tier, move);
     }
 
+    public static Weapon createBirdTalons() {
+        final String name = "Bird Talons";
+        final int tier = 1;
+        final Move move = MoveFactory.createScratchMove();
+
+        return new Weapon(name, tier, move);
+    }
+
     // *** OTHER WEAPONS ***
     public static Weapon createWoodClub() {
         final String name = "Wood Club";
@@ -50,6 +58,30 @@ public class WeaponFactory {
         final String name = "Heal Staff";
         final int tier = 3;
         final Move move = MoveFactory.createHealMove();
+
+        return new Weapon(name, tier, move);
+    }
+
+    public static Weapon createRoyalSword() {
+        final String name = "Royal Sword";
+        final int tier = 2;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move);
+    }
+
+    public static Weapon createRustyDagger() {
+        final String name = "Rusty Dagger";
+        final int tier = 1;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move);
+    }
+
+    public static Weapon createSteelHammer() {
+        final String name = "Steel Hammer";
+        final int tier = 2;
+        final Move move = MoveFactory.createSmashMove();
 
         return new Weapon(name, tier, move);
     }

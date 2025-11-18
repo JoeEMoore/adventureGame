@@ -42,4 +42,44 @@ public class CreatureFactory {
         return new Creature(name, health, cm, inv);
     }
 
+    public static Creature createBird() {
+        final String name = "Bird";
+        final int health = 30;
+        final CreatureModifiers cm = new CreatureModifiers(3, .2, new LinkedList<>(Arrays.asList(0.5, 0.7, 2.0, 1.4)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0,WeaponFactory.createBirdTalons());
+
+        return new Creature(name, health, cm, inv);
+    }
+
+    public static Creature createWitch() {
+        final String name = "Witch";
+        final int health = 75;
+        final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createToxicStaff());
+
+        return new Creature(name, health, cm, inv);
+    }
+
+    public static Creature createGuardian() {
+        final String name = "Guardian";
+        final int health = 105;
+        final CreatureModifiers cm = new CreatureModifiers(2, .15, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createRoyalSword());
+        
+        return new Creature(name, health, cm, inv);
+    }
+
+    public static Creature createGoblin() {
+        final String name = "Goblin";
+        final int health = 25;
+        final CreatureModifiers cm = new CreatureModifiers(3, 0.1, new LinkedList<>(Arrays.asList(1.0, 0.9, 1.2, 1.4)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createRustyDagger());
+
+        return new Creature(name, health, cm, inv);
+    }
+
 }
