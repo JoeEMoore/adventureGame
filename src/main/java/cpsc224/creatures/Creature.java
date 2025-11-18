@@ -8,6 +8,10 @@ import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.items.Inventory;
 
+/**
+ * A class that represents creatures within the game.
+ */
+
 public class Creature {
     private double health;
     private double maxHealth;
@@ -17,6 +21,13 @@ public class Creature {
     private List<Effect> effects = new ArrayList<>(); 
     private Inventory inventory;
 
+    /**
+     * Instantiates a creature.
+     * @param creatureName the name
+     * @param maxHealth the max health
+     * @param baseModifiers the base modifiers
+     * @param inventory the inventory
+     */
     public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory) {
         this.name = creatureName;
         this.maxHealth = maxHealth;
@@ -27,6 +38,11 @@ public class Creature {
         resetTurnModifiers();
     }
 
+    /**
+     * Adds an effect to the creature. The effect is
+     * only applied if it is an instantly applied effect.
+     * @param effect the effect
+     */
     public void addEffect(Effect effect) {
         if (effect.isAppliedInstantly())
             effect.applyEffect(this);
@@ -37,14 +53,27 @@ public class Creature {
         effects.add(effect);
     }
 
+    /**
+     * Clears all effects from the creature.
+     */
     public void clearEffects() {
         effects.clear();
     }
 
+    /**
+     * Gets all effects from the creature.
+     * @return the effects as a collection
+     */
     public Collection<Effect> getEffects() {
         return effects;
     }
 
+    /**
+     * Applies all effects to the creature for the turn. 
+     * The creature's turn modifiers are reset to the base modifiers.
+     * Effects that run out of turns are removed.
+     * @return the result of the effects as a collection of strings
+     */
     public Collection<String> calculateEffects() {
         resetTurnModifiers();
 
@@ -61,40 +90,79 @@ public class Creature {
         return results;
     }
 
+    /**
+     * Gets the name of the creature.
+     * @return the name
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Gets the current health of the creature.
+     * @return the health
+     */
     public double getHealth() {
         return health;
     }
 
+    /**
+     * Sets the current health of the creature.
+     * @param health the new health
+     */
     public void setHealth(double health) {
         this.health = health;
     }
 
+    /**
+     * Gets the max health of the creature.
+     * @return the max health
+     */
     public double getMaxHealth() {
         return maxHealth;
     }
 
+    /**
+     * Gets the base modifiers of the creature.
+     * @return the base modifiers
+     */
     public CreatureModifiers getBaseModifiers() {
         return baseModifiers;
     }
 
+    /**
+     * Gets the turn modifiers of the creature.
+     * @return the turn modifiers
+     */
     public CreatureModifiers getTurnModifiers() {
         return turnModifiers;
     }
 
+    /**
+     * Gets the inventory of the creature.
+     * @return the inventory
+     */
     public Inventory getInventory() {
         return inventory;
     }
 
+    /**
+     * Adds health to the creature up to the max health.
+     * @param amount the amount of health to add
+     * @return the amount of health added
+     */
     public double addHealth(int amount) {
         double amountAdded = Math.min(maxHealth - health, amount);
         health = Math.min(maxHealth, health + amount);
         return amountAdded;
     }
 
+    /**
+     * Applies damage to the creature. Takes into account damage type resistances.
+     * @param damage the amount of damage
+     * @param type the damage type
+     * @return the amount of damage applied
+     */
     public double applyDamage(double damage, DamageType type) {
         double damageDealt = damage * turnModifiers.getResistance(type);
 
@@ -106,10 +174,19 @@ public class Creature {
         return damageDealt;
     }
 
+    /**
+     * Applies damage as a percent of the creature's current health.
+     * @param percent the percent of the creature's health
+     * @param type the damage type
+     * @return the amount of damage applied
+     */
     public double applyPercentDamage(double percent, DamageType type) {
         return applyDamage(health * percent, type);
     }
 
+    /**
+     * resets the turn modifiers to a copy of the base modifiers
+     */
     private void resetTurnModifiers(){
         turnModifiers = baseModifiers.clone();
     }
