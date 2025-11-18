@@ -7,6 +7,7 @@ import java.util.List;
 
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
+import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
 
 public class MoveFactory {
@@ -17,10 +18,9 @@ public class MoveFactory {
         final DamageType dt = DamageType.Slice;
         final int maxUses = -1;
         final double accuracy = 0.8;
-        final boolean canTargetAllies = false;
-        final boolean canTargetEnemies = true;
+        final boolean targetsAllies = false;
 
-        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
 
@@ -30,10 +30,9 @@ public class MoveFactory {
         final DamageType dt = DamageType.Slice;
         final int maxUses = -1;
         final double accuracy = 0.8;
-        final boolean canTargetAllies = false;
-        final boolean canTargetEnemies = true;
+        final boolean targetsAllies = false;
 
-        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
     public static Move createSmashMove() {
@@ -42,10 +41,9 @@ public class MoveFactory {
         final DamageType dt = DamageType.Blunt;
         final int maxUses = -1;
         final double accuracy = 0.6;
-        final boolean canTargetAllies = false;
-        final boolean canTargetEnemies = true;
+        final boolean targetsAllies = false;
 
-        return new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
     public static Move createToxicBoltMove() {
@@ -54,14 +52,27 @@ public class MoveFactory {
         final DamageType dt = DamageType.Magic;
         final int maxUses = -1;
         final double accuracy = 0.8;
-        final boolean canTargetAllies = false;
-        final boolean canTargetEnemies = true;
+        final boolean targetsAllies = false;
 
-        Move move = new Move(name, damage, dt, maxUses, accuracy, canTargetAllies, canTargetEnemies);
+        Move move = new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
         move.setEffects(() -> {
             return Arrays.asList(new PoisonEffect(2));
         });
         return move;
     }
 
+    public static Move createHealMove() {
+        final String name = "Heal";
+        final int damage = 0;
+        final DamageType dt = DamageType.Pure;
+        final int maxUses = -1;
+        final double accuracy = 1.0;
+        final boolean targetsAllies = true;
+
+        Move move = new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
+        move.setEffects(() -> {
+            return Arrays.asList(new HealEffect(20));
+        });
+        return move;
+    }
 }

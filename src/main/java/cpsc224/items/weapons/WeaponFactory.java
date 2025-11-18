@@ -42,4 +42,12 @@ public class WeaponFactory {
 
         return new Weapon(name, tier, move);
     }
+
+    public static Weapon createHealStaff() {
+        final String name = "Heal Staff";
+        final int tier = 3;
+        final Move move = MoveFactory.createHealMove();
+
+        return new Weapon(name, tier, move);
+    }
 }

@@ -21,14 +21,17 @@ public class Fight {
         rand = new Random(seed);
     }
 
-    public double performAttack(Creature source, Creature target, Weapon weapon) {
-        double hitChance = (1D - target.getTurnModifiers().getEvasion()) * weapon.getMove().getAccuracy();
-
-        if (rand.nextDouble(1D) > hitChance)
-            return 0;
+    public String performAttack(Creature source, Creature target, Weapon weapon) {
         
         Move move = weapon.getMove();
+        
+        if (!source.equals(target)) {
+            double hitChance = (1D - target.getTurnModifiers().getEvasion()) * weapon.getMove().getAccuracy();
 
+            if (rand.nextDouble(1D) > hitChance)
+                return source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " against " + target.getName() + ". They Missed!";
+        }
+        
         double damage = move.getDamage() * source.getTurnModifiers().getDamage();
         double damageDealt = target.applyDamage(damage, move.getDamageType());
         
@@ -36,10 +39,10 @@ public class Fight {
             target.addEffect(e);
         }
 
-        return damageDealt;
+        return source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " to inflict " + damageDealt + " damage on " + target.getName();
     }
 
-    public double creatureTurn(Creature creature, Creature enemy) {
+    public String creatureTurn(Creature creature, Creature enemy) {
         return performAttack(creature, enemy, creature.getInventory().getWeapon(0));
     }
 }

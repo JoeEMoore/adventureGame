@@ -69,8 +69,13 @@ public class FightPanel extends JPanel {
 
                     enableWeaponButtons(false);
 
-                    double playerDamage = fight.performAttack(player, enemy, weapon);
-                    displayAttackInfo(player, enemy, playerDamage);
+                    String result;
+                    if (weapon.getMove().targetsAllies())
+                        result = fight.performAttack(player, player, weapon);
+                    else
+                        result = fight.performAttack(player, enemy, weapon);
+                    
+                    displayAttackInfo(result);
                     displayEffectInfo(new ArrayList<>(), player, playerInfo);
                     displayEffectInfo(new ArrayList<>(), enemy, enemyInfo);
                     
@@ -146,20 +151,15 @@ public class FightPanel extends JPanel {
     private Timer enemyAttackTimer(int delay) {
         return new Timer(delay, e -> {
             displayEffectInfo(enemy.calculateEffects(), enemy, enemyInfo);
-            double enemyDamage = fight.creatureTurn(enemy, player);
-            displayAttackInfo(enemy, player, enemyDamage);
+            displayAttackInfo(fight.creatureTurn(enemy, player));
 
             displayEffectInfo(player.calculateEffects(), player, playerInfo);
             enableWeaponButtons(true);
         });      
     }
 
-    private void displayAttackInfo(Creature source, Creature target, double damage) {
-        if (damage == 0)
-            infoLabel.setText(target.getName() + " dodged the attack");
-        else
-            infoLabel.setText(source.getName() + " dealt " + damage + " damage to " + target.getName());
-        
+    private void displayAttackInfo(String text) {
+        infoLabel.setText(text);
         updateDisplay();
     }
 

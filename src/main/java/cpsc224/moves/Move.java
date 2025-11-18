@@ -17,21 +17,18 @@ public class Move {
     private final int maxUses;
     private int uses;
     private final double accuracy;
-    private final boolean canTargetAllies;
-    private final boolean canTargetEnemies;
+    private final boolean targetsAllies;
 
     private EffectFactory effectsFactory;
 
-    public Move(String name, double damage, DamageType damageType, int maxUses, double accuracy, boolean canTargetAllies,
-            boolean canTargetEnemies) {
+    public Move(String name, double damage, DamageType damageType, int maxUses, double accuracy, boolean targetAllies) {
 
         this.name = name;
         this.damage = damage;
         this.damageType = damageType;
         this.maxUses = maxUses;
         this.accuracy = accuracy;
-        this.canTargetAllies = canTargetAllies;
-        this.canTargetEnemies = canTargetEnemies;
+        this.targetsAllies = targetAllies;
         
         effectsFactory = () -> {return new ArrayList<>();};
         uses = maxUses;
@@ -69,12 +66,8 @@ public class Move {
         return accuracy;
     }
 
-    public boolean canTargetAllies() {
-        return canTargetAllies;
-    }
-
-    public boolean canTargetEnemies() {
-        return canTargetEnemies;
+    public boolean targetsAllies() {
+        return targetsAllies;
     }
 
     public void setEffects(EffectFactory effectsFactory) {

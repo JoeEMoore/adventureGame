@@ -20,6 +20,7 @@ public class Application {
 
         Player player = CreatureFactory.createPlayer();
         player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
+        player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
