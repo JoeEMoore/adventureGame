@@ -35,5 +35,9 @@ public abstract class Effect {
         return isAppliedInstantly;
     }
 
+    public String toString() {
+        return name + " (" + turns + ")";
+    }
+
     protected abstract void apply(Creature creature);
 }
