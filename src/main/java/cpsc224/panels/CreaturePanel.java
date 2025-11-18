@@ -81,7 +81,7 @@ public class CreaturePanel extends JPanel{
     public void displayEffectInfo(Collection<String> info) {
         String text = "";
         for (String result : info) {
-            text += creature.getName() + " was effected by " + result + "\n";
+            text += result + "\n";
         }
         infoTextArea.setText(text);
 

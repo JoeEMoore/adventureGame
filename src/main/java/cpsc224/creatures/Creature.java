@@ -51,14 +51,12 @@ public class Creature {
         List<String> results = new ArrayList<>();
         for (int i = 0; i < effects.size(); i++) {
             Effect e = effects.get(i);
-            e.applyEffect(this);
+            results.add(e.applyEffect(this));
 
             if (e.getTurns() <= 0) {
                 effects.remove(i);
                 i--;
             }
-
-            results.add(e.getName());
         }
         return results;
     }
@@ -91,11 +89,10 @@ public class Creature {
         return inventory;
     }
 
-    public void addHealth(int amount) {
-        if(health + amount <= maxHealth)
-            this.health += amount;
-        else
-            this.health = maxHealth;
+    public double addHealth(int amount) {
+        double amountAdded = Math.min(maxHealth - health, amount);
+        health = Math.min(maxHealth, health + amount);
+        return amountAdded;
     }
 
     public double applyDamage(double damage, DamageType type) {
@@ -109,8 +106,8 @@ public class Creature {
         return damageDealt;
     }
 
-    public void applyPercentDamage(double percent, DamageType type) {
-        applyDamage(health * percent, type);
+    public double applyPercentDamage(double percent, DamageType type) {
+        return applyDamage(health * percent, type);
     }
 
     public void setTurnModifiers(double damage, double evasion, DamageType type, double resistance) {

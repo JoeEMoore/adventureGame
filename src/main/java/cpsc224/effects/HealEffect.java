@@ -17,8 +17,8 @@ public class HealEffect extends Effect {
     }
 
     @Override
-    public void apply(Creature creature) {
-        creature.addHealth(healAmount);
+    public String apply(Creature creature) {
+        double health = creature.addHealth(healAmount);
+        return creature.getName() + " was healed by " + roundDouble(health);
     }
-
 }

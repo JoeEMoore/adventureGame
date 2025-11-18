@@ -34,7 +34,6 @@ public class FightPanel extends JPanel {
 
     private CreaturePanel playerPanel;
     private CreaturePanel enemyPanel;
-    
 
     private JPanel creaturePanel;
     private JLabel infoLabel;

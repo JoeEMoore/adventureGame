@@ -39,7 +39,12 @@ public class Fight {
             target.addEffect(e);
         }
 
-        return source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " to inflict " + damageDealt + " damage on " + target.getName();
+        String result = source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " on " + target.getName() + ".";
+
+        if (damageDealt > 0)
+            result += " They dealt " + damageDealt + " damage!";
+        
+        return result;
     }
 
     public String creatureTurn(Creature creature, Creature enemy) {

@@ -1,5 +1,7 @@
 package cpsc224.effects;
 
+import java.text.DecimalFormat;
+
 import cpsc224.creatures.Creature;
 
 public abstract class Effect {
@@ -26,9 +28,9 @@ public abstract class Effect {
         return name;
     }
 
-    public void applyEffect(Creature creature) {
-        apply(creature);
+    public String applyEffect(Creature creature) {
         turns--;
+        return apply(creature);
     }
 
     public boolean isAppliedInstantly() {
@@ -39,5 +41,10 @@ public abstract class Effect {
         return name + " (" + turns + ")";
     }
 
-    protected abstract void apply(Creature creature);
+    protected static String roundDouble(double d) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return df.format(d);
+    }
+
+    protected abstract String apply(Creature creature);
 }

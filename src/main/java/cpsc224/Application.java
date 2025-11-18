@@ -25,7 +25,7 @@ public class Application {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new FightPanel(player, CreatureFactory.createTroll(), rand.nextLong()));
-        frame.setMinimumSize(new Dimension(600, 400));
+        frame.setMinimumSize(new Dimension(800, 400));
         frame.pack();
         frame.setVisible(true);
     }
