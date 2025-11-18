@@ -10,6 +10,9 @@ import cpsc224.effects.Effect;
 import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
 
+/**
+ * A factory class to make moves.
+ */
 public class MoveFactory {
 
     public static Move createSlashMove() {
