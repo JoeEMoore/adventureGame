@@ -43,14 +43,17 @@ public class Creature {
      * only applied if it is an instantly applied effect.
      * @param effect the effect
      */
-    public void addEffect(Effect effect) {
+    public String addEffect(Effect effect) {
+        String result = null;
+
         if (effect.isAppliedInstantly())
-            effect.applyEffect(this);
+            result = effect.applyEffect(this);
 
         if (effect.getTurns() <= 0)
-            return;
+            return result;
         
         effects.add(effect);
+        return result;
     }
 
     /**

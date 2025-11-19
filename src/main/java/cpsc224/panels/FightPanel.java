@@ -1,19 +1,14 @@
 package cpsc224.panels;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
+import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 
 /**
@@ -28,11 +23,16 @@ public class FightPanel extends JPanel {
     private Creature enemy;
     private Fight fight;
 
+    private JPanel topPanel;
+    private JButton inventoryButton;
+
+    private JPanel mainPanel;
+    private JLabel infoLabel;
+
     private CreaturePanel playerPanel;
     private CreaturePanel enemyPanel;
 
     private JPanel creaturePanel;
-    private JLabel infoLabel;
 
 
     /**
@@ -44,13 +44,75 @@ public class FightPanel extends JPanel {
     public FightPanel(Player player, Creature enemy, long seed) {
         this.player = player;
         this.enemy = enemy;
-
         fight = new Fight(player, enemy, seed);
+
+        initComponents();
+        layoutComponents();
+        addListeners();
+    }
+
+    /**
+     * Initializes the panel's components
+     */
+    private void initComponents() {
+        topPanel = new JPanel();
+        inventoryButton = new JButton("Inventory");
+
+        infoLabel = new JLabel();
 
         playerPanel = new CreaturePanel(player);
         enemyPanel = new CreaturePanel(enemy);
 
-        // Setup listeners for each of the player's weapoms
+        creaturePanel = new JPanel();
+        mainPanel = new JPanel();
+    }
+
+    /**
+     * Lays out the panel's components
+     */
+    private void layoutComponents() {
+        // top panel
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        topPanel.add(inventoryButton);
+
+        // the panel containing the player and enemy panels
+        creaturePanel.setLayout(new BoxLayout(creaturePanel, BoxLayout.X_AXIS));
+        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
+        creaturePanel.add(playerPanel);
+        creaturePanel.add(Box.createGlue());
+        creaturePanel.add(enemyPanel);
+        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
+
+        // the panel containing creature panel and info label
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(infoLabel);
+        mainPanel.add(creaturePanel);
+
+        // align everything to the left
+        topPanel.setAlignmentX(LEFT_ALIGNMENT);
+        mainPanel.setAlignmentX(LEFT_ALIGNMENT);
+
+        // add everything to this panel
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        add(topPanel);
+        add(Box.createGlue());
+        add(mainPanel);
+        add(Box.createRigidArea(new Dimension(0, 10)));
+    }
+
+    /**
+     * Add listeners to the panel's components
+     */
+    private void addListeners() {
+        inventoryButton.addActionListener(e -> {
+            InventoryDialog invDialog = new InventoryDialog(SwingUtilities.getWindowAncestor(this), playerPanel, player);
+            invDialog.setVisible(true);
+        });
+
+
+        // Setup listeners for each of the player's weapons
         JButton[] weaponButtons = playerPanel.getWeaponButtons();
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = player.getInventory().getWeapon(i);
@@ -65,12 +127,12 @@ public class FightPanel extends JPanel {
                         result = fight.performMove(player, player, weapon);
                     else
                         result = fight.performMove(player, enemy, weapon);
-                    
+
                     // display info as a result of the move
                     displayMoveInfo(result);
                     playerPanel.displayEffectInfo(new ArrayList<>());
                     enemyPanel.displayEffectInfo(new ArrayList<>());
-                    
+
                     // enemy attacks after delay
                     if (enemy.getHealth() > 0) {
                         enemyAttackTimer(3000);
@@ -78,24 +140,6 @@ public class FightPanel extends JPanel {
                 });
             }
         }
-        
-
-        // the panel containing the player and enemy panels
-        creaturePanel = new JPanel();
-        creaturePanel.setLayout(new BoxLayout(creaturePanel, BoxLayout.X_AXIS));
-        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
-        creaturePanel.add(playerPanel);
-        creaturePanel.add(Box.createGlue());
-        creaturePanel.add(enemyPanel);
-        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
-
-        // add everything to this panel
-        infoLabel = new JLabel();
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(Box.createGlue());
-        this.add(infoLabel);
-        this.add(creaturePanel);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
     }
 
     /**

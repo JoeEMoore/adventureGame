@@ -42,12 +42,28 @@ public class CreaturePanel extends JPanel{
     public CreaturePanel(Creature creature) {
         this.creature = creature;
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(200, 200));
+        initComponents();
+        layoutComponents();
+        addListeners();
+    }
 
-        weaponButtons = new JButton[creature.getInventory().getMaxWeapons()];
+    /**
+     * Initializes the panel's components
+     */
+    private void initComponents() {
+        nameLabel = new JLabel(creature.getName());
+        infoTextArea = new JTextArea();
+        infoTextArea.setEditable(false);
+
+        // health panel
+        healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
+        healthBar.setValue((int)creature.getHealth());
+        healthBar.setForeground(FightPanel.HEALTH_COLOR);
+        healthNumber = new JLabel(String.valueOf(creature.getHealth()));
+        healthPanel = new JPanel();
 
         // Weapon buttons
+        weaponButtons = new JButton[creature.getInventory().getMaxWeapons()];
         buttonPanel = new JPanel(new GridLayout(2, 3));
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = creature.getInventory().getWeapon(i);
@@ -62,22 +78,20 @@ public class CreaturePanel extends JPanel{
         }
 
         // enable buttons if this is a player
-        if (!(creature instanceof Player))
-            enableWeaponButtons(false);
+        enableWeaponButtons(creature instanceof Player);
+    }
 
+    /**
+     * Lays out the panel's components
+     */
+    private void layoutComponents() {
         // health panel
-        healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
-        healthBar.setValue((int)creature.getHealth());
-        healthBar.setForeground(FightPanel.HEALTH_COLOR);
-        healthNumber = new JLabel(String.valueOf(creature.getHealth()));
-        healthPanel = new JPanel();
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
 
         // add everything to this panel
-        nameLabel = new JLabel(creature.getName());
-        infoTextArea = new JTextArea();
-        infoTextArea.setEditable(false);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setMaximumSize(new Dimension(200, 200));
         add(nameLabel);
         add(healthPanel);
         add(buttonPanel);
@@ -86,7 +100,14 @@ public class CreaturePanel extends JPanel{
     }
 
     /**
-     * Displayes the effects in the creature's text area.
+     * Add listeners to the dialog's components
+     */
+    private void addListeners() {
+
+    }
+
+    /**
+     * Displays the effects in the creature's text area.
      * @param info the text area to display the effects
      */
     public void displayEffectInfo(Collection<String> info) {

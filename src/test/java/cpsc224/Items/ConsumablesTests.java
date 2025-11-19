@@ -17,7 +17,7 @@ public class ConsumablesTests {
         Consumable smallHealthPotion = ConsumableFactory.createSmallHealthPotion();
         Collection<Effect> effects = smallHealthPotion.createEffects();
 
-        assertEquals(smallHealthPotion.getName(), "Small Health Potion");
+        assertEquals(smallHealthPotion.toString(), "Small Health Potion");
         assertEquals(effects.size(), 1);
 
 

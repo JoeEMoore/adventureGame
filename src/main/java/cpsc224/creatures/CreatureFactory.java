@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import cpsc224.items.Inventory;
+import cpsc224.items.consumables.ConsumableFactory;
 import cpsc224.items.weapons.WeaponFactory;
 
 /**
@@ -18,6 +19,7 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createDullSword());
+        inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
 
         return new Player(name, health, cm, inv);
     }
