@@ -2,6 +2,7 @@ package cpsc224;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureModifiers;
@@ -9,6 +10,7 @@ import cpsc224.creatures.Player;
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.Inventory;
+import cpsc224.items.consumables.Consumable;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.moves.Move;
 
@@ -94,7 +96,6 @@ public class TestUtils {
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
-
     public static Move createTestScratchMove() {
         final String name = "Scratch";
         final int damage = 5;
@@ -130,6 +131,12 @@ public class TestUtils {
             return Arrays.asList(new PoisonEffect(2));
         });
         return move;
+    }
+
+    // CONSUMABLES
+
+    public static Consumable createTestPoisonPotion() {
+        return new Consumable("Poison Potion", () -> {return List.of(new PoisonEffect(2));});
     }
 
     // MODIFIERS

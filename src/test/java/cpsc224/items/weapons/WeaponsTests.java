@@ -1,10 +1,9 @@
-package cpsc224.Items;
+package cpsc224.items.weapons;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import cpsc224.items.weapons.Weapon;
 import cpsc224.moves.Move;
 import cpsc224.moves.MoveFactory;
 

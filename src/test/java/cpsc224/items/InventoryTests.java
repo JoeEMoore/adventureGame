@@ -1,11 +1,10 @@
-package cpsc224.Items;
+package cpsc224.items;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import cpsc224.items.Inventory;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.items.weapons.Weapon;
 
