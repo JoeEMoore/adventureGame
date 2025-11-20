@@ -36,11 +36,9 @@ public class Consumable {
      * Applies effects to a creature.
      * @param creature the creature
      */
-    public Collection<String> applyEffects(Creature creature) {
+    public void applyEffects(Creature creature) {
         List<String> results = new ArrayList<>();
         for (Effect e : effects.createEffects())
-                results.add(creature.addEffect(e));
-
-        return results;
+                creature.addEffect(e);
     }
 }

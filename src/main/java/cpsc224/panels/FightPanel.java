@@ -14,7 +14,7 @@ import cpsc224.items.weapons.Weapon;
 /**
  * A panel to visualize a fight.
  */
-public class FightPanel extends JPanel {
+public class FightPanel extends JPanel implements GamePanel {
 
     public static final Color HEALTH_COLOR = new Color(224, 45, 45);
     public static final Color POISON_COLOR = new Color(32, 148, 16);
@@ -107,7 +107,7 @@ public class FightPanel extends JPanel {
      */
     private void addListeners() {
         inventoryButton.addActionListener(e -> {
-            InventoryDialog invDialog = new InventoryDialog(SwingUtilities.getWindowAncestor(this), playerPanel, player);
+            InventoryDialog invDialog = new InventoryDialog((Frame)SwingUtilities.getWindowAncestor(this), playerPanel, player);
             invDialog.setVisible(true);
         });
 
@@ -130,8 +130,8 @@ public class FightPanel extends JPanel {
 
                     // display info as a result of the move
                     displayMoveInfo(result);
-                    playerPanel.displayEffectInfo(new ArrayList<>());
-                    enemyPanel.displayEffectInfo(new ArrayList<>());
+                    playerPanel.updateDisplay();
+                    enemyPanel.updateDisplay();
 
                     // enemy attacks after delay
                     if (enemy.getHealth() > 0) {
@@ -148,10 +148,12 @@ public class FightPanel extends JPanel {
      */
     private void enemyAttackTimer(int delay) {
         Timer timer = new Timer(delay, e -> {
-            enemyPanel.displayEffectInfo(enemy.calculateEffects());
+            enemy.calculateEffects();
+            enemyPanel.updateDisplay();
             displayMoveInfo(fight.creatureTurn(enemy, player));
 
-            playerPanel.displayEffectInfo(player.calculateEffects());
+            player.calculateEffects();
+            playerPanel.updateDisplay();
 
             if (player.getHealth() > 0)
                 playerPanel.enableWeaponButtons(true);
@@ -169,12 +171,8 @@ public class FightPanel extends JPanel {
         updateDisplay();
     }
 
-    /**
-     * Updates the fight display.
-     */
-    private void updateDisplay() {
+    public void updateDisplay() {
         playerPanel.updateDisplay();
         enemyPanel.updateDisplay();
     }
-
 }

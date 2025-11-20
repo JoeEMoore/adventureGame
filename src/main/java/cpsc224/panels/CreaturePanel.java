@@ -21,7 +21,7 @@ import cpsc224.items.weapons.Weapon;
 /**
  * A panel to visualize the state of a creature in a fight.
  */
-public class CreaturePanel extends JPanel{
+public class CreaturePanel extends JPanel implements GamePanel{
 
     private Creature creature;
 
@@ -106,24 +106,12 @@ public class CreaturePanel extends JPanel{
 
     }
 
-    /**
-     * Displays the effects in the creature's text area.
-     * @param info the text area to display the effects
-     */
-    public void displayEffectInfo(Collection<String> info) {
-        String text = "";
-        for (String result : info) {
-            text += result + "\n";
-        }
-        infoTextArea.setText(text);
-
-        updateDisplay();
-    }
-
-    /**
-     * Updates the panel to account for changes in the fight.
-     */
     public void updateDisplay() {
+        StringBuilder infoText = new StringBuilder();
+        for (String s : creature.getInfo())
+            infoText.append(s).append("\n");
+
+        infoTextArea.setText(infoText.toString());
 
         healthBar.setValue((int)creature.getHealth());
         healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));

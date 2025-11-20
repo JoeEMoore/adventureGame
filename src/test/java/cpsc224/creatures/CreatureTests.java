@@ -126,6 +126,28 @@ public class CreatureTests {
     }
 
     @Test
+    void getInfoReturnsCorrectInfo() {
+        Creature rat = TestUtils.createTestRat();
+        rat.applyDamage(5, DamageType.Pure);
+        rat.addEffect(new HealEffect(5));
+
+        assertTrue(rat.getInfo().contains("Rat was healed by 5"));
+    }
+
+    @Test
+    void clearInfoClearsCreatureInfo() {
+        Creature rat = TestUtils.createTestRat();
+        rat.applyDamage(5, DamageType.Pure);
+        rat.addEffect(new HealEffect(5, 2));
+        rat.addEffect(new PoisonEffect(2));
+        rat.calculateEffects();
+        assertEquals(2, rat.getInfo().size());
+
+        rat.clearInfo();
+        assertEquals(0, rat.getInfo().size());
+    }
+
+    @Test
     void getNameReturnsName() {
         Creature rat = TestUtils.createTestRat();
 

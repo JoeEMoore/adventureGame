@@ -19,7 +19,6 @@ public class ConsumablesTests {
         Consumable consumable = new Consumable("Consumable", () -> {return new ArrayList<>();});
 
         assertEquals("Consumable", consumable.toString());
-        assertEquals(0, consumable.applyEffects(CreatureFactory.createRat()).size());
     }
 
     @Test
@@ -31,6 +30,8 @@ public class ConsumablesTests {
         poisonPotion.applyEffects(rat);
 
         List<Effect> effects = rat.getEffects().stream().toList();
+        assertEquals("Poison", effects.get(0).getName());
+        assertEquals("Poison", effects.get(1).getName());
         assertNotEquals(effects.get(0), effects.get(1));
     }
 }

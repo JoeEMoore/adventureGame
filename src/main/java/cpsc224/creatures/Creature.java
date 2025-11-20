@@ -18,7 +18,8 @@ public class Creature {
     private String name;
     private CreatureModifiers baseModifiers;
     private CreatureModifiers turnModifiers;
-    private List<Effect> effects = new ArrayList<>(); 
+    private List<Effect> effects = new ArrayList<>();
+    private List<String> info = new ArrayList<>();
     private Inventory inventory;
 
     /**
@@ -43,17 +44,18 @@ public class Creature {
      * only applied if it is an instantly applied effect.
      * @param effect the effect
      */
-    public String addEffect(Effect effect) {
+    public void addEffect(Effect effect) {
         String result = null;
 
-        if (effect.isAppliedInstantly())
+        if (effect.isAppliedInstantly()) {
             result = effect.applyEffect(this);
+            info.add(result);
+        }
 
         if (effect.getTurns() <= 0)
-            return result;
+            return;
         
         effects.add(effect);
-        return result;
     }
 
     /**
@@ -75,9 +77,8 @@ public class Creature {
      * Applies all effects to the creature for the turn. 
      * The creature's turn modifiers are reset to the base modifiers.
      * Effects that run out of turns are removed.
-     * @return the result of the effects as a collection of strings
      */
-    public Collection<String> calculateEffects() {
+    public void calculateEffects() {
         resetTurnModifiers();
 
         List<String> results = new ArrayList<>();
@@ -90,7 +91,22 @@ public class Creature {
                 i--;
             }
         }
-        return results;
+        info = results;
+    }
+
+    /**
+     * Gets recent info about this creature.
+     * @return the info as a collection of strings
+     */
+    public Collection<String> getInfo() {
+        return info;
+    }
+
+    /**
+     * Clears recent info about this creature.
+     */
+    public void clearInfo() {
+        info.clear();
     }
 
     /**

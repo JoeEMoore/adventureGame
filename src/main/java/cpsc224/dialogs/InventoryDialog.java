@@ -2,15 +2,19 @@ package cpsc224.dialogs;
 
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
-import cpsc224.panels.CreaturePanel;
+import cpsc224.panels.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A dialog window that displays a creature's inventory and allows the user to
+ * access items.
+ */
 public class InventoryDialog extends JDialog {
 
     private Creature creature;
-    private CreaturePanel creaturePanel;
+    private GamePanel creaturePanel;
     private Consumable currentConsumable;
 
     private JPanel dialogPanel;
@@ -23,11 +27,17 @@ public class InventoryDialog extends JDialog {
     private JButton closeButton;
     private JButton useButton;
 
-    public InventoryDialog(Window owner, CreaturePanel creaturePanel, Creature creature) {
-        super(owner, "Inventory");
+    /**
+     * Creates the inventory dialog.
+     * @param owner the frame the dialog should appear over
+     * @param gamePanel the panel to update after actions are performed
+     * @param creature the creature that will have its inventory displayed
+     */
+    public InventoryDialog(Frame owner, GamePanel gamePanel, Creature creature) {
+        super((Frame) owner, "Inventory", true);
 
         this.creature = creature;
-        this.creaturePanel = creaturePanel;
+        this.creaturePanel = gamePanel;
         currentConsumable = null;
 
         initComponents();
@@ -83,7 +93,8 @@ public class InventoryDialog extends JDialog {
     private void addListeners() {
         useButton.addActionListener(e -> {
             // use item and display effects
-            creaturePanel.displayEffectInfo(currentConsumable.applyEffects(creature));
+            currentConsumable.applyEffects(creature);
+            creaturePanel.updateDisplay();
 
             // remove item
             creature.getInventory().getConsumables().remove(currentConsumable);
