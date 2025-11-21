@@ -136,6 +136,8 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));
 
         updateHealthBar();
+        updateWeapons();
+
     }
 
     /**
@@ -150,6 +152,28 @@ public class CreaturePanel extends JPanel implements GamePanel{
                 healthBar.setForeground(FightPanel.POISON_COLOR);
         }
         healthBar.setToolTipText("<html><p width=\"100\">" + toolTipText + "</p></html>");
+    }
+
+    /**
+     * Updates the shown weapons to account for changes in the fight.
+     */
+    private void updateWeapons() {
+        for (int i = 0; i < weaponButtons.length; i++) {
+            buttonPanel.remove(weaponButtons[i]);
+        }
+        for (int i = 0; i < weaponButtons.length; i++) {
+            Weapon weapon = creature.getInventory().getWeapon(i);
+            weaponButtons[i] = new JButton();
+            if (weapon != null) {
+                weaponButtons[i].setText(weapon.getName());
+            } else {
+                weaponButtons[i].setText("None");
+                weaponButtons[i].setEnabled(false);
+            }
+            buttonPanel.add(weaponButtons[i]);
+        }
+        buttonPanel.revalidate();
+        buttonPanel.repaint();
     }
 
     /**
