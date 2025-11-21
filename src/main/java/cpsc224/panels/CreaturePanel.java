@@ -2,10 +2,17 @@ package cpsc224.panels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
 import java.util.Collection;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +24,7 @@ import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.weapons.Weapon;
+import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize the state of a creature in a fight.
@@ -24,6 +32,8 @@ import cpsc224.items.weapons.Weapon;
 public class CreaturePanel extends JPanel implements GamePanel{
 
     private Creature creature;
+
+    private JLabel imageLabel;
 
     private JPanel healthPanel;
     private JProgressBar healthBar;
@@ -52,6 +62,16 @@ public class CreaturePanel extends JPanel implements GamePanel{
     private void initComponents() {
         nameLabel = new JLabel(creature.getName());
 
+
+        // image
+        imageLabel = new JLabel();
+        boolean flipHorizontally = !(creature instanceof Player);
+        try {
+            imageLabel.setIcon(ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 4, 4, flipHorizontally));
+        } catch (NullPointerException e) {
+            System.out.println("Failed to load image from creature " + creature.getName());
+        }
+        
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
@@ -83,12 +103,20 @@ public class CreaturePanel extends JPanel implements GamePanel{
      */
     private void layoutComponents() {
         // health panel
+        healthBar.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthNumber.setAlignmentY(BOTTOM_ALIGNMENT);
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
 
+        imageLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        nameLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthPanel.setAlignmentY(BOTTOM_ALIGNMENT);
+        buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
+
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(200, 200));
+        setPreferredSize(new Dimension(200, 400));
+        add(imageLabel);
         add(nameLabel);
         add(healthPanel);
         add(buttonPanel);
