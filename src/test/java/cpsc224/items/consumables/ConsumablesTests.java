@@ -10,6 +10,8 @@ import cpsc224.TestUtils;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.effects.Effect;
+import cpsc224.items.consumables.Consumable;
+
 import org.junit.jupiter.api.Test;
 
 public class ConsumablesTests {
