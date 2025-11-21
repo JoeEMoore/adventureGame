@@ -1,5 +1,6 @@
 package cpsc224.panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.nio.Buffer;
 import java.util.Collection;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -113,10 +115,15 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthPanel.setAlignmentY(BOTTOM_ALIGNMENT);
         buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
 
+        healthPanel.setMaximumSize(healthPanel.getPreferredSize());
+        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
+
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(200, 400));
+        add(Box.createGlue());
         add(imageLabel);
+        add(Box.createRigidArea(new Dimension(0, 20)));
         add(nameLabel);
         add(healthPanel);
         add(buttonPanel);

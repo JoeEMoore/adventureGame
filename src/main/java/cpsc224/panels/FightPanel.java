@@ -59,7 +59,7 @@ public class FightPanel extends JPanel implements GamePanel {
         topPanel = new JPanel();
         inventoryButton = new JButton("Inventory");
 
-        infoLabel = new JLabel();
+        infoLabel = new JLabel("Start of fight between " + player.getName() + " and " + enemy.getName());
         infoPanel = new JPanel();
 
         playerPanel = new CreaturePanel(player);
@@ -85,13 +85,17 @@ public class FightPanel extends JPanel implements GamePanel {
         creaturePanel.add(playerPanel);
         creaturePanel.add(Box.createGlue());
         
-        Border empty = BorderFactory.createEmptyBorder(25, 200, 25, 200);
+        Border empty = BorderFactory.createEmptyBorder(25, 50, 25, 50);
         Border line = BorderFactory.createLineBorder(Color.black);
         Border compound = BorderFactory.createCompoundBorder(line, empty);
         
+        infoLabel.setAlignmentY(BOTTOM_ALIGNMENT);
         infoLabel.setBorder(compound);
         infoPanel.add(infoLabel);
         creaturePanel.add(infoPanel);
+
+        //infoPanel.setMaximumSize(infoPanel.getPreferredSize());
+        infoPanel.setSize(getPreferredSize());
         
         creaturePanel.add(enemyPanel);
         creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
