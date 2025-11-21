@@ -24,6 +24,7 @@ import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.weapons.Weapon;
+import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize the state of a creature in a fight.
@@ -64,15 +65,13 @@ public class CreaturePanel extends JPanel implements GamePanel{
 
         // image
         imageLabel = new JLabel();
+        boolean flipHorizontally = !(creature instanceof Player);
         try {
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("images/creatures/" + creature.getName() + ".png"));
-            Image image = icon.getImage();
-            Image scaledImage = image.getScaledInstance(icon.getIconWidth() * 4, icon.getIconHeight() * 4, Image.SCALE_SMOOTH);
-            icon.setImage(scaledImage);
-            imageLabel = new JLabel(icon);
-        } catch (Exception e) {
-            System.out.println("Image for creature " + creature.getName() + " not found");
+            imageLabel.setIcon(ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 4, 4, flipHorizontally));
+        } catch (NullPointerException e) {
+            System.out.println("Failed to load image from creature " + creature.getName());
         }
+        
         
 
         // health panel
@@ -111,7 +110,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(200, 400));
+        setPreferredSize(new Dimension(200, 400));
         add(imageLabel);
         add(nameLabel);
         add(healthPanel);
