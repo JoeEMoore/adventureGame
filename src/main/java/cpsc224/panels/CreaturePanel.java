@@ -172,6 +172,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
             }
             buttonPanel.add(weaponButtons[i]);
         }
+        enableWeaponButtons(creature instanceof Player);
         buttonPanel.revalidate();
         buttonPanel.repaint();
     }
