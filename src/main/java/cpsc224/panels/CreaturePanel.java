@@ -1,5 +1,6 @@
 package cpsc224.panels;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -10,6 +11,7 @@ import java.nio.Buffer;
 import java.util.Collection;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -24,6 +26,7 @@ import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.weapons.Weapon;
+import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize the state of a creature in a fight.
@@ -61,20 +64,15 @@ public class CreaturePanel extends JPanel implements GamePanel{
     private void initComponents() {
         nameLabel = new JLabel(creature.getName());
 
-
         // image
         imageLabel = new JLabel();
+        boolean flipHorizontally = !(creature instanceof Player);
         try {
-            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("images/creatures/" + creature.getName() + ".png"));
-            Image image = icon.getImage();
-            Image scaledImage = image.getScaledInstance(icon.getIconWidth() * 4, icon.getIconHeight() * 4, Image.SCALE_SMOOTH);
-            icon.setImage(scaledImage);
-            imageLabel = new JLabel(icon);
-        } catch (Exception e) {
-            System.out.println("Image for creature " + creature.getName() + " not found");
+            imageLabel.setIcon(ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 192, 192, flipHorizontally));
+        } catch (NullPointerException e) {
+            System.out.println("Failed to load image from creature " + creature.getName());
         }
         
-
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
@@ -90,6 +88,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
             weaponButtons[i] = new JButton();
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
+                weaponButtons[i].setIcon((ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 32, 32, flipHorizontally)));
             } else {
                 weaponButtons[i].setText("None");
                 weaponButtons[i].setEnabled(false);
@@ -106,13 +105,25 @@ public class CreaturePanel extends JPanel implements GamePanel{
      */
     private void layoutComponents() {
         // health panel
+        healthBar.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthNumber.setAlignmentY(BOTTOM_ALIGNMENT);
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
 
+        imageLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        nameLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthPanel.setAlignmentY(BOTTOM_ALIGNMENT);
+        buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
+
+        healthPanel.setMaximumSize(healthPanel.getPreferredSize());
+        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
+
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(200, 400));
+        setPreferredSize(new Dimension(200, 500));
+        add(Box.createGlue());
         add(imageLabel);
+        add(Box.createRigidArea(new Dimension(0, 20)));
         add(nameLabel);
         add(healthPanel);
         add(buttonPanel);
