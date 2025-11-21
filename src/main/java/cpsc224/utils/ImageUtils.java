@@ -35,7 +35,7 @@ public class ImageUtils {
         return getImageIcon(o, path, scaleX, scaleY, false);
     }
 
-    /**
+/**
  * Converts a given Image into a BufferedImage
  *
  * @param img The Image to be converted

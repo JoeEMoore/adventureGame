@@ -110,17 +110,12 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
 
-        imageLabel.setAlignmentY(BOTTOM_ALIGNMENT);
-        nameLabel.setAlignmentY(BOTTOM_ALIGNMENT);
-        healthPanel.setAlignmentY(BOTTOM_ALIGNMENT);
-        buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
-
         healthPanel.setMaximumSize(healthPanel.getPreferredSize());
-        buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
+        buttonPanel.setMaximumSize(new Dimension(1000, (int)buttonPanel.getPreferredSize().getHeight()));
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(200, 500));
+        setPreferredSize(new Dimension(400, 500));
         add(Box.createGlue());
         add(imageLabel);
         add(Box.createRigidArea(new Dimension(0, 20)));
