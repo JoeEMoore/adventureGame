@@ -64,12 +64,11 @@ public class CreaturePanel extends JPanel implements GamePanel{
     private void initComponents() {
         nameLabel = new JLabel(creature.getName());
 
-
         // image
         imageLabel = new JLabel();
         boolean flipHorizontally = !(creature instanceof Player);
         try {
-            imageLabel.setIcon(ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 4, 4, flipHorizontally));
+            imageLabel.setIcon(ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 192, 192, flipHorizontally));
         } catch (NullPointerException e) {
             System.out.println("Failed to load image from creature " + creature.getName());
         }
@@ -89,6 +88,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
             weaponButtons[i] = new JButton();
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
+                weaponButtons[i].setIcon((ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 32, 32, flipHorizontally)));
             } else {
                 weaponButtons[i].setText("None");
                 weaponButtons[i].setEnabled(false);
@@ -120,7 +120,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(200, 400));
+        setPreferredSize(new Dimension(200, 500));
         add(Box.createGlue());
         add(imageLabel);
         add(Box.createRigidArea(new Dimension(0, 20)));

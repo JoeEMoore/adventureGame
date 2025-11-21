@@ -18,7 +18,7 @@ public class ImageUtils {
         }
 
         // scale image
-        Image scaledImage = image.getScaledInstance(icon.getIconWidth() * scaleX, icon.getIconHeight() * scaleY, Image.SCALE_SMOOTH);
+        Image scaledImage = image.getScaledInstance(scaleX, scaleY, Image.SCALE_SMOOTH);
 
         icon.setImage(scaledImage);
         return icon;

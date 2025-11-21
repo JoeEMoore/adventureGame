@@ -94,7 +94,6 @@ public class FightPanel extends JPanel implements GamePanel {
         infoPanel.add(infoLabel);
         creaturePanel.add(infoPanel);
 
-        //infoPanel.setMaximumSize(infoPanel.getPreferredSize());
         infoPanel.setSize(getPreferredSize());
         
         creaturePanel.add(enemyPanel);
