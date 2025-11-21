@@ -20,6 +20,7 @@ public class InventoryDialog extends JDialog {
     private GamePanel creaturePanel;
     private Consumable currentConsumable;
     private Weapon currentWeapon;
+    private boolean canDropItems;
 
     private JPanel dialogPanel;
     private JPanel buttonPanel;
@@ -43,11 +44,12 @@ public class InventoryDialog extends JDialog {
      * @param gamePanel the panel to update after actions are performed
      * @param creature the creature that will have its inventory displayed
      */
-    public InventoryDialog(Frame owner, GamePanel gamePanel, Creature creature) {
+    public InventoryDialog(Frame owner, GamePanel gamePanel, Creature creature, boolean canDropItems) {
         super((Frame) owner, "Inventory", true);
 
         this.creature = creature;
         this.creaturePanel = gamePanel;
+        this.canDropItems = canDropItems;
         currentConsumable = null;
 
         initComponents();
@@ -150,7 +152,7 @@ public class InventoryDialog extends JDialog {
         consumableList.addListSelectionListener(e -> {
             currentConsumable = consumableList.getSelectedValue();
             useButton.setEnabled(currentConsumable != null);
-            dropButton.setEnabled(currentConsumable != null);
+            dropButton.setEnabled(canDropItems && currentConsumable != null);
             
             if (currentConsumable != null) {
                 weaponList.clearSelection();
@@ -160,7 +162,7 @@ public class InventoryDialog extends JDialog {
 
         weaponList.addListSelectionListener(e -> {
             currentWeapon = weaponList.getSelectedValue();
-            dropButton.setEnabled(currentWeapon != null);
+            dropButton.setEnabled(canDropItems && currentWeapon != null);
 
             if (currentWeapon != null) {
                 consumableList.clearSelection();
