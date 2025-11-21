@@ -86,6 +86,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = creature.getInventory().getWeapon(i);
             weaponButtons[i] = new JButton();
+            //weaponButtons[i].setPreferredSize(new Dimension(150, 40));
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
                 weaponButtons[i].setIcon((ImageUtils.getImageIcon(this, "images/creatures/" + creature.getName() + ".png", 32, 32, flipHorizontally)));
@@ -111,7 +112,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthPanel.add(healthNumber);
 
         healthPanel.setMaximumSize(healthPanel.getPreferredSize());
-        buttonPanel.setMaximumSize(new Dimension(1000, (int)buttonPanel.getPreferredSize().getHeight()));
+        buttonPanel.setMaximumSize(new Dimension(400, (int)buttonPanel.getPreferredSize().getHeight()));
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -142,8 +143,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));
 
         updateHealthBar();
-        updateWeapons();
-
     }
 
     /**
@@ -160,28 +159,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthBar.setToolTipText("<html><p width=\"100\">" + toolTipText + "</p></html>");
     }
 
-    /**
-     * Updates the shown weapons to account for changes in the fight.
-     */
-    private void updateWeapons() {
-        for (int i = 0; i < weaponButtons.length; i++) {
-            buttonPanel.remove(weaponButtons[i]);
-        }
-        for (int i = 0; i < weaponButtons.length; i++) {
-            Weapon weapon = creature.getInventory().getWeapon(i);
-            weaponButtons[i] = new JButton();
-            if (weapon != null) {
-                weaponButtons[i].setText(weapon.getName());
-            } else {
-                weaponButtons[i].setText("None");
-                weaponButtons[i].setEnabled(false);
-            }
-            buttonPanel.add(weaponButtons[i]);
-        }
-        enableWeaponButtons(creature instanceof Player);
-        buttonPanel.revalidate();
-        buttonPanel.repaint();
-    }
 
     /**
      * Enables or disables all of the buttons with assigned weapons.
