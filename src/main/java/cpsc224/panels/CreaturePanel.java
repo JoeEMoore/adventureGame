@@ -2,10 +2,17 @@ package cpsc224.panels;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
 import java.util.Collection;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +31,8 @@ import cpsc224.items.weapons.Weapon;
 public class CreaturePanel extends JPanel implements GamePanel{
 
     private Creature creature;
+
+    private JLabel imageLabel;
 
     private JPanel healthPanel;
     private JProgressBar healthBar;
@@ -51,6 +60,20 @@ public class CreaturePanel extends JPanel implements GamePanel{
      */
     private void initComponents() {
         nameLabel = new JLabel(creature.getName());
+
+
+        // image
+        imageLabel = new JLabel();
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("images/creatures/" + creature.getName() + ".png"));
+            Image image = icon.getImage();
+            Image scaledImage = image.getScaledInstance(icon.getIconWidth() * 4, icon.getIconHeight() * 4, Image.SCALE_SMOOTH);
+            icon.setImage(scaledImage);
+            imageLabel = new JLabel(icon);
+        } catch (Exception e) {
+            System.out.println("Image for creature " + creature.getName() + " not found");
+        }
+        
 
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
@@ -88,7 +111,8 @@ public class CreaturePanel extends JPanel implements GamePanel{
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(200, 200));
+        setMaximumSize(new Dimension(200, 400));
+        add(imageLabel);
         add(nameLabel);
         add(healthPanel);
         add(buttonPanel);
