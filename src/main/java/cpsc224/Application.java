@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.util.Random;
 
 import javax.swing.JFrame;
-import javax.swing.text.StyledEditorKit.FontFamilyAction;
 
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.Player;
