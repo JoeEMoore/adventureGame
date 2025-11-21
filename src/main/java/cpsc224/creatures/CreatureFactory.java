@@ -77,7 +77,7 @@ public class CreatureFactory {
     public static Creature createGoblin() {
         final String name = "Goblin";
         final int health = 50;
-        final CreatureModifiers cm = new CreatureModifiers(3, 0.1, new LinkedList<>(Arrays.asList(1.0, 0.9, 1.2, 1.4)));
+        final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(1.0, 0.9, 1.2, 1.4)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
 

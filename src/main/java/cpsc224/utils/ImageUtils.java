@@ -6,13 +6,14 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
 public class ImageUtils {
 
-    public static ImageIcon getImageIcon(Object o, String path, int scaleX, int scaleY, boolean flipHorizontally) throws NullPointerException {
-        ImageIcon icon = new ImageIcon(o.getClass().getClassLoader().getResource(path));
+    public static ImageIcon getImageIcon(String path, int scaleX, int scaleY, boolean flipHorizontally) {
+        ImageIcon icon = new ImageIcon(Objects.requireNonNull(ImageUtils.class.getClassLoader().getResource(path)));
         Image image = icon.getImage();
 
         // flip image horizontally
@@ -27,12 +28,12 @@ public class ImageUtils {
         return icon;
     }
 
-    public static ImageIcon getImageIcon(Object o, String path) {
-        return getImageIcon(o, path, 1, 1, false);
+    public static ImageIcon getImageIcon(String path) {
+        return getImageIcon(path, -1, -1, false);
     }
 
-    public static ImageIcon getImageIcon(Object o, String path, int scaleX, int scaleY) {
-        return getImageIcon(o, path, scaleX, scaleY, false);
+    public static ImageIcon getImageIcon(String path, int scaleX, int scaleY) {
+        return getImageIcon(path, scaleX, scaleY, false);
     }
 
 /**

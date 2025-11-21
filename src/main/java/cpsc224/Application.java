@@ -28,8 +28,10 @@ public class Application {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new FightPanel(player, CreatureFactory.createGoblin(), rand.nextLong()));
-        frame.setMinimumSize(new Dimension(1400, 700));
+        frame.setPreferredSize(new Dimension(1400, 800));
+        frame.setMinimumSize(new Dimension(1200, 700));
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

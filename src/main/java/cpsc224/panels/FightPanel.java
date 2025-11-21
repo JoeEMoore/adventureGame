@@ -4,13 +4,17 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
+import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize a fight.
@@ -24,16 +28,13 @@ public class FightPanel extends JPanel implements GamePanel {
     private Creature enemy;
     private Fight fight;
 
-    private JPanel topPanel;
     private JButton inventoryButton;
 
-    private JPanel mainPanel;
     private JLabel infoLabel;
+    private JPanel infoPanel;
 
     private CreaturePanel playerPanel;
     private CreaturePanel enemyPanel;
-    private JPanel infoPanel;
-    private JPanel creaturePanel;
 
 
     /**
@@ -56,64 +57,65 @@ public class FightPanel extends JPanel implements GamePanel {
      * Initializes the panel's components
      */
     private void initComponents() {
-        topPanel = new JPanel();
         inventoryButton = new JButton("Inventory");
 
         infoLabel = new JLabel("Start of fight between " + player.getName() + " and " + enemy.getName());
+        infoLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         infoPanel = new JPanel();
+        infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infoPanel.setOpaque(false);
 
         playerPanel = new CreaturePanel(player);
         enemyPanel = new CreaturePanel(enemy);
 
-        creaturePanel = new JPanel();
-        mainPanel = new JPanel();
+        setBackground(new Color(143, 147, 184));
     }
 
     /**
      * Lays out the panel's components
      */
     private void layoutComponents() {
-        // top panel
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
-        topPanel.add(Box.createRigidArea(new Dimension(10, 0)));
-        topPanel.add(inventoryButton);
 
-        
-        // the panel containing the player and enemy panels
-        creaturePanel.setLayout(new BoxLayout(creaturePanel, BoxLayout.X_AXIS));
-        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
-        creaturePanel.add(playerPanel);
-        creaturePanel.add(Box.createGlue());
-        
-        Border empty = BorderFactory.createEmptyBorder(25, 50, 25, 50);
-        Border line = BorderFactory.createLineBorder(Color.black);
-        Border compound = BorderFactory.createCompoundBorder(line, empty);
-        
         infoLabel.setAlignmentY(BOTTOM_ALIGNMENT);
-        infoLabel.setBorder(compound);
-        infoPanel.add(infoLabel);
-        creaturePanel.add(infoPanel);
-
-        infoPanel.setSize(getPreferredSize());
-        
-        creaturePanel.add(enemyPanel);
-        creaturePanel.add(Box.createRigidArea(new Dimension(20, 0)));
-        
-        // the panel containing creature panel and info label
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(creaturePanel);
-
-        // align everything to the left
-        topPanel.setAlignmentX(LEFT_ALIGNMENT);
-        mainPanel.setAlignmentX(LEFT_ALIGNMENT);
+        infoPanel.setLayout(new BorderLayout());
+        infoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        infoPanel.add(infoLabel, BorderLayout.CENTER);
 
         // add everything to this panel
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createRigidArea(new Dimension(0, 10)));
-        add(topPanel);
-        add(Box.createGlue());
-        add(mainPanel);
-        add(Box.createRigidArea(new Dimension(0, 10)));
+        setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.insets = new Insets(0, 50, 30, 50);
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = 3;
+        c.weightx = 1;
+        c.weighty = 1;
+        c.gridx = 0;
+        c.gridy = 2;
+        add(infoPanel, c);
+
+        c.insets = new Insets(10, 10, 0, 0);
+        c.anchor = GridBagConstraints.FIRST_LINE_START;
+        c.fill = GridBagConstraints.NONE;
+        c.weighty = 1;
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(inventoryButton, c);
+
+        c.insets = new Insets(0, 50, 50, 0);
+        c.anchor = GridBagConstraints.LAST_LINE_START;
+        c.weightx = 1;
+        c.gridx = 0;
+        c.gridy = 1;
+        add(playerPanel, c);
+
+        c.insets = new Insets(0, 0, 50, 50);
+        c.anchor = GridBagConstraints.LAST_LINE_END;
+        c.gridx = 2;
+        c.gridy = 1;
+        add(enemyPanel, c);
     }
 
     /**
@@ -192,5 +194,14 @@ public class FightPanel extends JPanel implements GamePanel {
         enemyPanel.updateDisplay();
     }
 
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        ImageIcon icon = ImageUtils.getImageIcon("images/backgrounds/StoneWall.png");
+//        BufferedImage image = ImageUtils.toBufferedImage(icon.getImage());
+//        RescaleOp op = new RescaleOp(1f, 100, null);
+//        op.filter(image, image);
+//
+//        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+//    }
 
 }
