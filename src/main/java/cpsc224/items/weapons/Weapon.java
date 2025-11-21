@@ -46,4 +46,9 @@ public class Weapon {
     public Move getMove() {
         return move;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
