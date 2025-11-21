@@ -72,8 +72,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
             System.out.println("Failed to load image from creature " + creature.getName());
         }
         
-        
-
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
@@ -105,8 +103,15 @@ public class CreaturePanel extends JPanel implements GamePanel{
      */
     private void layoutComponents() {
         // health panel
+        healthBar.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthNumber.setAlignmentY(BOTTOM_ALIGNMENT);
         healthPanel.add(healthBar);
         healthPanel.add(healthNumber);
+
+        imageLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        nameLabel.setAlignmentY(BOTTOM_ALIGNMENT);
+        healthPanel.setAlignmentY(BOTTOM_ALIGNMENT);
+        buttonPanel.setAlignmentY(BOTTOM_ALIGNMENT);
 
         // add everything to this panel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
