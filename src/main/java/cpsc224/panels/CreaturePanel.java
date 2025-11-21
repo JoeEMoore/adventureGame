@@ -30,7 +30,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
     private JLabel healthNumber;
 
     private JLabel nameLabel;
-    private JTextArea infoTextArea;
 
     JPanel buttonPanel;
     JButton[] weaponButtons;
@@ -52,8 +51,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
      */
     private void initComponents() {
         nameLabel = new JLabel(creature.getName());
-        infoTextArea = new JTextArea();
-        infoTextArea.setEditable(false);
 
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
@@ -96,7 +93,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
         add(healthPanel);
         add(buttonPanel);
         add(Box.createRigidArea(new Dimension(0, 10)));
-        add(infoTextArea);
     }
 
     /**
@@ -111,7 +107,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
         for (String s : creature.getInfo())
             infoText.append(s).append("\n");
 
-        infoTextArea.setText(infoText.toString());
 
         healthBar.setValue((int)creature.getHealth());
         healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));
