@@ -3,6 +3,9 @@ package cpsc224.utils;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class ImageUtils {
 
@@ -12,6 +15,11 @@ public class ImageUtils {
  * @param img The Image to be converted
  * @return The converted BufferedImage
  */
+
+
+
+    
+    
     public static BufferedImage toBufferedImage(Image img) {
         if (img instanceof BufferedImage)
         {
@@ -49,4 +57,46 @@ public class ImageUtils {
         }
         return flippedImage;
     }
+
+     public static BufferedImage loadSheet(String resourcePath) {
+        try {
+            BufferedImage sheet = ImageIO.read(ImageUtils.class.getResource(resourcePath));
+            if (sheet == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            return sheet;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+/**
+     * Slices a sprite sheet into a 2D array of tiles
+     * @param sheet the loaded sprite sheet
+     * @param tileWidth width of a single tile
+     * @param tileHeight height of a single tile
+     * @param rows number of rows
+     * @param cols number of columns
+     * @return 2D array [row][col] of BufferedImages
+     */
+    public static BufferedImage[][] sliceSheet(BufferedImage sheet, int tileWidth, int tileHeight, int rows, int cols) {
+        BufferedImage[][] tiles = new BufferedImage[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                tiles[row][col] = sheet.getSubimage(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
+            }
+        }
+        return tiles;
+    }
+
+    public static BufferedImage getItem(BufferedImage[][] tiles, int row, int col) {
+    if (tiles == null || row < 0 || row >= tiles.length || col < 0 || col >= tiles[0].length) {
+        return null;
+    }
+    return tiles[row][col];
+}
+
+
+    
+
 }
