@@ -2,6 +2,9 @@ package cpsc224.items.weapons;
 
 import cpsc224.moves.Move;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * A class that represents weapons to be used by creatures in combat.
  */
@@ -11,6 +14,8 @@ public class Weapon {
     private int tier;
     private Move move;
 
+    private ImageIcon icon;
+
     /**
      * Creates a weapon with the specified name, tier, and move.
      * @param name the name
@@ -18,9 +23,20 @@ public class Weapon {
      * @param move the move
      */
     public Weapon(String name, int tier, Move move) {
+        this(name, tier, move, null);
+    }
+
+    /**
+     * Creates a weapon with the specified name, tier, and move.
+     * @param name the name
+     * @param tier the tier
+     * @param move the move
+     */
+    public Weapon(String name, int tier, Move move, ImageIcon icon) {
         this.name = name;
         this.tier = tier;
         this.move = move;
+        this.icon = icon;
     }
 
     /**
@@ -46,6 +62,12 @@ public class Weapon {
     public Move getMove() {
         return move;
     }
+
+    /**
+     * Gets the icon.
+     * @return the icon
+     */
+    public ImageIcon getIcon() { return icon; }
 
     @Override
     public String toString() {

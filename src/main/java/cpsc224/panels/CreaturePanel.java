@@ -1,29 +1,17 @@
 package cpsc224.panels;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.Buffer;
-import java.util.Collection;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JTextArea;
 
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize the state of a creature in a fight.
@@ -68,12 +56,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
 
         // creature image
         imageLabel = new JLabel();
-        boolean flipHorizontally = !(creature instanceof Player);
-        try {
-            imageLabel.setIcon(ImageUtils.getImageIcon("images/creatures/" + creature.getName() + ".png", 256, 256, flipHorizontally));
-        } catch (IllegalArgumentException e) {
-            System.out.println("Failed to load image from creature " + creature.getName());
-        }
+        imageLabel.setIcon(creature.getIcon());
         
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
@@ -92,7 +75,8 @@ public class CreaturePanel extends JPanel implements GamePanel{
             //weaponButtons[i].setPreferredSize(new Dimension(150, 40));
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.getName());
-                weaponButtons[i].setIcon((ImageUtils.getImageIcon("images/creatures/" + creature.getName() + ".png", 32, 32, flipHorizontally)));
+                if (weapon.getIcon() != null)
+                    weaponButtons[i].setIcon(weapon.getIcon());
             } else {
                 weaponButtons[i].setText("None");
                 weaponButtons[i].setEnabled(false);

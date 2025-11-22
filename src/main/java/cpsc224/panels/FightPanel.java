@@ -1,20 +1,14 @@
 package cpsc224.panels;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.utils.ImageUtils;
 
 /**
  * A panel to visualize a fight.

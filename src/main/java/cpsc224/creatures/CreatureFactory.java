@@ -6,12 +6,31 @@ import java.util.LinkedList;
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.ConsumableFactory;
 import cpsc224.items.weapons.WeaponFactory;
+import cpsc224.utils.BufferedImageBuilder;
+
+import javax.swing.*;
 
 /**
  * A factory class to create creatures.
  */
 
 public class CreatureFactory {
+
+    private static ImageIcon getIcon(String name, boolean flipHorizontally) {
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/creatures/" + name + ".png");
+
+        if (flipHorizontally)
+            imageBuilder.flipHorizontally();
+
+        return imageBuilder
+                .scale(256, 256)
+                .toImageIcon();
+    }
+
+    private static ImageIcon getIcon(String name) {
+        return getIcon(name, true);
+    }
+
 
     public static Player createPlayer() {
         final String name = "Player";
@@ -21,7 +40,7 @@ public class CreatureFactory {
         inv.setWeapon(0, WeaponFactory.createDullSword());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
 
-        return new Player(name, health, cm, inv);
+        return new Player(name, health, cm, inv, getIcon(name, false));
     }
 
     public static Creature createRat() {
@@ -81,7 +100,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, getIcon(name));
     }
 
 }

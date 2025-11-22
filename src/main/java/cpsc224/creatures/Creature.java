@@ -8,6 +8,8 @@ import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.items.Inventory;
 
+import javax.swing.*;
+
 /**
  * A class that represents creatures within the game.
  */
@@ -21,6 +23,7 @@ public class Creature {
     private List<Effect> effects = new ArrayList<>();
     private List<String> info = new ArrayList<>();
     private Inventory inventory;
+    private ImageIcon icon;
 
     /**
      * Instantiates a creature.
@@ -30,11 +33,24 @@ public class Creature {
      * @param inventory the inventory
      */
     public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory) {
+        this(creatureName, maxHealth, baseModifiers, inventory, null);
+    }
+
+    /**
+     * Instantiates a creature.
+     * @param creatureName the name
+     * @param maxHealth the max health
+     * @param baseModifiers the base modifiers
+     * @param inventory the inventory
+     * @param icon the ImageIcon
+     */
+    public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory, ImageIcon icon) {
         this.name = creatureName;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.baseModifiers = baseModifiers;
         this.inventory = inventory;
+        this.icon = icon;
 
         resetTurnModifiers();
     }
@@ -163,6 +179,10 @@ public class Creature {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public ImageIcon getIcon() {
+        return icon;
     }
 
     /**

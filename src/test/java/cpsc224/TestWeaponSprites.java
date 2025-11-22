@@ -5,19 +5,17 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import cpsc224.utils.ImageUtils;
-
 public class TestWeaponSprites {
 
     public static void main(String[] args) {
         // Load the sprite sheet
-        BufferedImage sheet = ImageUtils.loadSheet("/images/items.png");
+        BufferedImage sheet = ImageUtils.loadBufferedImage("/images/items.png");
 
         // Slice the sheet into a 2D array of tiles
         BufferedImage[][] tiles = ImageUtils.sliceSheet(sheet, 32, 32, 26, 11);
 
         // Grab a specific tile (row 0, column 0)
-        BufferedImage tile = ImageUtils.getItem(tiles, 0, 0);
+        BufferedImage tile = ImageUtils.getSprite(tiles, 0, 0);
 
         // Create a simple window to display the tile
         JFrame frame = new JFrame("Sprite Test");

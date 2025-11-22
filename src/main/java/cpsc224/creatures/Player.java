@@ -2,6 +2,8 @@ package cpsc224.creatures;
 
 import cpsc224.items.Inventory;
 
+import javax.swing.*;
+
 /**
  * A class to represent a player in the game.
  */
@@ -17,7 +19,18 @@ public class Player extends Creature {
      * @param inventory the inventory
      */
     public Player(String creatureName, int maxHealth, CreatureModifiers modifiers, Inventory inventory) {
-        super(creatureName, maxHealth, modifiers, inventory);
+        this(creatureName, maxHealth, modifiers, inventory, null);
+    }
+
+    /**
+     * Creates a player with the specified name, max health, base modifiers, and inventory
+     * @param creatureName the name
+     * @param maxHealth the max health
+     * @param modifiers the base modifiers
+     * @param inventory the inventory
+     */
+    public Player(String creatureName, int maxHealth, CreatureModifiers modifiers, Inventory inventory, ImageIcon icon) {
+        super(creatureName, maxHealth, modifiers, inventory, icon);
 
         gold = 0;
     }

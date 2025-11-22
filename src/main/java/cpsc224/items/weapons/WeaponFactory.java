@@ -2,11 +2,25 @@ package cpsc224.items.weapons;
 
 import cpsc224.moves.Move;
 import cpsc224.moves.MoveFactory;
+import cpsc224.utils.BufferedImageBuilder;
+
+import javax.swing.*;
 
 /**
  * A factory class to create weapons.
  */
 public class WeaponFactory {
+
+    private static final int ICON_WIDTH = 32;
+    private static final int ICON_HEIGHT = 32;
+
+    private static ImageIcon getIcon(int row, int col) {
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/items.png");
+        return imageBuilder
+                .sliceToSprite(ICON_WIDTH, ICON_HEIGHT, row, col)
+                .scale(64, 64)
+                .toImageIcon();
+    }
 
     // *** PLAYER STARTER WEAPONS ***
 
@@ -15,7 +29,7 @@ public class WeaponFactory {
         final int tier = 1;
         final Move move = MoveFactory.createSlashMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(0, 2));
     }
 
 
@@ -51,7 +65,7 @@ public class WeaponFactory {
         final int tier = 1;
         final Move move = MoveFactory.createToxicBoltMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(10, 2));
     }
 
     public static Weapon createHealStaff() {
@@ -59,7 +73,7 @@ public class WeaponFactory {
         final int tier = 3;
         final Move move = MoveFactory.createHealMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(10, 1));
     }
 
     public static Weapon createRoyalSword() {
@@ -75,7 +89,7 @@ public class WeaponFactory {
         final int tier = 1;
         final Move move = MoveFactory.createSlashMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(0, 0));
     }
 
     public static Weapon createSteelHammer() {
