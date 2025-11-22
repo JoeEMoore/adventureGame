@@ -38,8 +38,10 @@ public class Fight {
      * @return the result of the move as a string
      */
     public String performMove(Creature source, Creature target, Weapon weapon) {
-        
         Move move = weapon.getMove();
+
+        if (move.getUses() > 0)
+            move.decrementUses();
         
         // attack has a chance to miss if the move is not self-targeting
         if (!source.equals(target)) {

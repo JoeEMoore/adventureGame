@@ -11,6 +11,7 @@ import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
+import cpsc224.items.Inventory;
 import cpsc224.items.weapons.Weapon;
 
 /**
@@ -74,7 +75,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
             weaponButtons[i] = new JButton();
             //weaponButtons[i].setPreferredSize(new Dimension(150, 40));
             if (weapon != null) {
-                weaponButtons[i].setText(weapon.getName());
+                weaponButtons[i].setText(weapon.toString());
                 if (weapon.getIcon() != null)
                     weaponButtons[i].setIcon(weapon.getIcon());
             } else {
@@ -133,10 +134,11 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));
 
         updateHealthBar();
+        updateWeaponButtons();
     }
 
     /**
-     * Updates the health bar to account for changes in the fight.
+     * Updates the health bar.
      */
     private void updateHealthBar() {
         String toolTipText = "";
@@ -149,15 +151,27 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthBar.setToolTipText("<html><p width=\"100\">" + toolTipText + "</p></html>");
     }
 
+    /**
+     * Updates the weapon buttons.
+     */
+    private void updateWeaponButtons() {
+        Inventory inv = creature.getInventory();
+        for (int i = 0; i < weaponButtons.length; i++) {
+            Weapon weapon = inv.getWeapon(i);
+            if (weapon != null) {
+                weaponButtons[i].setText(weapon.toString());
+            }
+        }
+    }
 
     /**
-     * Enables or disables all of the buttons with assigned weapons.
+     * Enables or disables all the buttons with assigned weapons with moves left.
      * @param b true if the buttons should be enabled
      */
     public void enableWeaponButtons(boolean b) {
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = creature.getInventory().getWeapon(i);
-            if (weapon != null)
+            if (weapon != null && weapon.getMove().getUses() != 0)
                 weaponButtons[i].setEnabled(b);
         }
     }

@@ -71,6 +71,9 @@ public class Weapon {
 
     @Override
     public String toString() {
-        return name;
+        if (move.getMaxUses() < 0)
+            return name;
+
+        return name + " (" + move.getUses() + ")";
     }
 }

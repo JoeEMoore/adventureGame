@@ -49,7 +49,7 @@ public class MoveFactory {
         final String name = "Toxic Bolt";
         final int damage = 10;
         final DamageType dt = DamageType.Magic;
-        final int maxUses = -1;
+        final int maxUses = 5;
         final double accuracy = 0.8;
         final boolean targetsAllies = false;
 
@@ -64,7 +64,7 @@ public class MoveFactory {
         final String name = "Heal";
         final int damage = 0;
         final DamageType dt = DamageType.Pure;
-        final int maxUses = -1;
+        final int maxUses = 3;
         final double accuracy = 1.0;
         final boolean targetsAllies = true;
 
