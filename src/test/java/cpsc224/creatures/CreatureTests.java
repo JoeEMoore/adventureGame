@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.LinkedList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,13 +22,14 @@ public class CreatureTests {
     void creatureCreatesCorrectCreature() {
         CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
         Inventory inv = new Inventory();
-        Creature c = new Creature("Creature", 100, modifiers, inv);
+        Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
 
         assertEquals("Creature", c.getName());
         assertEquals(100, c.getMaxHealth());
         assertEquals(100, c.getHealth());
         assertEquals(modifiers, c.getBaseModifiers());
         assertEquals(inv, c.getInventory());
+        assertEquals(Arrays.asList(1.0), c.getweaponWeights());
     }
 
     @Test
@@ -181,7 +183,7 @@ public class CreatureTests {
     void getBaseModifiersReturnsBaseModifiers() {
         CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
         Inventory inv = new Inventory();
-        Creature c = new Creature("Creature", 100, modifiers, inv);
+        Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
 
         assertEquals(modifiers, c.getBaseModifiers());
     }
@@ -190,9 +192,18 @@ public class CreatureTests {
     void getInventoryReturnsInventory() {
         CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
         Inventory inv = new Inventory();
-        Creature c = new Creature("Creature", 100, modifiers, inv);
+        Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
 
         assertEquals(inv, c.getInventory());
+   }
+
+   @Test
+   void getweaponWeightsReturnsWeaponWeights() {
+        CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
+        Inventory inv = new Inventory();
+        Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
+
+        assertEquals(Arrays.asList(1.0), c.getweaponWeights());
    }
 
     @Test

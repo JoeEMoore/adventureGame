@@ -1,5 +1,6 @@
 package cpsc224;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,8 +36,10 @@ public class TestUtils {
         final CreatureModifiers cm = new CreatureModifiers(1, .3, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 0);
         inv.setWeapon(0, createTestClaws());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createTestTroll() {
@@ -45,8 +48,10 @@ public class TestUtils {
         final CreatureModifiers cm = new CreatureModifiers(2, .05, new LinkedList<>(Arrays.asList(0.5, 1.5, 1.0, 2.0)));
         final Inventory inv = new Inventory(4, 0);
         inv.setWeapon(0, createTestWoodClub());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     // WEAPONS
