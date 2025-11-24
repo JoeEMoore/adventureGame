@@ -13,7 +13,7 @@ import cpsc224.effects.PoisonEffect;
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.moves.Move;
+import cpsc224.items.weapons.moves.Move;
 
 public class TestUtils {
 

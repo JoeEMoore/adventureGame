@@ -1,5 +1,7 @@
 package cpsc224.levels;
 
+import cpsc224.levels.rooms.Room;
+
 public class Level {
 
     private final Room[][] rooms;

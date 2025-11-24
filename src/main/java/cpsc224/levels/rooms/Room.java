@@ -1,4 +1,4 @@
-package cpsc224.levels;
+package cpsc224.levels.rooms;
 
 import cpsc224.items.Item;
 

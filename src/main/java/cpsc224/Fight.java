@@ -7,7 +7,7 @@ import cpsc224.creatures.CreatureAI;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.moves.Move;
+import cpsc224.items.weapons.moves.Move;
 
 /**
  * A class to represent a fight between two creatures.

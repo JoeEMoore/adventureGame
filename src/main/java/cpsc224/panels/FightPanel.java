@@ -11,7 +11,7 @@ import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.DefaultLevelInitializer;
-import cpsc224.levels.Room;
+import cpsc224.levels.rooms.Room;
 
 /**
  * A panel to visualize a fight.

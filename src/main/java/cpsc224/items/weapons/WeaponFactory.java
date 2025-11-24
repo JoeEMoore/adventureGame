@@ -1,7 +1,7 @@
 package cpsc224.items.weapons;
 
-import cpsc224.moves.Move;
-import cpsc224.moves.MoveFactory;
+import cpsc224.items.weapons.moves.Move;
+import cpsc224.items.weapons.moves.MoveFactory;
 import cpsc224.utils.BufferedImageBuilder;
 
 import javax.swing.*;

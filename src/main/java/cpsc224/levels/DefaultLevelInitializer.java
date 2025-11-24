@@ -7,6 +7,9 @@ import java.util.Random;
 
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureFactory;
+import cpsc224.levels.rooms.BossRoom;
+import cpsc224.levels.rooms.Room;
+import cpsc224.levels.rooms.ShopRoom;
 
 public class DefaultLevelInitializer implements LevelInitializer {
 

@@ -1,7 +1,7 @@
 package cpsc224.items.weapons;
 
 import cpsc224.items.Item;
-import cpsc224.moves.Move;
+import cpsc224.items.weapons.moves.Move;
 
 import javax.swing.*;
 import java.awt.*;

@@ -12,11 +12,11 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
-import cpsc224.levels.BossRoom;
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
-import cpsc224.levels.Room;
-import cpsc224.levels.ShopRoom;
+import cpsc224.levels.rooms.BossRoom;
+import cpsc224.levels.rooms.Room;
+import cpsc224.levels.rooms.ShopRoom;
 
 public class LevelPanel extends JPanel implements GamePanel {
 

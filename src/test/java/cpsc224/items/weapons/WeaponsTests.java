@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import cpsc224.moves.Move;
-import cpsc224.moves.MoveFactory;
+import cpsc224.items.weapons.moves.Move;
+import cpsc224.items.weapons.moves.MoveFactory;
 
 public class WeaponsTests {
     

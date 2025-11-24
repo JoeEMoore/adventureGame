@@ -1,4 +1,4 @@
-package cpsc224.moves;
+package cpsc224.items.weapons.moves;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import cpsc224.TestUtils;
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
+import cpsc224.items.weapons.moves.Move;
 
 public class MoveTests {
 

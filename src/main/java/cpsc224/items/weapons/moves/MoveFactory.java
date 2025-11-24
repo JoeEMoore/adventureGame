@@ -1,4 +1,4 @@
-package cpsc224.moves;
+package cpsc224.items.weapons.moves;
 
 import java.util.Arrays;
 
