@@ -2,5 +2,7 @@ package cpsc224.levels;
 
 public interface LevelInitializer {
 
-    Level initializeLevel();
+    Room[][] initializeLevel(int roomLength, int numRooms);
+
+    Coordinate getStartRoom();
 }

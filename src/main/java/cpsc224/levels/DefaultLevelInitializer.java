@@ -11,35 +11,35 @@ import cpsc224.creatures.CreatureFactory;
 public class DefaultLevelInitializer implements LevelInitializer {
 
     private Room[][] rooms;
+    private Coordinate startRoom;
     private HashSet<Coordinate> validPositions = new HashSet<>();
-    private int numRooms;
+
     private int roomLength;
+    private int numRooms;
+
     Random rand = new Random();
 
-    public DefaultLevelInitializer(int roomLength, int numRooms) {
-        rooms = new Room[roomLength][roomLength];
-
-        this.roomLength = roomLength;
-        this.numRooms = numRooms;
-    }
+    public DefaultLevelInitializer() {}
 
     @Override
-    public Level initializeLevel() {
-        
+    public Room[][] initializeLevel(int roomLength, int numRooms) {
+        this.roomLength = roomLength;
+        this.numRooms = numRooms;
+
+        rooms = new Room[roomLength][roomLength];
         validPositions.add(new Coordinate(rand.nextInt(roomLength), rand.nextInt(roomLength)));
 
         addRoom(new BossRoom());
 
-        Coordinate start = new Coordinate(0, 0);
         for (int i = 0; i < numRooms; i++) {
             Room room = new Room();
             room.setCreature(CreatureFactory.createGoblin());
-            start = addRoom(room);
+            startRoom = addRoom(room);
         }
 
         addRoom(new ShopRoom());
 
-        return new Level(rooms, numRooms, start);
+        return rooms;
     }
 
     private Coordinate addRoom(Room room) {
@@ -77,5 +77,10 @@ public class DefaultLevelInitializer implements LevelInitializer {
         if (newCol < roomLength - 1 && rooms[newRow][newCol + 1] == null)
             validPositions.add(new Coordinate(newRow, newCol + 1));
 
+    }
+
+    @Override
+    public Coordinate getStartRoom() {
+        return startRoom;
     }
 }

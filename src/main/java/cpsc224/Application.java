@@ -21,12 +21,16 @@ public class Application {
 
     public static void main(String[] args) {
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(7, 15);
-        Level level = levelInit.initializeLevel();
+        LevelInitializer levelInit = new DefaultLevelInitializer();
+        Level level = new Level(7, 15, levelInit);
+        Player player = CreatureFactory.createPlayer();
 
-        game.setPlayer(CreatureFactory.createPlayer());
+        game.setPlayer(player);
         game.setLevel(level);
-        
+
+        player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
+        player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
+
         new SplashWindow();
     }
 }

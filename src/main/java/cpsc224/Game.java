@@ -1,5 +1,7 @@
 package cpsc224;
 
+import javax.swing.JPanel;
+
 import cpsc224.creatures.Player;
 import cpsc224.levels.Level;
 
@@ -9,6 +11,7 @@ public class Game {
 
     private Player player;
     private Level level;
+    private JPanel rootPanel;
 
     private Game() {}
 
@@ -35,4 +38,11 @@ public class Game {
         this.level = level;
     }
 
+    public JPanel getRootPanel() {
+        return rootPanel;
+    }
+
+    public void setRootPanel(JPanel rootPanel) {
+        this.rootPanel = rootPanel;
+    }
 }

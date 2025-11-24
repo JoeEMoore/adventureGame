@@ -22,14 +22,10 @@ public class GameFrame extends JFrame {
     public GameFrame() {
         game = Game.getInstance();
 
-        Player player = CreatureFactory.createPlayer();
-        player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
-        player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
-
         //JPanel panel = new JPanel();
         //panel.setLayout(new OverlayLayout(panel));
 
-        add(new LevelPanel(game.getLevel(), player));
+        add(new LevelPanel(game.getLevel(), game.getPlayer()));
 
         //add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import cpsc224.Fight;
+import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
@@ -23,6 +24,7 @@ public class FightPanel extends JPanel implements GamePanel {
     private Player player;
     private Creature enemy;
     private Fight fight;
+    private Room room;
 
     private JButton inventoryButton;
 
@@ -36,11 +38,11 @@ public class FightPanel extends JPanel implements GamePanel {
     /**
      * Creates a panel for the specified player and enemy.
      * @param player the player
-     * @param enemy the enemy
-     * @param seed the game seed
+     * @param room the toom
      */
     public FightPanel(Player player, Room room) {
         this.player = player;
+        this.room = room;
         enemy = room.getCreature();
         fight = new Fight(player, enemy);
 
@@ -149,8 +151,12 @@ public class FightPanel extends JPanel implements GamePanel {
                     if (enemy.getHealth() > 0) {
                         enemyAttackTimer(3000);
                     } else {
+                        room.removCreature(enemy);
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        Game game = Game.getInstance();
                         frame.remove(this);
+                        frame.add(new LevelPanel(game.getLevel(), game.getPlayer()));
+                        frame.pack();
                     }
                 });
             }

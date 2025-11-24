@@ -6,10 +6,11 @@ public class Level {
     private int numRooms;
     private Coordinate startRoom;
 
-    public Level(Room[][] rooms, int numRooms, Coordinate startRoom) {
-        this.rooms = rooms;
+    public Level(int roomLength, int numRooms, LevelInitializer initializer) {
         this.numRooms = numRooms;
-        this.startRoom = startRoom;
+
+        rooms = initializer.initializeLevel(roomLength, numRooms);
+        startRoom = initializer.getStartRoom();
     }
 
     public int getRoomLength() {
