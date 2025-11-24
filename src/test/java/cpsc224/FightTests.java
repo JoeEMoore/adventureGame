@@ -20,7 +20,7 @@ public class FightTests {
         Player p = CreatureFactory.createPlayer();
         Creature rat = CreatureFactory.createRat();
         Weapon s = WeaponFactory.createDullSword();
-        Fight f = new Fight(p, rat, 1);
+        Fight f = new Fight(p, rat);
         double intitialRhealth = rat.getHealth();
         String t1 = f.performMove(p,rat,s);
         double dmg = s.getMove().getDamage() * p.getTurnModifiers().getDamage();
@@ -42,7 +42,7 @@ public class FightTests {
     public void createsTurns () {
         Player p = CreatureFactory.createPlayer();
         Creature rat = CreatureFactory.createRat();
-        Fight f = new Fight(p, rat, 4348675);
+        Fight f = new Fight(p, rat);
         String t1 = f.creatureTurn(p, rat);
 
         assertTrue(t1.contains("Dull Sword"));
@@ -56,7 +56,7 @@ public class FightTests {
     public void createFights() {
         Player p = CreatureFactory.createPlayer();
         Creature rat = CreatureFactory.createRat();
-        Fight f = new Fight(p, rat, 4348675);
+        Fight f = new Fight(p, rat);
         String o = f.creatureTurn(p, rat);
 
         assertTrue(o.contains("Player"));

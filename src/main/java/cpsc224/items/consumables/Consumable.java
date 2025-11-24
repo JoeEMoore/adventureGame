@@ -3,6 +3,7 @@ package cpsc224.items.consumables;
 import cpsc224.creatures.Creature;
 import cpsc224.effects.Effect;
 import cpsc224.effects.EffectsFactory;
+import cpsc224.items.Item;
 
 import java.util.ArrayList;
 import java.util.Collection;

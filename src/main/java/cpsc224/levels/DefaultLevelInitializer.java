@@ -14,14 +14,13 @@ public class DefaultLevelInitializer implements LevelInitializer {
     private HashSet<Coordinate> validPositions = new HashSet<>();
     private int numRooms;
     private int roomLength;
-    Random rand;
+    Random rand = new Random();
 
-    public DefaultLevelInitializer(int roomLength, int numRooms, long seed) {
+    public DefaultLevelInitializer(int roomLength, int numRooms) {
         rooms = new Room[roomLength][roomLength];
 
         this.roomLength = roomLength;
         this.numRooms = numRooms;
-        rand = new Random(seed);
     }
 
     @Override
@@ -31,21 +30,23 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
         addRoom(new BossRoom());
 
+        Coordinate start = new Coordinate(0, 0);
         for (int i = 0; i < numRooms; i++) {
             Room room = new Room();
-            room.addCreature(CreatureFactory.createGoblin());
-            addRoom(room);
+            room.setCreature(CreatureFactory.createGoblin());
+            start = addRoom(room);
         }
 
         addRoom(new ShopRoom());
 
-        return new Level(rooms);
+        return new Level(rooms, numRooms, start);
     }
 
-    private void addRoom(Room room) {
+    private Coordinate addRoom(Room room) {
         Coordinate roomCoord = randomValidPosition();
         rooms[roomCoord.getRow()][roomCoord.getCol()] = room;
         updateValidPositions(roomCoord.getRow(), roomCoord.getCol());
+        return roomCoord;
     }
 
     private Coordinate randomValidPosition() {
@@ -62,16 +63,19 @@ public class DefaultLevelInitializer implements LevelInitializer {
     }
 
     private void updateValidPositions(int newRow, int newCol) {
+        validPositions.remove(new Coordinate(newRow, newCol));
+
         if (newRow > 0 && rooms[newRow - 1][newCol] == null)
             validPositions.add(new Coordinate(newRow - 1, newCol));
 
-        if (newRow < numRooms - 1 && rooms[newRow + 1][newCol] == null)
+        if (newRow < roomLength - 1 && rooms[newRow + 1][newCol] == null)
             validPositions.add(new Coordinate(newRow + 1, newCol));
 
         if (newCol > 0 && rooms[newRow][newCol - 1] == null)
             validPositions.add(new Coordinate(newRow, newCol - 1));
 
-        if (newCol < numRooms - 1 && rooms[newRow][newCol + 1] == null)
+        if (newCol < roomLength - 1 && rooms[newRow][newCol + 1] == null)
             validPositions.add(new Coordinate(newRow, newCol + 1));
+
     }
 }

@@ -22,12 +22,11 @@ public class Fight {
      * Creates a fight with a player, enemy, and seed.
      * @param player the player
      * @param enemy the enemy
-     * @param seed the seed
      */
-    public Fight(Player player, Creature enemy, long seed) {
+    public Fight(Player player, Creature enemy) {
         this.player = player;
         this.enemy = enemy;
-        rand = new Random(seed);
+        rand = new Random();
     }
 
     /**

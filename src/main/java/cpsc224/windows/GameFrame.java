@@ -1,9 +1,14 @@
 package cpsc224.windows;
 
+import cpsc224.Game;
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.Player;
 import cpsc224.items.weapons.WeaponFactory;
+import cpsc224.levels.DefaultLevelInitializer;
+import cpsc224.levels.Level;
+import cpsc224.levels.LevelInitializer;
 import cpsc224.panels.FightPanel;
+import cpsc224.panels.LevelPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +16,23 @@ import java.util.Random;
 
 public class GameFrame extends JFrame {
 
+    private Game game;
     static Random rand = new Random();
 
     public GameFrame() {
+        game = Game.getInstance();
+
         Player player = CreatureFactory.createPlayer();
         player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
         player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
 
+        //JPanel panel = new JPanel();
+        //panel.setLayout(new OverlayLayout(panel));
+
+        add(new LevelPanel(game.getLevel(), player));
+
+        //add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        add(new FightPanel(player, CreatureFactory.createGoblin(), rand.nextLong()));
         setPreferredSize(new Dimension(1400, 800));
         setMinimumSize(new Dimension(1200, 700));
         pack();

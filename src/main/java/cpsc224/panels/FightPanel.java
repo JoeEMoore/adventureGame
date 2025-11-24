@@ -9,6 +9,8 @@ import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
+import cpsc224.levels.DefaultLevelInitializer;
+import cpsc224.levels.Room;
 
 /**
  * A panel to visualize a fight.
@@ -37,10 +39,10 @@ public class FightPanel extends JPanel implements GamePanel {
      * @param enemy the enemy
      * @param seed the game seed
      */
-    public FightPanel(Player player, Creature enemy, long seed) {
+    public FightPanel(Player player, Room room) {
         this.player = player;
-        this.enemy = enemy;
-        fight = new Fight(player, enemy, seed);
+        enemy = room.getCreature();
+        fight = new Fight(player, enemy);
 
         initComponents();
         layoutComponents();
@@ -146,6 +148,9 @@ public class FightPanel extends JPanel implements GamePanel {
                     // enemy attacks after delay
                     if (enemy.getHealth() > 0) {
                         enemyAttackTimer(3000);
+                    } else {
+                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        frame.remove(this);
                     }
                 });
             }

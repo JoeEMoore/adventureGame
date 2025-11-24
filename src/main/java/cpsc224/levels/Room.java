@@ -10,23 +10,27 @@ import cpsc224.creatures.Creature;
 
 public class Room {
 
-    protected List<Creature> creatures = new ArrayList<>();
+    protected Creature creature;
     protected List<Item> items = new ArrayList<>();
 
     public Room() {
         
     }
 
-    public Collection<Creature> getCreatures() {
-        return creatures;
+    public Creature getCreature() {
+        return creature;
+    }
+
+    public boolean hasCreature() {
+        return creature != null;
     }
 
     public Collection<Item> getItems() {
         return items;
     }
 
-    public void addCreature(Creature c) {
-        creatures.add(c);
+    public void setCreature(Creature c) {
+        creature = c;
     }
 
     public void addItem(Item i) {
@@ -34,15 +38,11 @@ public class Room {
     }
 
     public void removCreature(Creature c) {
-        creatures.remove(c);
+        creature = null;
     }
 
     public void removeItem(Item i) {
         items.remove(i);
-    }
-
-    public void clearCreatures() {
-        creatures.clear();
     }
 
     public void clearItems() {
