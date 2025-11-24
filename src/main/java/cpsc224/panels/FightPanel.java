@@ -150,6 +150,7 @@ public class FightPanel extends JPanel implements GamePanel {
                     // enemy attacks after delay
                     if (enemy.getHealth() > 0) {
                         enemyAttackTimer(3000);
+                    // enemy is dead
                     } else {
                         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
                         room.removCreature(enemy);

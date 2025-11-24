@@ -17,6 +17,10 @@ public class Room {
         
     }
 
+    public Room(Creature creature) {
+        this.creature = creature;
+    }
+
     public Creature getCreature() {
         return creature;
     }
