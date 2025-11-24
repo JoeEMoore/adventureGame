@@ -4,6 +4,8 @@ import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 
+import cpsc224.items.weapons.*;
+
 public class CreatureAI {
     
     private List<Double> weaponWeights;
@@ -15,11 +17,10 @@ public class CreatureAI {
      * @param weaponWeights the weapon weights
      */
     public CreatureAI(Creature creature){
-        weaponWeights = new ArrayList<Double>();
+        weaponWeights = creature.getweaponWeights();
         totalWeight = 0.0;
-        for (int i = 0; i < creature.getInventory().getWeapons().size(); i++){
-            weaponWeights.add(1.0);
-            totalWeight+=1;
+        for (int i = 0; i < creature.getweaponWeights().size(); i++){
+            totalWeight+=creature.getweaponWeights().get(i);
         }     
     }
 
