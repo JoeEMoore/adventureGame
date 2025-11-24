@@ -87,7 +87,9 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
+        inv.setWeapon(1, WeaponFactory.createDullSword());
         List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(4.0);
         weaponWeights.add(1.0);
 
         return new Creature(name, health, cm, inv, weaponWeights);
@@ -99,7 +101,9 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .15, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRoyalSword());
+        inv.setWeapon(1, WeaponFactory.createSteelHammer());
         List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(2.0);
         weaponWeights.add(1.0);
         
         return new Creature(name, health, cm, inv, weaponWeights);

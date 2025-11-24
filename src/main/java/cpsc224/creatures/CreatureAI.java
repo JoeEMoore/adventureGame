@@ -5,6 +5,7 @@ import java.util.List;
 
 public class CreatureAI {
     
+    private Creature creature;
     private List<Double> weaponWeights;
     private double totalWeight;
     
@@ -14,14 +15,21 @@ public class CreatureAI {
      * @param weaponWeights the weapon weights
      */
     public CreatureAI(Creature creature){
+        this.creature = creature;
         weaponWeights = creature.getweaponWeights();
         totalWeight = 0.0;
         for (int i = 0; i < creature.getweaponWeights().size(); i++){
-            totalWeight+=creature.getweaponWeights().get(i);
+            totalWeight+=weaponWeights.get(i);
         }     
     }
 
     public int calculateMove() {
+        for (int i = 0; i < creature.getInventory().getWeapons().size(); i++){
+            if (creature.getInventory().getWeapon(i).getMove().getUses() == 0){
+                totalWeight -= weaponWeights.get(i);
+                weaponWeights.set(i,0.0);
+            }
+        }
         Random rand = new Random();
         double num = rand.nextDouble() * totalWeight;
         int index = 0;
