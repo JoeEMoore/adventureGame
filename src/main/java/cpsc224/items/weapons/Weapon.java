@@ -1,5 +1,6 @@
 package cpsc224.items.weapons;
 
+import cpsc224.items.Item;
 import cpsc224.moves.Move;
 
 import javax.swing.*;
@@ -8,9 +9,8 @@ import java.awt.*;
 /**
  * A class that represents weapons to be used by creatures in combat.
  */
-public class Weapon {
+public class Weapon extends Item {
 
-    private String name;
     private int tier;
     private Move move;
 
@@ -33,18 +33,10 @@ public class Weapon {
      * @param move the move
      */
     public Weapon(String name, int tier, Move move, ImageIcon icon) {
-        this.name = name;
+        super(name);
         this.tier = tier;
         this.move = move;
         this.icon = icon;
-    }
-
-    /**
-     * Gets the name.
-     * @return the name
-     */
-    public String getName() {
-        return name;
     }
 
     /**

@@ -11,10 +11,8 @@ import java.util.List;
 /**
  * A class to represent limited-use items that can be used by creatures
  */
-public class Consumable {
+public class Consumable extends Item {
     
-    private String name;
-
     private EffectsFactory effects;
 
     /**
@@ -23,13 +21,8 @@ public class Consumable {
      * @param effects the EffectsFactory functional interface
      */
     public Consumable(String name, EffectsFactory effects) {
-        this.name = name;
+        super(name);
         this.effects = effects;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     /**
