@@ -2,9 +2,6 @@ package cpsc224.creatures;
 
 import java.util.Random;
 import java.util.List;
-import java.util.ArrayList;
-
-import cpsc224.items.weapons.*;
 
 public class CreatureAI {
     
