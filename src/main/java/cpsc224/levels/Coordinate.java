@@ -31,4 +31,14 @@ public class Coordinate {
     public int getCol() {
         return col;
     }
+
+    public boolean isAdjacent(Coordinate other) {
+        if (Math.abs(other.getRow() - getRow()) == 1 && other.getCol() == getCol())
+            return true;
+
+        if (Math.abs(other.getCol() - getCol()) == 1 && other.getRow() == getRow())
+            return true;
+
+        return false;
+    }
 }

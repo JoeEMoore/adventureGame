@@ -1,5 +1,6 @@
 package cpsc224.panels;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -12,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
 import cpsc224.levels.BossRoom;
+import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
 import cpsc224.levels.Room;
 import cpsc224.levels.ShopRoom;
@@ -22,15 +24,19 @@ public class LevelPanel extends JPanel implements GamePanel {
     Player player;
     Room[][] rooms;
     JButton[][] roomButtons;
+    Coordinate playerPosition;
 
     public LevelPanel(Level level, Player player) {
         this.level = level;
         this.player = player;
         rooms = level.getRooms();
+        playerPosition = level.getCurrentRoom();
         
         initComponents();
         layoutComponents();
         addListeners();
+
+        updateDisplay();
 
     }
 
@@ -72,14 +78,19 @@ public class LevelPanel extends JPanel implements GamePanel {
                 if (button == null)
                     continue;
 
+                int row = i;
+                int col = j;
                 Room room = rooms[i][j];
                 button.addActionListener(e -> {
+                    playerPosition = new Coordinate(row, col);
+                    level.setCurrentRoom(playerPosition);
                     if (room.hasCreature()) {
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         frame.remove(this);
                         frame.getContentPane().add(new FightPanel(player, room));
                         frame.pack();
                     }
+                    updateDisplay();
                 });
             }
         }
@@ -87,7 +98,33 @@ public class LevelPanel extends JPanel implements GamePanel {
 
     @Override
     public void updateDisplay() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateDisplay'");
+        updateRoomButtons();
+    }
+
+    private void updateRoomButtons() {
+        for (int i = 0; i < level.getRoomLength(); i++) {   
+            for (int j = 0; j < level.getRoomLength(); j++) {
+                Room room = rooms[i][j];
+                JButton button = roomButtons[i][j];
+                if (room != null) {
+                    Coordinate c = new Coordinate(i, j);
+
+                    // default values
+                    button.setEnabled(false);
+                    button.setBackground(Color.LIGHT_GRAY);
+
+                    // if room is adjacent to player
+                    if (c.isAdjacent(playerPosition)) {
+                        button.setEnabled(true);
+                        button.setBackground(Color.ORANGE);
+                    }
+
+                    // if room is at player's position
+                    if (c.equals(playerPosition)) {
+                        button.setBackground(Color.GREEN);
+                    }
+                }
+            }
+        }
     }
 }

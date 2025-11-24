@@ -4,13 +4,13 @@ public class Level {
 
     private final Room[][] rooms;
     private int numRooms;
-    private Coordinate startRoom;
+    private Coordinate currentRoom;
 
     public Level(int roomLength, int numRooms, LevelInitializer initializer) {
         this.numRooms = numRooms;
 
         rooms = initializer.initializeLevel(roomLength, numRooms);
-        startRoom = initializer.getStartRoom();
+        currentRoom = initializer.getStartRoom();
     }
 
     public int getRoomLength() {
@@ -25,7 +25,11 @@ public class Level {
         return rooms;
     }
 
-    public Coordinate getStartRoom() {
-        return startRoom;
+    public Coordinate getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Coordinate currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }

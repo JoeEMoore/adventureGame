@@ -31,11 +31,13 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
         addRoom(new BossRoom());
 
-        for (int i = 0; i < numRooms; i++) {
+        for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
             room.setCreature(CreatureFactory.createGoblin());
-            startRoom = addRoom(room);
+            addRoom(room);
         }
+        
+        startRoom = addRoom(new Room()); // second last room is empty start room
 
         addRoom(new ShopRoom());
 
