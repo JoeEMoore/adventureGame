@@ -3,6 +3,7 @@ package cpsc224;
 import java.util.Random;
 
 import cpsc224.creatures.Creature;
+import cpsc224.creatures.CreatureAI;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.items.weapons.Weapon;
@@ -75,6 +76,8 @@ public class Fight {
      * @return the result of the move as a string.
      */
     public String creatureTurn(Creature creature, Creature enemy) {
-        return performMove(creature, enemy, creature.getInventory().getWeapon(0));
+        CreatureAI move = new CreatureAI(creature);
+        int index = move.calculateMove();
+        return performMove(creature, enemy, creature.getInventory().getWeapon(index));
     }
 }

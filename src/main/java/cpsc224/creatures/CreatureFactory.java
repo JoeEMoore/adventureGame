@@ -2,6 +2,8 @@ package cpsc224.creatures;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.ConsumableFactory;
@@ -49,8 +51,10 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(1, .3, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 0);
         inv.setWeapon(0, WeaponFactory.createRatClaws());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createTroll() {
@@ -59,8 +63,10 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .05, new LinkedList<>(Arrays.asList(0.7, 1.5, 0.8, 2.0)));
         final Inventory inv = new Inventory(4, 0);
         inv.setWeapon(0, WeaponFactory.createWoodClub());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createBird() {
@@ -69,8 +75,10 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(3, .2, new LinkedList<>(Arrays.asList(0.5, 0.7, 2.0, 1.4)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0,WeaponFactory.createBirdTalons());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createWitch() {
@@ -79,8 +87,10 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createGuardian() {
@@ -89,8 +99,10 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .15, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRoyalSword());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.0);
         
-        return new Creature(name, health, cm, inv);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
     public static Creature createGoblin() {
@@ -99,8 +111,14 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(1.0, 0.9, 1.2, 1.4)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
+        inv.setWeapon(1, WeaponFactory.createWoodClub());
+        inv.setWeapon(2, WeaponFactory.createDullSword());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(1.5);
+        weaponWeights.add(1.0);
+        weaponWeights.add(0.5);
 
-        return new Creature(name, health, cm, inv, getIcon(name));
+        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
     }
 
 }

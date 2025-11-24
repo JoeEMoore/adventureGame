@@ -24,6 +24,7 @@ public class Creature {
     private List<String> info = new ArrayList<>();
     private Inventory inventory;
     private ImageIcon icon;
+    private List<Double> weaponWeights;
 
     /**
      * Instantiates a creature.
@@ -32,8 +33,8 @@ public class Creature {
      * @param baseModifiers the base modifiers
      * @param inventory the inventory
      */
-    public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory) {
-        this(creatureName, maxHealth, baseModifiers, inventory, null);
+    public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory, List<Double> weaponWeights) {
+        this(creatureName, maxHealth, baseModifiers, inventory, null, weaponWeights);
     }
 
     /**
@@ -51,6 +52,26 @@ public class Creature {
         this.baseModifiers = baseModifiers;
         this.inventory = inventory;
         this.icon = icon;
+
+        resetTurnModifiers();
+    }
+
+    /**
+     * Instantiates a creature.
+     * @param creatureName the name
+     * @param maxHealth the max health
+     * @param baseModifiers the base modifiers
+     * @param inventory the inventory
+     * @param icon the ImageIcon
+     */
+    public Creature(String creatureName, double maxHealth, CreatureModifiers baseModifiers, Inventory inventory, ImageIcon icon, List<Double> weaponWeights) {
+        this.name = creatureName;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+        this.baseModifiers = baseModifiers;
+        this.inventory = inventory;
+        this.icon = icon;
+        this.weaponWeights = weaponWeights;
 
         resetTurnModifiers();
     }
@@ -183,6 +204,14 @@ public class Creature {
 
     public ImageIcon getIcon() {
         return icon;
+    }
+
+    public List<Double> getweaponWeights(){
+        return weaponWeights;
+    }
+
+    public void setWeaponWeights(List<Double> weights){
+        weaponWeights = weights;
     }
 
     /**
