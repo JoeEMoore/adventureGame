@@ -151,6 +151,7 @@ public class FightPanel extends JPanel implements GamePanel {
                     if (enemy.getHealth() > 0) {
                         enemyAttackTimer(3000);
                     } else {
+                        JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
                         room.removCreature(enemy);
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         Game game = Game.getInstance();
