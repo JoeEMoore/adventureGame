@@ -68,4 +68,12 @@ public class Weapon extends Item {
 
         return name + " (" + move.getUses() + ")";
     }
+
+    public String getToolTipText() {
+        String text = "<b>" + getName() + "</b><br>";
+        text += "Tier: " + getTier() + "<br><br>";
+        text += getMove().getToolTipText();
+        
+        return text;
+    }
 }

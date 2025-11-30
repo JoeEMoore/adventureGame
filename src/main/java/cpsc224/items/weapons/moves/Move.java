@@ -131,4 +131,28 @@ public class Move {
     public Collection<Effect> createEffects() {
         return effectsFactory.createEffects();
     }
+
+    public String getToolTipText() {
+        String text = "<b>Move: " + getName() + "</b><br>";
+        text += "Damage Type: " + getDamageType().toString() + "<br>";
+        text += "Damage: " + getDamage() + "<br>";
+        text += "Accuracy: " + getAccuracy() * 100 + "% <br>";
+
+        // shows uses if there are limited uses
+        if (getMaxUses() > 0)
+            text += "Uses: " + getUses() + "/" + getMaxUses() + "<br>";
+
+        text += "Targets Self: " + targetsAllies() + "<br>";
+
+        // Effects info
+        Collection<Effect> effects = createEffects();
+        if (!effects.isEmpty()) {
+            text += "Effects: ";
+            for (Effect e : effects) {
+                text += "<br>&emsp;" + e.toString();
+            }
+        }
+
+        return text;
+    }
 }

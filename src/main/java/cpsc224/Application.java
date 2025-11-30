@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.ToolTipManager;
 
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.Player;
@@ -19,6 +20,9 @@ import cpsc224.windows.SplashWindow;
 public class Application {
 
     public static void main(String[] args) {
+        ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
+
+
         Game game = Game.getInstance();
         LevelInitializer levelInit = new DefaultLevelInitializer();
         Level level = new Level(7, 15, levelInit);
