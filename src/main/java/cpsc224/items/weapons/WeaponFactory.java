@@ -40,7 +40,7 @@ public class WeaponFactory {
         final int tier = 1;
         final Move move = MoveFactory.createScratchMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(2, 4));
     }
 
     public static Weapon createBirdTalons() {

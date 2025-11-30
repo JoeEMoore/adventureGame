@@ -36,7 +36,7 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
-            room.setCreature(CreatureFactory.createGoblin());
+            room.setCreature(CreatureFactory.createRat());
             addRoom(room);
         }
         

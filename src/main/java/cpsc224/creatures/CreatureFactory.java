@@ -48,13 +48,13 @@ public class CreatureFactory {
     public static Creature createRat() {
         final String name = "Rat";
         final int health = 10;
-        final CreatureModifiers cm = new CreatureModifiers(1, .3, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1, .15, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 0);
         inv.setWeapon(0, WeaponFactory.createRatClaws());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv, weaponWeights);
+        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
     }
 
     public static Creature createTroll() {

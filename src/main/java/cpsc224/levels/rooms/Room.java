@@ -13,12 +13,17 @@ public class Room {
     protected Creature creature;
     protected List<Item> items = new ArrayList<>();
 
+    protected boolean isDiscovered;
+    protected boolean isExplored;
+
     public Room() {
-        
+        this(null);
     }
 
     public Room(Creature creature) {
         this.creature = creature;
+        isDiscovered = false;
+        isExplored = false;
     }
 
     public Creature getCreature() {
@@ -51,6 +56,23 @@ public class Room {
 
     public void clearItems() {
         items.clear();
+    }
+
+    public boolean isDiscovered() {
+        return isDiscovered;
+    }
+
+    public void setDiscovered(boolean isDiscovered) {
+        this.isDiscovered = isDiscovered;
+    }
+
+    public boolean isExplored() {
+        return isExplored;
+    }
+
+    public void setExplored(boolean isExplored) {
+        this.isExplored = isExplored;
+        setDiscovered(true);
     }
 
 }

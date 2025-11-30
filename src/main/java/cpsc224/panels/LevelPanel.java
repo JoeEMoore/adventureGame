@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +19,7 @@ import cpsc224.levels.Level;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.ShopRoom;
+import cpsc224.utils.BufferedImageBuilder;
 
 public class LevelPanel extends JPanel implements GamePanel {
 
@@ -50,6 +53,7 @@ public class LevelPanel extends JPanel implements GamePanel {
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1;
         c.weighty = 1;
+        c.fill = GridBagConstraints.BOTH;
 
         for (int i = 0; i < level.getRoomLength(); i++) {
             for (int j = 0; j < level.getRoomLength(); j++) {
@@ -57,14 +61,7 @@ public class LevelPanel extends JPanel implements GamePanel {
                 if (room != null) {
                     c.gridy = i;
                     c.gridx = j;
-                    c.fill = GridBagConstraints.BOTH;
-                    roomButtons[i][j] = new JButton(i + ", " + j);
-
-                    if (room instanceof BossRoom)
-                        roomButtons[i][j].setText("Boss");
-                    if (room instanceof ShopRoom)
-                        roomButtons[i][j].setText("Shop");
-                    
+                    roomButtons[i][j] = new JButton();
                     add(roomButtons[i][j], c);
                 }
             }
@@ -111,12 +108,31 @@ public class LevelPanel extends JPanel implements GamePanel {
 
                     // default values
                     button.setEnabled(false);
+                    button.setOpaque(false);
+                    button.setBorder(BorderFactory.createEmptyBorder());
                     button.setBackground(Color.LIGHT_GRAY);
+
+                    // if room is discovered
+                    if (room.isDiscovered()) {
+                        button.setOpaque(true);
+                        button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+                        // if (room instanceof BossRoom)
+                        //     roomButtons[i][j].setIcon(getIcon(15, 6));
+                        // if (room instanceof ShopRoom)
+                        //     roomButtons[i][j].setIcon(getIcon(24, 3));
+                    }
+
+                    // if room is explored
+                    if (room.isExplored()) {
+                        button.setBackground(Color.LIGHT_GRAY);
+                        button.setText("Cleared");
+                    }
 
                     // if room is adjacent to player
                     if (c.isAdjacent(playerPosition)) {
                         button.setEnabled(true);
-                        button.setBackground(Color.ORANGE);
+                        button.setBackground(Color.YELLOW);
                     }
 
                     // if room is at player's position
@@ -126,5 +142,13 @@ public class LevelPanel extends JPanel implements GamePanel {
                 }
             }
         }
+    }
+
+    private ImageIcon getIcon(int row, int col) {
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/items.png");
+        return imageBuilder
+            .sliceToSprite(32, 32, row, col)
+            .scale(128, 128)
+            .toImageIcon();
     }
 }

@@ -11,7 +11,6 @@ import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
 import cpsc224.levels.LevelInitializer;
-import cpsc224.panels.FightPanel;
 import cpsc224.windows.SplashWindow;
 
 /**
