@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -49,21 +50,16 @@ public class LevelPanel extends JPanel implements GamePanel {
 
     private void layoutComponents() {
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        c.weightx = 1;
-        c.weighty = 1;
-        c.fill = GridBagConstraints.BOTH;
+        setLayout(new GridLayout(level.getRoomLength(), level.getRoomLength(), 1, 1));
 
         for (int i = 0; i < level.getRoomLength(); i++) {
             for (int j = 0; j < level.getRoomLength(); j++) {
-                Room room = rooms[i][j];
-                if (room != null) {
-                    c.gridy = i;
-                    c.gridx = j;
-                    roomButtons[i][j] = new JButton();
-                    add(roomButtons[i][j], c);
-                }
+                JButton button = new JButton();
+                button.setOpaque(false);
+                button.setBorder(BorderFactory.createEmptyBorder());
+                button.setBackground(Color.LIGHT_GRAY);
+                roomButtons[i][j] = button;
+                add(roomButtons[i][j]);
             }
         }
     }
@@ -72,12 +68,12 @@ public class LevelPanel extends JPanel implements GamePanel {
         for (int i = 0; i < roomButtons.length; i++) {
             for (int j = 0; j < roomButtons[i].length; j++) {
                 JButton button = roomButtons[i][j];
-                if (button == null)
-                    continue;
-
                 int row = i;
                 int col = j;
                 Room room = rooms[i][j];
+                if (room == null)
+                    continue;
+
                 button.addActionListener(e -> {
                     playerPosition = new Coordinate(row, col);
                     level.setCurrentRoom(playerPosition);
@@ -103,29 +99,27 @@ public class LevelPanel extends JPanel implements GamePanel {
             for (int j = 0; j < level.getRoomLength(); j++) {
                 Room room = rooms[i][j];
                 JButton button = roomButtons[i][j];
-                if (room != null) {
-                    Coordinate c = new Coordinate(i, j);
+                Coordinate c = new Coordinate(i, j);
 
-                    // default values
-                    button.setEnabled(false);
-                    button.setOpaque(false);
-                    button.setBorder(BorderFactory.createEmptyBorder());
-                    button.setBackground(Color.LIGHT_GRAY);
+                // default value
+                button.setEnabled(false);
+
+                if (room != null) {
 
                     // if room is discovered
                     if (room.isDiscovered()) {
+                        button.setBackground(Color.LIGHT_GRAY);
                         button.setOpaque(true);
                         button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-                        // if (room instanceof BossRoom)
-                        //     roomButtons[i][j].setIcon(getIcon(15, 6));
-                        // if (room instanceof ShopRoom)
-                        //     roomButtons[i][j].setIcon(getIcon(24, 3));
+                        if (room instanceof BossRoom)
+                            roomButtons[i][j].setIcon(getIcon(15, 6));
+                        if (room instanceof ShopRoom)
+                            roomButtons[i][j].setIcon(getIcon(24, 3));
                     }
 
                     // if room is explored
                     if (room.isExplored()) {
-                        button.setBackground(Color.LIGHT_GRAY);
                         button.setText("Cleared");
                     }
 
