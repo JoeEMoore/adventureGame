@@ -243,13 +243,13 @@ public class Creature {
     }
 
     /**
-     * Applies damage as a percent of the creature's current health.
+     * Applies damage as a percent of the creature's max health.
      * @param percent the percent of the creature's health
      * @param type the damage type
      * @return the amount of damage applied
      */
     public double applyPercentDamage(double percent, DamageType type) {
-        return applyDamage(health * percent, type);
+        return applyDamage(maxHealth * percent, type);
     }
 
     /**

@@ -110,17 +110,24 @@ public class LevelPanel extends JPanel implements GamePanel {
                     if (room.isDiscovered()) {
                         button.setBackground(Color.LIGHT_GRAY);
                         button.setOpaque(true);
-                        button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                        button.setBorder(BorderFactory.createDashedBorder(Color.RED, 3, 4, 4, false));
 
-                        if (room instanceof BossRoom)
-                            roomButtons[i][j].setIcon(getIcon(15, 6));
-                        if (room instanceof ShopRoom)
-                            roomButtons[i][j].setIcon(getIcon(24, 3));
+                        if (room instanceof BossRoom) {
+                            ImageIcon bossIcon = getIcon(15, 6);
+                            roomButtons[i][j].setIcon(bossIcon);
+                            roomButtons[i][j].setDisabledIcon(bossIcon);
+                        }
+                        if (room instanceof ShopRoom) {
+                            ImageIcon shopIcon = getIcon(24, 3);
+                            roomButtons[i][j].setIcon(shopIcon);
+                            roomButtons[i][j].setDisabledIcon(shopIcon);
+                        }
                     }
 
                     // if room is explored
                     if (room.isExplored()) {
-                        button.setText("Cleared");
+                        //button.setText("Cleared");
+                        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
                     }
 
                     // if room is adjacent to player
