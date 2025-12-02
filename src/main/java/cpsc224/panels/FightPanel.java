@@ -10,7 +10,6 @@ import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.rooms.Room;
 
 /**
@@ -153,11 +152,10 @@ public class FightPanel extends JPanel implements GamePanel {
                     // enemy is dead
                     } else {
                         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
-                        room.removCreature(enemy);
+                        room.removeCreature(enemy);
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         Game game = Game.getInstance();
-                        frame.remove(this);
-                        frame.add(new LevelPanel(game.getLevel(), game.getPlayer()));
+                        frame.setContentPane(new MapPanel());
                         frame.pack();
                     }
                 });

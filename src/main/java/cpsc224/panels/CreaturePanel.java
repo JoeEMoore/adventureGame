@@ -65,7 +65,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
         healthBar.setForeground(FightPanel.HEALTH_COLOR);
-        healthNumber = new JLabel(String.valueOf(creature.getHealth()));
+        healthNumber = new JLabel(String.valueOf((int)creature.getHealth()));
         healthPanel = new JPanel();
         healthPanel.setOpaque(false);
 
@@ -131,10 +131,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
         for (String s : creature.getInfo())
             infoText.append(s).append("\n");
 
-
-        healthBar.setValue((int)creature.getHealth());
-        healthNumber.setText(String.valueOf(Math.round(creature.getHealth())));
-
         updateHealthBar();
         updateWeaponButtons();
     }
@@ -143,6 +139,9 @@ public class CreaturePanel extends JPanel implements GamePanel{
      * Updates the health bar.
      */
     private void updateHealthBar() {
+        healthBar.setValue((int)creature.getHealth());
+        healthNumber.setText(String.valueOf((int)creature.getHealth()));
+
         String toolTipText = "";
         healthBar.setForeground(FightPanel.HEALTH_COLOR);
         for (Effect e : creature.getEffects()) {

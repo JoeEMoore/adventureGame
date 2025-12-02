@@ -9,6 +9,7 @@ import cpsc224.levels.Level;
 import cpsc224.levels.LevelInitializer;
 import cpsc224.panels.FightPanel;
 import cpsc224.panels.LevelPanel;
+import cpsc224.panels.MapPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,7 +26,7 @@ public class GameFrame extends JFrame {
         //JPanel panel = new JPanel();
         //panel.setLayout(new OverlayLayout(panel));
 
-        add(new LevelPanel(game.getLevel(), game.getPlayer()));
+        setContentPane(new MapPanel());
 
         //add(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

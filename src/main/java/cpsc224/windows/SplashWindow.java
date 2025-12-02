@@ -16,7 +16,6 @@ public class SplashWindow extends JWindow {
 
         JButton newGameButton = new JButton("New Game");
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //newGameButton.setSize(new Dimension(100, 20));
 
         JButton exitButton = new JButton("Exit");
         exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);

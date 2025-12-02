@@ -79,8 +79,7 @@ public class LevelPanel extends JPanel implements GamePanel {
                     level.setCurrentRoom(playerPosition);
                     if (room.hasCreature()) {
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                        frame.remove(this);
-                        frame.getContentPane().add(new FightPanel(player, room));
+                        frame.setContentPane(new FightPanel(player, room));
                         frame.pack();
                     }
                     updateDisplay();
