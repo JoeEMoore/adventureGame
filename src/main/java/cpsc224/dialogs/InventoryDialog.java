@@ -6,7 +6,6 @@ import cpsc224.panels.GamePanel;
 import cpsc224.items.weapons.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 
@@ -17,7 +16,7 @@ import java.awt.*;
 public class InventoryDialog extends JDialog {
 
     private Creature creature;
-    private GamePanel creaturePanel;
+    private GamePanel gamePanel;
     private Consumable currentConsumable;
     private Weapon currentWeapon;
     private boolean canDropItems;
@@ -48,7 +47,7 @@ public class InventoryDialog extends JDialog {
         super((Frame) owner, "Inventory", true);
 
         this.creature = creature;
-        this.creaturePanel = gamePanel;
+        this.gamePanel = gamePanel;
         this.canDropItems = canDropItems;
         currentConsumable = null;
 
@@ -136,7 +135,7 @@ public class InventoryDialog extends JDialog {
         useButton.addActionListener(e -> {
             // use item and display effects
             currentConsumable.applyEffects(creature);
-            creaturePanel.updateDisplay();
+            gamePanel.updateDisplay();
 
             // remove item
             creature.getInventory().getConsumables().remove(currentConsumable);
@@ -170,12 +169,12 @@ public class InventoryDialog extends JDialog {
             }
         });
 
-        dropButton.addActionListener(e ->{
+        dropButton.addActionListener(e -> {
             // Dropping a consumable
             Consumable droppedConsumable = currentConsumable;
             creature.getInventory().getConsumables().remove(currentConsumable);
             consumableListModel.removeElement(currentConsumable);
-            creaturePanel.updateDisplay();
+            gamePanel.updateDisplay();
 
             // reset
             currentConsumable = null;
@@ -185,7 +184,7 @@ public class InventoryDialog extends JDialog {
             Weapon droppedWeapon = currentWeapon;
             creature.getInventory().getWeapons().remove(currentWeapon);
             weaponListModel.removeElement(currentWeapon);
-            creaturePanel.updateDisplay();
+            gamePanel.updateDisplay();
 
             // reset
             currentWeapon = null;
