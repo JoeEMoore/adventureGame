@@ -198,7 +198,7 @@ public class CreatureTests {
    }
 
    @Test
-   void getweaponWeightsReturnsWeaponWeights() {
+   void getWeaponWeightsReturnsWeaponWeights() {
         CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
         Inventory inv = new Inventory();
         Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));

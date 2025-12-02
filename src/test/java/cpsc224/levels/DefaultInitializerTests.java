@@ -1,6 +1,7 @@
 package cpsc224.levels;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,5 +34,12 @@ public class DefaultInitializerTests {
         assertEquals(5, rooms.length);
         for (int i = 0; i < rooms.length; i++)
             assertEquals(5, rooms[i].length);
+    }
+
+    @Test
+    void getStartRoomNotNull() {
+        LevelInitializer init = new DefaultLevelInitializer();
+        init.initializeLevel(5, 10);
+        assertNotNull(init.getStartRoom());
     }
 }
