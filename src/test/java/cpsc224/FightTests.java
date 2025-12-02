@@ -54,8 +54,8 @@ public class FightTests {
 
     @Test
     public void createFights() {
-        Player p = CreatureFactory.createPlayer();
-        Creature rat = CreatureFactory.createRat();
+        Player p = TestUtils.createTestPlayer();
+        Creature rat = TestUtils.createTestRat();
         Fight f = new Fight(p, rat);
         String o = f.creatureTurn(p, rat);
 

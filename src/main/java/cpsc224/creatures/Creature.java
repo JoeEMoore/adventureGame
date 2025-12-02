@@ -52,6 +52,7 @@ public class Creature {
         this.baseModifiers = baseModifiers;
         this.inventory = inventory;
         this.icon = icon;
+        weaponWeights = new ArrayList<>();
 
         resetTurnModifiers();
     }
@@ -206,7 +207,7 @@ public class Creature {
         return icon;
     }
 
-    public List<Double> getweaponWeights(){
+    public List<Double> getWeaponWeights(){
         return weaponWeights;
     }
 

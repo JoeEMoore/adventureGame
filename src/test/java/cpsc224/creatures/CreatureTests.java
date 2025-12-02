@@ -29,7 +29,7 @@ public class CreatureTests {
         assertEquals(100, c.getHealth());
         assertEquals(modifiers, c.getBaseModifiers());
         assertEquals(inv, c.getInventory());
-        assertEquals(Arrays.asList(1.0), c.getweaponWeights());
+        assertEquals(Arrays.asList(1.0), c.getWeaponWeights());
     }
 
     @Test
@@ -203,7 +203,7 @@ public class CreatureTests {
         Inventory inv = new Inventory();
         Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
 
-        assertEquals(Arrays.asList(1.0), c.getweaponWeights());
+        assertEquals(Arrays.asList(1.0), c.getWeaponWeights());
    }
 
     @Test

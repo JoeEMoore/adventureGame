@@ -12,13 +12,12 @@ public class CreatureAI {
     /**
      * Instantiates a creatureAI
      * @param creature the creature
-     * @param weaponWeights the weapon weights
      */
     public CreatureAI(Creature creature){
         this.creature = creature;
-        weaponWeights = creature.getweaponWeights();
+        weaponWeights = creature.getWeaponWeights();
         totalWeight = 0.0;
-        for (int i = 0; i < creature.getweaponWeights().size(); i++){
+        for (int i = 0; i < creature.getWeaponWeights().size(); i++){
             totalWeight+=weaponWeights.get(i);
         }     
     }
