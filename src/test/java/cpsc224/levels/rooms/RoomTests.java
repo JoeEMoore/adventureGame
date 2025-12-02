@@ -1,4 +1,4 @@
-package cpsc224.levels;
+package cpsc224.levels.rooms;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import cpsc224.TestUtils;
 import cpsc224.creatures.Creature;
 import cpsc224.items.Item;
-import cpsc224.levels.rooms.Room;
 
 public class RoomTests {
 

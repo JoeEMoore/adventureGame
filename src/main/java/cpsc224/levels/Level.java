@@ -6,14 +6,14 @@ public class Level {
 
     private final Room[][] rooms;
     private int numRooms;
-    private Coordinate currentRoom;
+    private Coordinate currentPosition;
 
     public Level(int roomLength, int numRooms, LevelInitializer initializer) {
         this.numRooms = numRooms;
 
         rooms = initializer.initializeLevel(roomLength, numRooms);
-        currentRoom = initializer.getStartRoom();
-        setCurrentRoom(currentRoom);
+        currentPosition = initializer.getStartRoom();
+        setCurrentPosition(currentPosition);
     }
 
     public int getRoomLength() {
@@ -33,16 +33,17 @@ public class Level {
     }
 
     public Coordinate getCurrentPosition() {
-        return currentRoom;
+        return currentPosition;
     }
 
-    public void setCurrentRoom(Coordinate currentRoom) {
-        this.currentRoom = currentRoom;
+    public void setCurrentPosition(Coordinate currentPosition) {
+        this.currentPosition = currentPosition;
 
-        int row = currentRoom.getRow();
-        int col = currentRoom.getCol();
+        int row = currentPosition.getRow();
+        int col = currentPosition.getCol();
 
-        rooms[row][col].setExplored(true);
+        if (rooms[row][col] != null)
+            rooms[row][col].setExplored(true);
 
         if (row < rooms.length - 1 && rooms[row + 1][col] != null)
             rooms[row + 1][col].setDiscovered(true);
