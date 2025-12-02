@@ -1,17 +1,13 @@
 package cpsc224.panels;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
@@ -34,7 +30,7 @@ public class LevelPanel extends JPanel implements GamePanel {
         this.level = level;
         this.player = player;
         rooms = level.getRooms();
-        playerPosition = level.getCurrentRoom();
+        playerPosition = level.getCurrentPosition();
         
         initComponents();
         layoutComponents();

@@ -1,7 +1,9 @@
 package cpsc224.dialogs;
 
+import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
+import cpsc224.levels.Level;
 import cpsc224.panels.GamePanel;
 import cpsc224.items.weapons.*;
 
@@ -170,10 +172,13 @@ public class InventoryDialog extends JDialog {
         });
 
         dropButton.addActionListener(e -> {
+            Level level = Game.getInstance().getLevel();
+
             // Dropping a consumable
             Consumable droppedConsumable = currentConsumable;
             creature.getInventory().getConsumables().remove(currentConsumable);
             consumableListModel.removeElement(currentConsumable);
+            level.getRoom(level.getCurrentPosition()).addItem(droppedConsumable);
             gamePanel.updateDisplay();
 
             // reset
@@ -184,6 +189,7 @@ public class InventoryDialog extends JDialog {
             Weapon droppedWeapon = currentWeapon;
             creature.getInventory().getWeapons().remove(currentWeapon);
             weaponListModel.removeElement(currentWeapon);
+            level.getRoom(level.getCurrentPosition()).addItem(droppedWeapon);
             gamePanel.updateDisplay();
 
             // reset

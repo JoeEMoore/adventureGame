@@ -28,7 +28,11 @@ public class Level {
         return rooms;
     }
 
-    public Coordinate getCurrentRoom() {
+    public Room getRoom(Coordinate coord) {
+        return rooms[coord.getRow()][coord.getCol()];
+    }
+
+    public Coordinate getCurrentPosition() {
         return currentRoom;
     }
 
