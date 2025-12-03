@@ -42,6 +42,7 @@ public class CreatureFactory {
         inv.setWeapon(0, WeaponFactory.createDullSword());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
+        inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
 
         return new Player(name, health, cm, inv, getIcon(name, false));
     }

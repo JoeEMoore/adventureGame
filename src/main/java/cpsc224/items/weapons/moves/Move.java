@@ -85,6 +85,10 @@ public class Move {
         return uses;
     }
 
+    public void setUsesToMax() {
+        uses = maxUses;
+    }
+
     /**
      * Decreases the number of current uses by one.
      */
