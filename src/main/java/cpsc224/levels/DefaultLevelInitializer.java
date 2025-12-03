@@ -30,7 +30,7 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
-            room.setCreature(CreatureFactory.createRat());
+            room.setCreature(creaturePool.getCreature());
             addRoom(room);
         }
         

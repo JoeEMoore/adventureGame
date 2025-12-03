@@ -10,22 +10,21 @@ public class DefaultCreaturePool implements CreaturePool {
 
         int randValue = rand.nextInt(100);
 
-        if (randValue < 25) {
-            return CreatureFactory.createRat();
-        } else if (randValue < 50) {
-            return CreatureFactory.createGoblin();
-        } else if (randValue < 70) {
-            return CreatureFactory.createSkeleton();
-        } else if (randValue < 80) {
-            return CreatureFactory.createWitch();
-        } else if (randValue < 90) {
-            return CreatureFactory.createGoblin();
-        } else if (randValue < 100) {
-            return CreatureFactory.createGuardian();
+        if (randValue < 20) {                       
+            return CreatureFactory.createRat();         // 20% chance for rat
+        } else if (randValue < 40) {
+            return CreatureFactory.createGoblin();      // 20% chance for goblin
+        } else if (randValue < 55) {
+            return CreatureFactory.createSkeleton();    // 15% chance for skeleton
+        } else if (randValue < 65) {
+            return CreatureFactory.createWitch();       // 10% chance for witch
+        } else if (randValue < 75) {
+            return CreatureFactory.createGoblin();      // 10% chance for goblin
+        } else if (randValue < 85) {
+            return CreatureFactory.createGuardian();    // 10% chance for guardian
+        } else {
+            return null;                                // 15% chance for nothing
         }
-
-        // should never reach this
-        return CreatureFactory.createRat();
     }
 
 }
