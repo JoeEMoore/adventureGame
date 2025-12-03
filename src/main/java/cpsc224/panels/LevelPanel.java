@@ -79,7 +79,8 @@ public class LevelPanel extends JPanel implements GamePanel {
                     if (room.hasCreature()) {
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         frame.setContentPane(new FightPanel(player, room));
-                        frame.pack();
+                        frame.revalidate();
+                        frame.repaint();
                     }
                     if (room instanceof ShopRoom){
                         ShopGenerator generator = new ShopGenerator();

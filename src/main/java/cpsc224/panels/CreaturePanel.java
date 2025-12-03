@@ -14,7 +14,6 @@ import cpsc224.effects.Effect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.Inventory;
 import cpsc224.items.weapons.Weapon;
-import cpsc224.items.weapons.moves.Move;
 
 /**
  * A panel to visualize the state of a creature in a fight.
@@ -75,6 +74,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = creature.getInventory().getWeapon(i);
             weaponButtons[i] = new JButton();
+            weaponButtons[i].setEnabled(false);
             if (weapon != null) {
                 weaponButtons[i].setText(weapon.toString());
                 weaponButtons[i].setToolTipText(getWeaponButtonToolTipText(weapon));
@@ -82,7 +82,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
                     weaponButtons[i].setIcon(weapon.getIcon());
             } else {
                 weaponButtons[i].setText("None");
-                weaponButtons[i].setEnabled(false);
             }
             buttonPanel.add(weaponButtons[i]);
         }

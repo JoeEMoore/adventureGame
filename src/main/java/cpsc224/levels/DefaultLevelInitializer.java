@@ -3,7 +3,6 @@ package cpsc224.levels;
 import java.util.HashSet;
 import java.util.Random;
 
-import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.CreaturePool;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
