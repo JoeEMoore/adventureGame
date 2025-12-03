@@ -203,7 +203,7 @@ public class FightPanel extends JPanel implements GamePanel {
      * Displays info about the move.
      * @param text the move info
      */
-    private void displayMoveInfo(String text) {
+    public void displayMoveInfo(String text) {
 
         infoLabel.setText(text);
 

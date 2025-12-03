@@ -40,4 +40,12 @@ public class Consumable extends Item {
         for (Effect e : effects.createEffects())
                 creature.addEffect(e);
     }
+
+    public String effectMessage(Creature creature) {
+    List<String> messages = new ArrayList<>();
+    for (Effect e : effects.createEffects()) {
+        messages.add(e.effectMessage(creature));
+    }
+    return String.join(", ", messages);
+}
 }

@@ -33,4 +33,8 @@ public class HealEffect extends Effect {
         double health = creature.addHealth(healAmount);
         return creature.getName() + " was healed by " + roundDouble(health);
     }
+
+    public String effectMessage(Creature creature) {
+        return creature.getName() + " gained " + roundDouble(healAmount) + " health.";
+    }
 }

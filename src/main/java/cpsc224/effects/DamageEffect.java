@@ -22,6 +22,10 @@ public class DamageEffect extends Effect{
     @Override
     public String apply(Creature creature) {
         creature.setHealth(creature.getHealth() - damageAmount);
-        return creature.getName() + " was dealt " + damageAmount + " damage.";
+        return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
+    }
+
+    public String effectMessage(Creature creature) {
+        return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
     }
 }
