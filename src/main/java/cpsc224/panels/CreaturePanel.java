@@ -139,8 +139,8 @@ public class CreaturePanel extends JPanel implements GamePanel{
      * Updates the health bar.
      */
     private void updateHealthBar() {
-        healthBar.setValue((int)creature.getHealth());
-        healthNumber.setText(String.valueOf((int)creature.getHealth()));
+        healthBar.setValue((int)Math.ceil(creature.getHealth()));
+        healthNumber.setText(String.valueOf((int)Math.ceil(creature.getHealth())));
 
         String toolTipText = "";
         healthBar.setForeground(Application.HEALTH_COLOR);

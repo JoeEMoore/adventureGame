@@ -122,14 +122,14 @@ public class MapPanel extends JPanel implements GamePanel {
         goldLabel.setText(String.valueOf(player.getGold()));
 
         Level level = levelPanel.getLevel();
-        roomItemsButton.setEnabled(level.getRoom(level.getCurrentPosition()).hasItems());
+        //roomItemsButton.setEnabled(level.getRoom(level.getCurrentPosition()).hasItems());
 
         updateHealthBar();
         levelPanel.updateDisplay();
     }
 
     private void updateHealthBar() {
-        healthBar.setValue((int)player.getHealth());
+        healthBar.setValue((int)Math.ceil(player.getHealth()));
         healthBar.setForeground(Application.HEALTH_COLOR);
     }
 }

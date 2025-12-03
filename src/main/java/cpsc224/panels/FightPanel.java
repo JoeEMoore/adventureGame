@@ -23,6 +23,7 @@ public class FightPanel extends JPanel implements GamePanel {
     private Creature enemy;
     private Fight fight;
     private Room room;
+    private boolean isPlayersTurn;
 
     private JButton inventoryButton;
 
@@ -43,6 +44,7 @@ public class FightPanel extends JPanel implements GamePanel {
         this.room = room;
         enemy = room.getCreature();
         fight = new Fight(player, enemy);
+        isPlayersTurn = true;
 
         initComponents();
         layoutComponents();
@@ -129,7 +131,7 @@ public class FightPanel extends JPanel implements GamePanel {
             Weapon weapon = player.getInventory().getWeapon(i);
             if (weapon != null) {
                 weaponButtons[i].addActionListener(weaponEvent -> {
-
+                    isPlayersTurn = false;
                     playerPanel.enableWeaponButtons(false);
 
                     // targets either enemy or ally based on move and gets the result as a string
@@ -145,6 +147,7 @@ public class FightPanel extends JPanel implements GamePanel {
 
                     if (!isWinner())
                         enemyAttackTimer(3000);
+                    isPlayersTurn = true;
                 });
             }
         }
@@ -206,6 +209,8 @@ public class FightPanel extends JPanel implements GamePanel {
     public void updateDisplay() {
         playerPanel.updateDisplay();
         enemyPanel.updateDisplay();
+
+        playerPanel.enableWeaponButtons(isPlayersTurn);
     }
 
     public boolean isWinner() {

@@ -158,8 +158,8 @@ public class InventoryDialog extends JDialog {
             consumableListModel.removeElement(currentConsumable);
 
             // reset
-            currentConsumable = null;
-            consumableList.clearSelection();
+            consumableList.setSelectedIndex(0);
+            currentConsumable = consumableList.getSelectedValue();
         });
 
         closeButton.addActionListener(e -> {dispose();});
