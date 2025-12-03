@@ -51,8 +51,8 @@ public class InventoryTests {
         assertEquals(inv.getWeapons().size(), 2);
         
 
-        Consumable smallHealthPotion = new Consumable("small health potion", null);
-        Consumable BigHealthPotion = new Consumable("big health potion", null);
+        Consumable smallHealthPotion = new Consumable("small health potion", 1, null, true);
+        Consumable BigHealthPotion = new Consumable("big health potion", 3, null, true);
 
         assertEquals(inv.getConsumables().size(), 0);
 
@@ -76,8 +76,8 @@ public class InventoryTests {
         assertEquals(inv.getWeapon(1), sword);
         assertEquals(inv.getWeapon(5), null);
         
-        Consumable smallHealthPotion = new Consumable("small health potion", null);
-        Consumable BigHealthPotion = new Consumable("big health potion", null);
+        Consumable smallHealthPotion = new Consumable("small health potion", 1, null, true);
+        Consumable BigHealthPotion = new Consumable("big health potion", 3, null, true);
 
         inv.getConsumables().add(smallHealthPotion);
         inv.getConsumables().add(BigHealthPotion);
@@ -104,8 +104,8 @@ public class InventoryTests {
         assertEquals(inv.getWeapon(1), mace);
 
         
-        Consumable smallHealthPotion = new Consumable("small health potion", null);
-        Consumable BigHealthPotion = new Consumable("big health potion", null);
+        Consumable smallHealthPotion = new Consumable("small health potion", 1, null, true);
+        Consumable BigHealthPotion = new Consumable("big health potion", 1, null, true);
 
         inv.getConsumables().add(null);
         inv.getConsumables().add(null);

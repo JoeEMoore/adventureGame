@@ -141,7 +141,7 @@ public class TestUtils {
     // CONSUMABLES
 
     public static Consumable createTestPoisonPotion() {
-        return new Consumable("Poison Potion", () -> {return List.of(new PoisonEffect(2));});
+        return new Consumable("Poison Potion", 1, () -> {return List.of(new PoisonEffect(2));}, false);
     }
 
     // MODIFIERS

@@ -18,7 +18,7 @@ public class ConsumablesTests {
 
     @Test
     void createConsumableCreatesCorrectConsumable() {
-        Consumable consumable = new Consumable("Consumable", () -> {return new ArrayList<>();});
+        Consumable consumable = new Consumable("Consumable", 1,  () -> {return new ArrayList<>();},true);
 
         assertEquals("Consumable", consumable.toString());
     }
