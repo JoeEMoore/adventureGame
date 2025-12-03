@@ -136,7 +136,7 @@ public class CreatureFactory {
         weaponWeights.add(3.0);
         weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
+        return new Creature(name, health, cm, inv, weaponWeights);
     }
 
 }
