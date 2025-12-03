@@ -6,17 +6,20 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
+import cpsc224.items.shop.ShopGenerator;
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.ShopRoom;
 import cpsc224.utils.BufferedImageBuilder;
+
 
 public class LevelPanel extends JPanel implements GamePanel {
 
@@ -78,6 +81,19 @@ public class LevelPanel extends JPanel implements GamePanel {
                         frame.setContentPane(new FightPanel(player, room));
                         frame.revalidate();
                         frame.repaint();
+                    }
+                    if (room instanceof ShopRoom){
+                        ShopGenerator generator = new ShopGenerator();
+                        var weaponEntries = generator.generateWeaponEntries();
+                        var consumableEntries = generator.generateConsumableEntries();
+
+                        ShopPanel shopPanel = new ShopPanel(weaponEntries, consumableEntries);
+                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                        JDialog shopDialog = new JDialog(frame, "SHOP", true);
+                        shopDialog.setContentPane(shopPanel);
+                        shopDialog.pack();
+                        shopDialog.setLocationRelativeTo(frame);
+                        shopDialog.setVisible(true);
                     }
                     updateDisplay();
                 });
