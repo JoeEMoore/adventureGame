@@ -151,13 +151,7 @@ public class FightPanel extends JPanel implements GamePanel {
                         enemyAttackTimer(3000);
                     // enemy is dead
                     } else {
-                        JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
-                        room.removeCreature(enemy);
-                        player.addGold((int)enemy.getMaxHealth());
-                        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                        frame.setContentPane(new MapPanel());
-                        frame.revalidate();
-                        frame.repaint();
+                        winFight();
                     }
                 });
             }
@@ -172,6 +166,11 @@ public class FightPanel extends JPanel implements GamePanel {
         Timer timer = new Timer(delay, e -> {
             enemy.calculateEffects();
             enemyPanel.updateDisplay();
+
+            if (enemy.getHealth() <= 0) {
+                winFight();
+            }
+
             displayMoveInfo(fight.creatureTurn(enemy, player));
 
             player.calculateEffects();
@@ -182,6 +181,16 @@ public class FightPanel extends JPanel implements GamePanel {
         });   
         timer.setRepeats(false);
         timer.start();   
+    }
+
+    private void winFight() {
+        JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
+        room.removeCreature(enemy);
+        player.addGold((int)enemy.getMaxHealth());
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        frame.setContentPane(new MapPanel());
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**
