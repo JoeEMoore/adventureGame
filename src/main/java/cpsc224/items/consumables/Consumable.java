@@ -37,7 +37,6 @@ public class Consumable extends Item {
      * @param creature the creature
      */
     public void applyEffects(Creature creature) {
-        List<String> results = new ArrayList<>();
         for (Effect e : effects.createEffects())
                 creature.addEffect(e);
     }

@@ -139,11 +139,11 @@ public class InventoryDialog extends JDialog {
     private void addListeners() {
         useButton.addActionListener(e -> {
         // use item and display effects
-        if (gamePanel instanceof FightPanel){
-            if (currentConsumable.getAffectsPlayer()){
+        if (gamePanel instanceof FightPanel) {
+            if (currentConsumable.getAffectsPlayer()) {
                 currentConsumable.applyEffects(creature); 
             }
-            else{
+            else {
                 currentConsumable.applyEffects(((FightPanel)gamePanel).getEnemy());
             }
         }

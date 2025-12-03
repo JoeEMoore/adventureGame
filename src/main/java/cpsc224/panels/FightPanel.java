@@ -120,7 +120,7 @@ public class FightPanel extends JPanel implements GamePanel {
      */
     private void addListeners() {
         inventoryButton.addActionListener(e -> {
-            InventoryDialog invDialog = new InventoryDialog((Frame)SwingUtilities.getWindowAncestor(this), playerPanel, player, false);
+            InventoryDialog invDialog = new InventoryDialog((Frame)SwingUtilities.getWindowAncestor(this), this, player, false);
             invDialog.setVisible(true);
         });
 
