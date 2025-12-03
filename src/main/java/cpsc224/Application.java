@@ -25,7 +25,7 @@ public class Application {
 
 
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(7, 15, new DefaultCreaturePool());
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool());
         Level level = new Level(levelInit);
         Player player = CreatureFactory.createPlayer();
 

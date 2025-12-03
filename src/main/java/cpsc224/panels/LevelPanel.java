@@ -109,13 +109,13 @@ public class LevelPanel extends JPanel implements GamePanel {
 
                         if (room instanceof BossRoom) {
                             ImageIcon bossIcon = getIcon(15, 6);
-                            roomButtons[i][j].setIcon(bossIcon);
-                            roomButtons[i][j].setDisabledIcon(bossIcon);
+                            button.setIcon(bossIcon);
+                            button.setDisabledIcon(bossIcon);
                         }
                         if (room instanceof ShopRoom) {
                             ImageIcon shopIcon = getIcon(24, 3);
-                            roomButtons[i][j].setIcon(shopIcon);
-                            roomButtons[i][j].setDisabledIcon(shopIcon);
+                            button.setIcon(shopIcon);
+                            button.setDisabledIcon(shopIcon);
                         }
                     }
 
