@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import cpsc224.Application;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
@@ -63,7 +64,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         // health panel
         healthBar = new JProgressBar(0, (int)creature.getMaxHealth());
         healthBar.setValue((int)creature.getHealth());
-        healthBar.setForeground(FightPanel.HEALTH_COLOR);
+        healthBar.setForeground(Application.HEALTH_COLOR);
         healthNumber = new JLabel(String.valueOf((int)creature.getHealth()));
         healthPanel = new JPanel();
         healthPanel.setOpaque(false);
@@ -142,11 +143,11 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthNumber.setText(String.valueOf((int)creature.getHealth()));
 
         String toolTipText = "";
-        healthBar.setForeground(FightPanel.HEALTH_COLOR);
+        healthBar.setForeground(Application.HEALTH_COLOR);
         for (Effect e : creature.getEffects()) {
             toolTipText += e.toString() + "<br>";
             if (e instanceof PoisonEffect)
-                healthBar.setForeground(FightPanel.POISON_COLOR);
+                healthBar.setForeground(Application.POISON_COLOR);
         }
         healthBar.setToolTipText("<html><p width=\"100\">" + toolTipText + "</p></html>");
     }

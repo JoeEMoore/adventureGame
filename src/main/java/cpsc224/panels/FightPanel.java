@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
+import cpsc224.Application;
 import cpsc224.Fight;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
@@ -11,14 +12,12 @@ import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
+import cpsc224.windows.SplashWindow;
 
 /**
  * A panel to visualize a fight.
  */
 public class FightPanel extends JPanel implements GamePanel {
-
-    public static final Color HEALTH_COLOR = new Color(224, 45, 45);
-    public static final Color POISON_COLOR = new Color(32, 148, 16);
 
     private Player player;
     private Creature enemy;
@@ -124,7 +123,6 @@ public class FightPanel extends JPanel implements GamePanel {
             invDialog.setVisible(true);
         });
 
-
         // Setup listeners for each of the player's weapons
         JButton[] weaponButtons = playerPanel.getWeaponButtons();
         for (int i = 0; i < weaponButtons.length; i++) {
@@ -178,6 +176,8 @@ public class FightPanel extends JPanel implements GamePanel {
 
             if (player.getHealth() > 0)
                 playerPanel.enableWeaponButtons(true);
+            else
+                loseFight();
         });   
         timer.setRepeats(false);
         timer.start();   
@@ -191,6 +191,12 @@ public class FightPanel extends JPanel implements GamePanel {
         frame.setContentPane(new MapPanel());
         frame.revalidate();
         frame.repaint();
+    }
+
+    private void loseFight() {
+        JOptionPane.showMessageDialog(this, "You were killed by " + enemy.getName() + "!", "You Died!", JOptionPane.INFORMATION_MESSAGE);
+        SwingUtilities.getWindowAncestor(this).dispose();
+        Application.main(null);
     }
 
     /**

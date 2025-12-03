@@ -1,5 +1,6 @@
 package cpsc224.panels;
 
+import cpsc224.Application;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
@@ -115,6 +116,6 @@ public class MapPanel extends JPanel implements GamePanel {
 
     private void updateHealthBar() {
         healthBar.setValue((int)player.getHealth());
-        healthBar.setForeground(FightPanel.HEALTH_COLOR);
+        healthBar.setForeground(Application.HEALTH_COLOR);
     }
 }

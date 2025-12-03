@@ -1,5 +1,6 @@
 package cpsc224;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Random;
 
@@ -20,6 +21,9 @@ import cpsc224.windows.SplashWindow;
  */
 public class Application {
 
+    public static final Color MENU_COLOR = new Color(156, 219, 173);
+    public static final Color HEALTH_COLOR = new Color(224, 45, 45);
+    public static final Color POISON_COLOR = new Color(32, 148, 16);
     public static void main(String[] args) {
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
 
