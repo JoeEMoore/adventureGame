@@ -120,7 +120,7 @@ public class FightPanel extends JPanel implements GamePanel {
      */
     private void addListeners() {
         inventoryButton.addActionListener(e -> {
-            InventoryDialog invDialog = new InventoryDialog((Frame)SwingUtilities.getWindowAncestor(this), playerPanel, player, false);
+            InventoryDialog invDialog = new InventoryDialog((Frame)SwingUtilities.getWindowAncestor(this), this, player, false);
             invDialog.setVisible(true);
         });
 
@@ -153,6 +153,7 @@ public class FightPanel extends JPanel implements GamePanel {
                     } else {
                         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
                         room.removeCreature(enemy);
+                        player.addGold((int)enemy.getMaxHealth());
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         Game game = Game.getInstance();
                         frame.setContentPane(new MapPanel());
