@@ -7,6 +7,7 @@ import cpsc224.effects.DamageEffect;
 import cpsc224.effects.EffectsFactory;
 import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
+import cpsc224.effects.RefillEffect;
 
 /**
  * A factory class to create consumables.
@@ -101,5 +102,15 @@ public class ConsumableFactory {
         };
 
         return new Consumable(name, tier, effects, false);
+    }
+
+    public static Consumable createWeaponRefillPotion() {
+        final String name = "Weapon Refill Potion";
+        final int tier = 2;
+        final EffectsFactory effects = () -> {
+            return List.of(new RefillEffect(1));
+        };
+
+        return new Consumable(name, tier, effects, true);
     }
 }
