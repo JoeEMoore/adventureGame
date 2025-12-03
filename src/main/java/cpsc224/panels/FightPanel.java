@@ -155,9 +155,9 @@ public class FightPanel extends JPanel implements GamePanel {
                         room.removeCreature(enemy);
                         player.addGold((int)enemy.getMaxHealth());
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                        Game game = Game.getInstance();
                         frame.setContentPane(new MapPanel());
-                        frame.pack();
+                        frame.revalidate();
+                        frame.repaint();
                     }
                 });
             }
