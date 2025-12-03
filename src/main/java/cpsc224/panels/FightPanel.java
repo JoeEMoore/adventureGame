@@ -199,6 +199,10 @@ public class FightPanel extends JPanel implements GamePanel {
         enemyPanel.updateDisplay();
     }
 
+    public Creature getEnemy(){
+        return enemy;
+    }
+
 //    @Override
 //    protected void paintComponent(Graphics g) {
 //        ImageIcon icon = ImageUtils.getImageIcon("images/backgrounds/StoneWall.png");

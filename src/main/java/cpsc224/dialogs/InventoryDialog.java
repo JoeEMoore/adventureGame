@@ -1,10 +1,12 @@
 package cpsc224.dialogs;
 
+import cpsc224.Fight;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.levels.Level;
 import cpsc224.panels.GamePanel;
+import cpsc224.panels.FightPanel;
 import cpsc224.items.weapons.*;
 
 import javax.swing.*;
@@ -18,6 +20,7 @@ import java.awt.*;
 public class InventoryDialog extends JDialog {
 
     private Creature creature;
+    private Creature enemy;
     private GamePanel gamePanel;
     private Consumable currentConsumable;
     private Weapon currentWeapon;
@@ -135,8 +138,15 @@ public class InventoryDialog extends JDialog {
      */
     private void addListeners() {
         useButton.addActionListener(e -> {
-            // use item and display effects
-            currentConsumable.applyEffects(creature);
+        // use item and display effects
+        if (gamePanel instanceof FightPanel){
+            if (currentConsumable.getAffectsPlayer()){
+                currentConsumable.applyEffects(creature); 
+            }
+            else{
+                currentConsumable.applyEffects(((FightPanel)gamePanel).getEnemy());
+            }
+        }
             gamePanel.updateDisplay();
 
             // remove item

@@ -4,8 +4,11 @@ public abstract class Item {
 
     protected String name;
 
-    public Item(String name) {
+    private int tier;
+
+    public Item(String name, int tier) {
         this.name = name;
+        this.tier = tier;
     }
 
     @Override
@@ -19,5 +22,13 @@ public abstract class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getTier() {
+        return tier;
+    }
+
+    public void setTier(int tier){
+        this.tier = tier;
     }
 }
