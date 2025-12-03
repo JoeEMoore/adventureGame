@@ -125,4 +125,18 @@ public class CreatureFactory {
         return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
     }
 
+    public static Creature createSkeleton() {
+        final String name = "Skeleton";
+        final int health = 50;
+        final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(1.5, 0.5, 0.5, 2.0)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createBow());
+        inv.setWeapon(1, WeaponFactory.createRustyDagger());
+        List<Double> weaponWeights = new ArrayList<Double>();
+        weaponWeights.add(3.0);
+        weaponWeights.add(1.0);
+
+        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
+    }
+
 }

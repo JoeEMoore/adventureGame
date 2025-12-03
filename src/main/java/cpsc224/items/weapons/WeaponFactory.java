@@ -99,4 +99,12 @@ public class WeaponFactory {
 
         return new Weapon(name, tier, move);
     }
+
+    public static Weapon createBow() {
+        final String name = "Bow";
+        final int tier = 1;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move);
+    }
 }

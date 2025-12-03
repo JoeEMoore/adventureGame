@@ -74,4 +74,16 @@ public class MoveFactory {
         });
         return move;
     }
+
+
+    public static Move createShootMove() {
+        final String name = "Shoot";
+        final int damage = 20;
+        final DamageType dt = DamageType.Projectile;
+        final int maxUses = 20;
+        final double accuracy = 0.7;
+        final boolean targetsAllies = false;
+
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
+    }
 }
