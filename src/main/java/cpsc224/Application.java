@@ -10,6 +10,7 @@ import javax.swing.ToolTipManager;
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.DefaultCreaturePool;
 import cpsc224.creatures.Player;
+import cpsc224.items.DefaultItemPool;
 import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
@@ -29,7 +30,7 @@ public class Application {
 
 
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool());
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool());
         Level level = new Level(levelInit);
         Player player = CreatureFactory.createPlayer();
 

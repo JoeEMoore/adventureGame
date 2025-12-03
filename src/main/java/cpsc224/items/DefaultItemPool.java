@@ -9,34 +9,41 @@ public class DefaultItemPool implements ItemPool {
     
     
     public Item getItem() {
-        Random randNum = new Random();
-        int Num = randNum.nextInt(100);
+        Random rand = new Random();
+        int randValue = rand.nextInt(1000);
 
-        if(Num < 8){
+        if(randValue < 30){
             return WeaponFactory.createDullSword();
-        } else if(Num < 11){
+        } else if(randValue < 60){
             return WeaponFactory.createWoodClub();
-        } else if(Num < 14){
-            return WeaponFactory.createToxicStaff();
-        } else if(Num < 1){
-            return WeaponFactory.createHealStaff();
-        } else if(Num < 3) {
-            return WeaponFactory.createRoyalSword();
-        } else if(Num < 17){
+        } else if(randValue < 90){
             return WeaponFactory.createRustyDagger();
-        } else if(Num < 5){
-            return WeaponFactory.createSteelHammer();
-        } else if(Num < 20){
+        } else if(randValue < 120){
             return WeaponFactory.createBow();
-        } else if(Num < 30){
+        } else if(randValue < 140) {
+            return WeaponFactory.createRoyalSword();
+        } else if(randValue < 160){
+            return WeaponFactory.createToxicStaff();
+        } else if(randValue < 180){
+            return WeaponFactory.createSteelHammer();
+        } else if(randValue < 200){
+            return WeaponFactory.createHealStaff();
+        } else if(randValue < 250){
             return ConsumableFactory.createSmallHealthPotion();
+        } else if (randValue < 300) {
+            return ConsumableFactory.createSmallDamagePotion();
+        } else if (randValue < 320) {
+            return ConsumableFactory.createMediumHealthPotion();
+        } else if (randValue < 340) {
+            return ConsumableFactory.createMediumDamagePotion();
+        } else if (randValue < 350) {
+            return ConsumableFactory.createLargeHealthPotion();
+        } else if (randValue < 360) {
+            return ConsumableFactory.createLargeDamagePotion();
+        } else if (randValue < 400) {
+            return ConsumableFactory.createWeaponRefillPotion();
         } else {
             return null;
         }
-         
-
-
-
-
     }
 }

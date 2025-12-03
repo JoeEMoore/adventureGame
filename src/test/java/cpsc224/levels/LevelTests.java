@@ -1,6 +1,7 @@
 package cpsc224.levels;
 
 import cpsc224.creatures.DefaultCreaturePool;
+import cpsc224.items.DefaultItemPool;
 import cpsc224.levels.rooms.Room;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ public class LevelTests {
 
     @Test
     void createLevelCreatesCorrectLevel() {
-        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool()));
+        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool()));
 
         assertEquals(5, level.getRoomLength());
         assertEquals(10, level.getNumRooms());
@@ -19,7 +20,7 @@ public class LevelTests {
 
     @Test
     void getRoomReturnsCorrectRoom() {
-        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool()));
+        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool()));
         Coordinate coord = new Coordinate(1, 2);
         Room[][] rooms = level.getRooms();
 
@@ -28,7 +29,7 @@ public class LevelTests {
 
     @Test
     void setCurrentPositionCorrectlySetsPosition() {
-        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool()));
+        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool()));
         level.setCurrentPosition(new Coordinate(2, 4));
 
         assertEquals(new Coordinate(2, 4), level.getCurrentPosition());
@@ -36,7 +37,7 @@ public class LevelTests {
 
     @Test
     void setCurrentPositionExploresRoom() {
-        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool()));
+        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool()));
         level.setCurrentPosition(new Coordinate(2, 4));
 
         Room room = level.getRoom(level.getCurrentPosition());
@@ -45,7 +46,7 @@ public class LevelTests {
 
     @Test
     void setCurrentPositionDiscoversAdjacentRooms() {
-        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool()));
+        Level level = new Level(new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool()));
         level.setCurrentPosition(new Coordinate(2, 3));
 
         Room room1 = level.getRoom(new Coordinate(1, 3));
