@@ -11,7 +11,6 @@ import java.awt.*;
  */
 public class Weapon extends Item {
 
-    private int tier;
     private Move move;
 
     private ImageIcon icon;
@@ -33,18 +32,9 @@ public class Weapon extends Item {
      * @param move the move
      */
     public Weapon(String name, int tier, Move move, ImageIcon icon) {
-        super(name);
-        this.tier = tier;
+        super(name, tier);
         this.move = move;
         this.icon = icon;
-    }
-
-    /**
-     * Gets the tier.
-     * @return the tier
-     */
-    public int getTier() {
-        return tier;
     }
 
     /**

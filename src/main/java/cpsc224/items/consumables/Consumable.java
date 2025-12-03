@@ -15,15 +15,21 @@ import java.util.List;
 public class Consumable extends Item {
     
     private EffectsFactory effects;
+    private boolean affectsPlayer;
 
     /**
      * Creates a consumabel with the specified name and effects factory.
      * @param name the name
      * @param effects the EffectsFactory functional interface
      */
-    public Consumable(String name, EffectsFactory effects) {
-        super(name);
+    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsPlayer) {
+        super(name, tier);
         this.effects = effects;
+        this.affectsPlayer = affectsPlayer;
+    }
+
+    public boolean getAffectsPlayer(){
+        return affectsPlayer;
     }
 
     /**
@@ -31,7 +37,6 @@ public class Consumable extends Item {
      * @param creature the creature
      */
     public void applyEffects(Creature creature) {
-        List<String> results = new ArrayList<>();
         for (Effect e : effects.createEffects())
                 creature.addEffect(e);
     }
