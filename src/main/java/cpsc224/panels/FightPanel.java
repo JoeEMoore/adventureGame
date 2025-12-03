@@ -141,16 +141,10 @@ public class FightPanel extends JPanel implements GamePanel {
 
                     // display info as a result of the move
                     displayMoveInfo(result);
-                    playerPanel.updateDisplay();
-                    enemyPanel.updateDisplay();
+                    updateDisplay();
 
-                    // enemy attacks after delay
-                    if (enemy.getHealth() > 0) {
+                    if (!isWinner())
                         enemyAttackTimer(3000);
-                    // enemy is dead
-                    } else {
-                        winFight();
-                    }
                 });
             }
         }
@@ -163,21 +157,20 @@ public class FightPanel extends JPanel implements GamePanel {
     private void enemyAttackTimer(int delay) {
         Timer timer = new Timer(delay, e -> {
             enemy.calculateEffects();
-            enemyPanel.updateDisplay();
+            updateDisplay();
 
-            if (enemy.getHealth() <= 0) {
-                winFight();
-            }
+            if (isWinner())
+                return;
 
             displayMoveInfo(fight.creatureTurn(enemy, player));
 
             player.calculateEffects();
-            playerPanel.updateDisplay();
+            updateDisplay();
 
-            if (player.getHealth() > 0)
-                playerPanel.enableWeaponButtons(true);
-            else
-                loseFight();
+            if (isWinner())
+                return;
+
+            playerPanel.enableWeaponButtons(true);
         });   
         timer.setRepeats(false);
         timer.start();   
@@ -213,6 +206,20 @@ public class FightPanel extends JPanel implements GamePanel {
     public void updateDisplay() {
         playerPanel.updateDisplay();
         enemyPanel.updateDisplay();
+    }
+
+    public boolean isWinner() {
+        if (player.getHealth() <= 0) {
+            loseFight();
+            return true;
+        } 
+
+        if (enemy.getHealth() <= 0) {
+            winFight();
+            return true;
+        }
+
+        return false;
     }
 
     public Creature getEnemy(){
