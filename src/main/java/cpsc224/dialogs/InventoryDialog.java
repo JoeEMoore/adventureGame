@@ -55,6 +55,7 @@ public class InventoryDialog extends JDialog {
         this.gamePanel = gamePanel;
         this.canDropItems = canDropItems;
         currentConsumable = null;
+        currentWeapon = null;
 
         initComponents();
         layoutComponents();
@@ -138,20 +139,17 @@ public class InventoryDialog extends JDialog {
      */
     private void addListeners() {
         useButton.addActionListener(e -> {
-        // use item and display effects
-        if (gamePanel instanceof FightPanel fightPanel) {
-            if (currentConsumable.getAffectsPlayer()) {
-                currentConsumable.applyEffects(creature);
-                fightPanel.displayMoveInfo(currentConsumable.effectMessage(creature)); 
-            }
-            else {
+            // use item and display effects
+            if (!currentConsumable.getAffectsPlayer() && gamePanel instanceof FightPanel fightPanel) {
                 currentConsumable.applyEffects(((FightPanel)gamePanel).getEnemy());
                 fightPanel.displayMoveInfo(currentConsumable.effectMessage(((FightPanel)gamePanel).getEnemy()));
 
                 if (fightPanel.isWinner())
                     dispose();
+                
+            } else {
+                currentConsumable.applyEffects(creature);
             }
-        }
             
             gamePanel.updateDisplay();
 
@@ -191,26 +189,28 @@ public class InventoryDialog extends JDialog {
             Level level = Game.getInstance().getLevel();
 
             // Dropping a consumable
-            Consumable droppedConsumable = currentConsumable;
-            creature.getInventory().getConsumables().remove(currentConsumable);
-            consumableListModel.removeElement(currentConsumable);
-            level.getRoom(level.getCurrentPosition()).addItem(droppedConsumable);
+            if (currentConsumable != null) {
+                Consumable droppedConsumable = currentConsumable;
+                creature.getInventory().getConsumables().remove(currentConsumable);
+                consumableListModel.removeElement(currentConsumable);
+                level.getRoom(level.getCurrentPosition()).addItem(droppedConsumable);
+    
+                // reset
+                consumableList.setSelectedIndex(0);
+                currentConsumable = consumableList.getSelectedValue();
+            // Dropping a weapon 
+            } else if (currentWeapon != null) {
+                Weapon droppedWeapon = currentWeapon;
+                creature.getInventory().getWeapons().remove(currentWeapon);
+                weaponListModel.removeElement(currentWeapon);
+                level.getRoom(level.getCurrentPosition()).addItem(droppedWeapon);
+
+                // reset
+                weaponList.setSelectedIndex(0);
+                currentWeapon = weaponList.getSelectedValue();
+            }
+
             gamePanel.updateDisplay();
-
-            // reset
-            currentConsumable = null;
-            consumableList.clearSelection();   
-
-            // Dropping a weapon
-            Weapon droppedWeapon = currentWeapon;
-            creature.getInventory().getWeapons().remove(currentWeapon);
-            weaponListModel.removeElement(currentWeapon);
-            level.getRoom(level.getCurrentPosition()).addItem(droppedWeapon);
-            gamePanel.updateDisplay();
-
-            // reset
-            currentWeapon = null;
-            weaponList.clearSelection();
         });
     }
 }

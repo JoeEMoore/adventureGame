@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import cpsc224.creatures.CreaturePool;
+import cpsc224.items.Item;
 import cpsc224.items.ItemPool;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
@@ -31,7 +32,12 @@ public class DefaultLevelInitializer extends LevelInitializer {
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
             room.setCreature(creaturePool.getCreature());
-            room.addItem(roomPool.getItem());
+
+            // add item
+            Item item = roomPool.getItem();
+            if (item != null)
+                room.addItem(item);
+
             addRoom(room);
         }
         

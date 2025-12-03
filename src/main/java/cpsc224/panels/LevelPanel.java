@@ -106,6 +106,10 @@ public class LevelPanel extends JPanel implements GamePanel {
         updateRoomButtons();
     }
 
+    public Level getLevel() {
+        return level;
+    }
+
     private void updateRoomButtons() {
         for (int i = 0; i < level.getRoomLength(); i++) {   
             for (int j = 0; j < level.getRoomLength(); j++) {
@@ -138,8 +142,17 @@ public class LevelPanel extends JPanel implements GamePanel {
 
                     // if room is explored
                     if (room.isExplored()) {
-                        //button.setText("Cleared");
                         button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+
+                        // indicate room has items if it is explored
+                        if (room.hasItems()) {
+                            ImageIcon itemIcon = getIcon(2, 4);
+                            button.setIcon(itemIcon);
+                            button.setDisabledIcon(itemIcon);
+                        } else {
+                            button.setIcon(null);
+                            button.setDisabledIcon(null);
+                        }
                     }
 
                     // if room is adjacent to player
