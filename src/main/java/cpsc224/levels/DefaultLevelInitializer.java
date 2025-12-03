@@ -1,34 +1,28 @@
 package cpsc224.levels;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
-import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureFactory;
+import cpsc224.creatures.CreaturePool;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.ShopRoom;
 
-public class DefaultLevelInitializer implements LevelInitializer {
+public class DefaultLevelInitializer extends LevelInitializer {
 
     private Room[][] rooms;
     private Coordinate startRoom;
     private HashSet<Coordinate> validPositions = new HashSet<>();
 
-    private int roomLength;
-    private int numRooms;
-
     Random rand = new Random();
 
-    public DefaultLevelInitializer() {}
+    public DefaultLevelInitializer(int numRooms, int roomLength, CreaturePool creaturePool) {
+        super(numRooms, roomLength, creaturePool);
+    }
 
     @Override
-    public Room[][] initializeLevel(int roomLength, int numRooms) {
-        this.roomLength = roomLength;
-        this.numRooms = numRooms;
-
+    public Room[][] initializeLevel() {
         rooms = new Room[roomLength][roomLength];
         validPositions.add(new Coordinate(rand.nextInt(roomLength), rand.nextInt(roomLength)));
 
@@ -36,7 +30,7 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
-            room.setCreature(CreatureFactory.createRat());
+            room.setCreature(creaturePool.getCreature());
             addRoom(room);
         }
         
@@ -45,6 +39,11 @@ public class DefaultLevelInitializer implements LevelInitializer {
         addRoom(new ShopRoom());
 
         return rooms;
+    }
+
+    @Override
+    public Coordinate getStartRoom() {
+        return startRoom;
     }
 
     private Coordinate addRoom(Room room) {
@@ -84,8 +83,4 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
     }
 
-    @Override
-    public Coordinate getStartRoom() {
-        return startRoom;
-    }
 }

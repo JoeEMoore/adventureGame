@@ -5,14 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import cpsc224.creatures.DefaultCreaturePool;
 import cpsc224.levels.rooms.Room;
 
 public class DefaultInitializerTests {
 
     @Test
     void initializeLevelCreatesCorrectNumberOfRooms() {
-        LevelInitializer init = new DefaultLevelInitializer();
-        Room[][] rooms = init.initializeLevel(5, 10);
+        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool());
+        Room[][] rooms = init.initializeLevel();
 
         int count = 0;
         for (int i = 0; i < rooms.length; i++) {
@@ -28,8 +29,8 @@ public class DefaultInitializerTests {
 
     @Test
     void initializeLevelCreatesCorrectLengthRoomsArray() {
-        LevelInitializer init = new DefaultLevelInitializer();
-        Room[][] rooms = init.initializeLevel(5, 10);
+        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool());
+        Room[][] rooms = init.initializeLevel();
 
         assertEquals(5, rooms.length);
         for (int i = 0; i < rooms.length; i++)
@@ -38,8 +39,8 @@ public class DefaultInitializerTests {
 
     @Test
     void getStartRoomNotNull() {
-        LevelInitializer init = new DefaultLevelInitializer();
-        init.initializeLevel(5, 10);
+        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool());
+        Room[][] rooms = init.initializeLevel();
         assertNotNull(init.getStartRoom());
     }
 }

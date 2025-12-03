@@ -8,10 +8,8 @@ public class Level {
     private int numRooms;
     private Coordinate currentPosition;
 
-    public Level(int roomLength, int numRooms, LevelInitializer initializer) {
-        this.numRooms = numRooms;
-
-        rooms = initializer.initializeLevel(roomLength, numRooms);
+    public Level(LevelInitializer initializer) {
+        rooms = initializer.initializeLevel();
         currentPosition = initializer.getStartRoom();
         setCurrentPosition(currentPosition);
     }
