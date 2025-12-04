@@ -1,6 +1,9 @@
 package cpsc224.windows;
 
 import javax.swing.*;
+
+import cpsc224.Application;
+
 import java.awt.*;
 
 public class SplashWindow extends JWindow {
@@ -8,7 +11,7 @@ public class SplashWindow extends JWindow {
     public SplashWindow() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(156, 219, 173));
+        panel.setBackground(Application.MENU_COLOR);
 
         JLabel title = new JLabel("Adventure Game");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -54,6 +54,10 @@ public class Room {
         items.remove(i);
     }
 
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
+
     public void clearItems() {
         items.clear();
     }

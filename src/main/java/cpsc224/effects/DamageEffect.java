@@ -1,6 +1,7 @@
 package cpsc224.effects;
 
 import cpsc224.creatures.Creature;
+import cpsc224.damagetypes.DamageType;
 
 /**
  * An effect that deals instant damage to a creature.
@@ -21,7 +22,11 @@ public class DamageEffect extends Effect{
 
     @Override
     public String apply(Creature creature) {
-        creature.setHealth(creature.getHealth() - damageAmount);
-        return creature.getName() + " was dealt " + damageAmount + " damage.";
+        creature.applyDamage(damageAmount, DamageType.Pure);
+        return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
+    }
+
+    public String effectMessage(Creature creature) {
+        return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
     }
 }

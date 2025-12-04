@@ -15,4 +15,8 @@ public class RefillEffect extends Effect{
         }
         return creature.getName() + " refilled all of their weapon uses!";
     }
+
+    public String effectMessage(Creature creature ){
+        return creature.getName() + " refilled all of their weapon uses!";
+    }
 }

@@ -132,7 +132,6 @@ public class Inventory {
             weapons.add(newWeapon);
         }
 
-
         return oldWeapon;
     }
 
@@ -159,4 +158,25 @@ public class Inventory {
         return oldConsumable;
     }
 
+    /**
+     * Adds an item to an empty slot if there is one.
+     * @param item the item to add
+     * @return true if the item was added
+     */
+    public boolean addItem(Item item) {
+        if (item instanceof Weapon w) {
+            weapons.add(w);
+            if (weapons.indexOf(w) >= maxWeapons) {
+                weapons.remove(w);
+                return false;
+            }
+        } else if (item instanceof Consumable c) {
+            consumables.add(c);
+            if (consumables.indexOf(c) >= maxConsumables) {
+                consumables.remove(c);
+                return false;
+            }
+        }
+        return true;
+    }
 }

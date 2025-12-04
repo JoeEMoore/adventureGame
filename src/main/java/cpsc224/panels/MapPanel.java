@@ -1,26 +1,27 @@
 package cpsc224.panels;
 
+import cpsc224.Application;
 import cpsc224.Game;
-import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
+import cpsc224.dialogs.RoomItemsDialog;
 import cpsc224.levels.Level;
 import cpsc224.utils.BufferedImageBuilder;
 import cpsc224.windows.SplashWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.nio.Buffer;
 
 public class MapPanel extends JPanel implements GamePanel {
 
     Player player;
 
-    JPanel levelPanel;
+    LevelPanel levelPanel;
 
     JProgressBar healthBar;
     JButton inventoryButton;
     JLabel goldLabel;
+    JButton roomItemsButton;
 
     JButton exitButton;
 
@@ -50,6 +51,7 @@ public class MapPanel extends JPanel implements GamePanel {
         goldLabel.setFont(new Font("Dialog", Font.PLAIN, 18));
 
         inventoryButton = new JButton("Inventory");
+        roomItemsButton = new JButton("Room Items");
         exitButton = new JButton("Exit");
 
         levelPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -71,6 +73,8 @@ public class MapPanel extends JPanel implements GamePanel {
         c.gridy = 2;
         leftPanel.add(inventoryButton, c);
         c.gridy = 3;
+        leftPanel.add(roomItemsButton, c);
+        c.gridy = 4;
         c.weighty = 1;
         c.anchor = GridBagConstraints.PAGE_END;
         leftPanel.add(exitButton, c);
@@ -104,17 +108,28 @@ public class MapPanel extends JPanel implements GamePanel {
                 new SplashWindow();
             }
         });
+
+        roomItemsButton.addActionListener(e -> {
+            RoomItemsDialog dialog = new RoomItemsDialog((Frame)SwingUtilities.getWindowAncestor(this), this, player);
+            dialog.setVisible(true);
+            updateDisplay();
+        });
     }
 
 
     @Override
     public void updateDisplay() {
         goldLabel.setText(String.valueOf(player.getGold()));
+
+        Level level = levelPanel.getLevel();
+        //roomItemsButton.setEnabled(level.getRoom(level.getCurrentPosition()).hasItems());
+
         updateHealthBar();
+        levelPanel.updateDisplay();
     }
 
     private void updateHealthBar() {
-        healthBar.setValue((int)player.getHealth());
-        healthBar.setForeground(FightPanel.HEALTH_COLOR);
+        healthBar.setValue((int)Math.ceil(player.getHealth()));
+        healthBar.setForeground(Application.HEALTH_COLOR);
     }
 }

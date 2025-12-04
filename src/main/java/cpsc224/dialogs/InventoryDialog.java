@@ -1,5 +1,6 @@
 package cpsc224.dialogs;
 
+import cpsc224.Fight;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
@@ -19,6 +20,7 @@ import java.awt.*;
 public class InventoryDialog extends JDialog {
 
     private Creature creature;
+    private Creature enemy;
     private GamePanel gamePanel;
     private Consumable currentConsumable;
     private Weapon currentWeapon;
@@ -53,6 +55,7 @@ public class InventoryDialog extends JDialog {
         this.gamePanel = gamePanel;
         this.canDropItems = canDropItems;
         currentConsumable = null;
+        currentWeapon = null;
 
         initComponents();
         layoutComponents();
@@ -136,15 +139,18 @@ public class InventoryDialog extends JDialog {
      */
     private void addListeners() {
         useButton.addActionListener(e -> {
-        // determine whether to use on player or enemy
-        if (gamePanel instanceof FightPanel) {
-            if (currentConsumable.getAffectsPlayer()) {
-                currentConsumable.applyEffects(creature); 
-            }
-            else {
+            // use item and display effects
+            if (!currentConsumable.getAffectsPlayer() && gamePanel instanceof FightPanel fightPanel) {
                 currentConsumable.applyEffects(((FightPanel)gamePanel).getEnemy());
+                fightPanel.displayMoveInfo(currentConsumable.effectMessage(((FightPanel)gamePanel).getEnemy()));
+
+                if (fightPanel.isWinner())
+                    dispose();
+                
+            } else {
+                currentConsumable.applyEffects(creature);
             }
-        }
+            
             gamePanel.updateDisplay();
 
             // remove item
@@ -152,8 +158,8 @@ public class InventoryDialog extends JDialog {
             consumableListModel.removeElement(currentConsumable);
 
             // reset
-            currentConsumable = null;
-            consumableList.clearSelection();
+            consumableList.setSelectedIndex(0);
+            currentConsumable = consumableList.getSelectedValue();
         });
 
         closeButton.addActionListener(e -> {dispose();});
@@ -183,26 +189,28 @@ public class InventoryDialog extends JDialog {
             Level level = Game.getInstance().getLevel();
 
             // Dropping a consumable
-            Consumable droppedConsumable = currentConsumable;
-            creature.getInventory().getConsumables().remove(currentConsumable);
-            consumableListModel.removeElement(currentConsumable);
-            level.getRoom(level.getCurrentPosition()).addItem(droppedConsumable);
+            if (currentConsumable != null) {
+                Consumable droppedConsumable = currentConsumable;
+                creature.getInventory().getConsumables().remove(currentConsumable);
+                consumableListModel.removeElement(currentConsumable);
+                level.getRoom(level.getCurrentPosition()).addItem(droppedConsumable);
+    
+                // reset
+                consumableList.setSelectedIndex(0);
+                currentConsumable = consumableList.getSelectedValue();
+            // Dropping a weapon 
+            } else if (currentWeapon != null) {
+                Weapon droppedWeapon = currentWeapon;
+                creature.getInventory().getWeapons().remove(currentWeapon);
+                weaponListModel.removeElement(currentWeapon);
+                level.getRoom(level.getCurrentPosition()).addItem(droppedWeapon);
+
+                // reset
+                weaponList.setSelectedIndex(0);
+                currentWeapon = weaponList.getSelectedValue();
+            }
+
             gamePanel.updateDisplay();
-
-            // reset
-            currentConsumable = null;
-            consumableList.clearSelection();   
-
-            // Dropping a weapon
-            Weapon droppedWeapon = currentWeapon;
-            creature.getInventory().getWeapons().remove(currentWeapon);
-            weaponListModel.removeElement(currentWeapon);
-            level.getRoom(level.getCurrentPosition()).addItem(droppedWeapon);
-            gamePanel.updateDisplay();
-
-            // reset
-            currentWeapon = null;
-            weaponList.clearSelection();
         });
     }
 }

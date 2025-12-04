@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
+import cpsc224.Application;
 import cpsc224.Fight;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
@@ -11,19 +12,18 @@ import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
+import cpsc224.windows.SplashWindow;
 
 /**
  * A panel to visualize a fight.
  */
 public class FightPanel extends JPanel implements GamePanel {
 
-    public static final Color HEALTH_COLOR = new Color(224, 45, 45);
-    public static final Color POISON_COLOR = new Color(32, 148, 16);
-
     private Player player;
     private Creature enemy;
     private Fight fight;
     private Room room;
+    private boolean isPlayersTurn;
 
     private JButton inventoryButton;
 
@@ -44,6 +44,7 @@ public class FightPanel extends JPanel implements GamePanel {
         this.room = room;
         enemy = room.getCreature();
         fight = new Fight(player, enemy);
+        isPlayersTurn = true;
 
         initComponents();
         layoutComponents();
@@ -124,14 +125,13 @@ public class FightPanel extends JPanel implements GamePanel {
             invDialog.setVisible(true);
         });
 
-
         // Setup listeners for each of the player's weapons
         JButton[] weaponButtons = playerPanel.getWeaponButtons();
         for (int i = 0; i < weaponButtons.length; i++) {
             Weapon weapon = player.getInventory().getWeapon(i);
             if (weapon != null) {
                 weaponButtons[i].addActionListener(weaponEvent -> {
-
+                    isPlayersTurn = false;
                     playerPanel.enableWeaponButtons(false);
 
                     // targets either enemy or ally based on move and gets the result as a string
@@ -143,16 +143,11 @@ public class FightPanel extends JPanel implements GamePanel {
 
                     // display info as a result of the move
                     displayMoveInfo(result);
-                    playerPanel.updateDisplay();
-                    enemyPanel.updateDisplay();
+                    updateDisplay();
 
-                    // enemy attacks after delay
-                    if (enemy.getHealth() > 0) {
+                    if (!isWinner())
                         enemyAttackTimer(3000);
-                    // enemy is dead
-                    } else {
-                        winFight();
-                    }
+                    isPlayersTurn = true;
                 });
             }
         }
@@ -165,19 +160,20 @@ public class FightPanel extends JPanel implements GamePanel {
     private void enemyAttackTimer(int delay) {
         Timer timer = new Timer(delay, e -> {
             enemy.calculateEffects();
-            enemyPanel.updateDisplay();
+            updateDisplay();
 
-            if (enemy.getHealth() <= 0) {
-                winFight();
-            }
+            if (isWinner())
+                return;
 
             displayMoveInfo(fight.creatureTurn(enemy, player));
 
             player.calculateEffects();
-            playerPanel.updateDisplay();
+            updateDisplay();
 
-            if (player.getHealth() > 0)
-                playerPanel.enableWeaponButtons(true);
+            if (isWinner())
+                return;
+
+            playerPanel.enableWeaponButtons(true);
         });   
         timer.setRepeats(false);
         timer.start();   
@@ -193,11 +189,17 @@ public class FightPanel extends JPanel implements GamePanel {
         frame.repaint();
     }
 
+    private void loseFight() {
+        JOptionPane.showMessageDialog(this, "You were killed by " + enemy.getName() + "!", "You Died!", JOptionPane.INFORMATION_MESSAGE);
+        SwingUtilities.getWindowAncestor(this).dispose();
+        Application.main(null);
+    }
+
     /**
      * Displays info about the move.
      * @param text the move info
      */
-    private void displayMoveInfo(String text) {
+    public void displayMoveInfo(String text) {
 
         infoLabel.setText(text);
 
@@ -207,6 +209,22 @@ public class FightPanel extends JPanel implements GamePanel {
     public void updateDisplay() {
         playerPanel.updateDisplay();
         enemyPanel.updateDisplay();
+
+        playerPanel.enableWeaponButtons(isPlayersTurn);
+    }
+
+    public boolean isWinner() {
+        if (player.getHealth() <= 0) {
+            loseFight();
+            return true;
+        } 
+
+        if (enemy.getHealth() <= 0) {
+            winFight();
+            return true;
+        }
+
+        return false;
     }
 
     public Creature getEnemy(){

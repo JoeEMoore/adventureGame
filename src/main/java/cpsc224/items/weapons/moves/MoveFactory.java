@@ -50,7 +50,7 @@ public class MoveFactory {
         final int damage = 10;
         final DamageType dt = DamageType.Magic;
         final int maxUses = 5;
-        final double accuracy = 0.8;
+        final double accuracy = 0.9;
         final boolean targetsAllies = false;
 
         Move move = new Move(name, damage, dt, maxUses, accuracy, targetsAllies);

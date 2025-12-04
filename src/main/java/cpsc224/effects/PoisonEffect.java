@@ -22,8 +22,12 @@ public class PoisonEffect extends Effect {
     }
 
     @Override
-    protected String apply(Creature creature) {
+    public String apply(Creature creature) {
         double damage = creature.applyPercentDamage(PERCENT_DAMAGE, DamageType.Pure);
         return creature.getName() + " was poisoned for " + roundDouble(damage) + " damage";
+    }
+
+    public String effectMessage(Creature creature) {
+        return creature.getName() + " was poisoned for " + roundDouble(creature.getMaxHealth() * 0.05) + " damage";
     }
 }
