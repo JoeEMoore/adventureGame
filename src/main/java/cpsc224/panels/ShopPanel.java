@@ -1,5 +1,5 @@
 package cpsc224.panels;
-
+import cpsc224.creatures.Player;
 import cpsc224.items.shop.ShopEntry;
 import javax.swing.*;
 import java.awt.*;
@@ -7,9 +7,13 @@ import java.util.List;
 
 
 public class ShopPanel extends JPanel {
+    private final Player player;
+    
     JPanel ShopPanel;
 
-    public ShopPanel(List<ShopEntry> weapons, List<ShopEntry> consumables){
+    public ShopPanel(List<ShopEntry> weapons, List<ShopEntry> consumables, Player player){
+        this.player = player;
+        
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("SHOP", SwingConstants.CENTER);
@@ -57,10 +61,31 @@ public class ShopPanel extends JPanel {
         JLabel name = new JLabel(entry.getItem().getName(),SwingConstants.CENTER);
         JLabel quantity = new JLabel("Qty" + entry.getQuantity(), SwingConstants.CENTER);
         JLabel price = new JLabel("Price: " + entry.getPrice(), SwingConstants.CENTER);
+        
+        JButton buyButton = new JButton("BUY");
+        buyButton.addActionListener(e->{
+            
+            if(entry.getQuantity() <= 0){
+                JOptionPane.showMessageDialog(this, "Sold out!");
+                return;
+            }
+            
+             if (player.getGold() < entry.getPrice()) {
+                JOptionPane.showMessageDialog(this, "Not enough gold!");
+                return;
+            }
+
+            
+           
+            player.subractGold(entry.getPrice());
+
+
+            
+        });
         panel.add(name);
         panel.add(quantity);
         panel.add(price);
-
+        panel.add(buyButton);
         return panel;
     
     

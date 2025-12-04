@@ -51,4 +51,12 @@ public class Player extends Creature {
         gold += amount;
     }
 
+    /**
+     * Subtracts the amount of gold.
+     * @param amount the amount of gold
+     */
+    public void subractGold(int amount) {
+        gold -= amount;
+    }
+
 }

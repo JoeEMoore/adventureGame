@@ -8,7 +8,7 @@ public class Shop {
     private List<ShopEntry> weaponEntries;
     private List<ShopEntry> consumableEntries;
 
-    public Shop(List<Item> weapnPool, List<Item> consumablePool){
+    public Shop(List<Item> weaponPool, List<Item> consumablePool){
         weaponEntries = new ArrayList<>();
         consumableEntries = new ArrayList<>();
 
