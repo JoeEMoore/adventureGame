@@ -77,12 +77,18 @@ public class LevelPanel extends JPanel implements GamePanel {
                 button.addActionListener(e -> {
                     playerPosition = new Coordinate(row, col);
                     level.setCurrentPosition(playerPosition);
+
+                    // start fight if there is a creature
                     if (room.hasCreature()) {
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         frame.setContentPane(new FightPanel(player, room));
                         frame.revalidate();
                         frame.repaint();
                     }
+
+                    updateDisplay();
+
+                    // open shop dialog
                     if (room instanceof ShopRoom){
                         ShopGenerator generator = new ShopGenerator();
                         var weaponEntries = generator.generateWeaponEntries();
@@ -96,7 +102,6 @@ public class LevelPanel extends JPanel implements GamePanel {
                         shopDialog.setLocationRelativeTo(frame);
                         shopDialog.setVisible(true);
                     }
-                    updateDisplay();
                 });
             }
         }
@@ -145,14 +150,16 @@ public class LevelPanel extends JPanel implements GamePanel {
                     if (room.isExplored()) {
                         button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
 
-                        // indicate room has items if it is explored
-                        if (room.hasItems()) {
-                            ImageIcon itemIcon = getIcon(2, 4);
-                            button.setIcon(itemIcon);
-                            button.setDisabledIcon(itemIcon);
-                        } else {
-                            button.setIcon(null);
-                            button.setDisabledIcon(null);
+                        // indicate room has items if it is explored and not special room
+                        if (!(room instanceof ShopRoom || room instanceof BossRoom)) {
+                            if (room.hasItems()) {
+                                ImageIcon itemIcon = getIcon(2, 4);
+                                button.setIcon(itemIcon);
+                                button.setDisabledIcon(itemIcon);
+                            } else {
+                                button.setIcon(null);
+                                button.setDisabledIcon(null);
+                            }
                         }
                     }
 

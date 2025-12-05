@@ -87,16 +87,24 @@ public class InventoryDialog extends JDialog {
 
         weaponList = new JList<>(weaponListModel);
         weaponList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        weaponList.setSelectedIndex(0);
         weaponScrollPane = new JScrollPane(weaponList);
         weaponScrollPane.setPreferredSize(new Dimension(200, 100));
         weaponScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         weaponScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+        if (!weaponListModel.isEmpty())
+            currentWeapon = weaponListModel.get(0);
+        else if (!consumableListModel.isEmpty())
+            currentConsumable = consumableListModel.get(0);
+        else
+            currentWeapon = null;
+
         useButton = new JButton("Use");
         useButton.setEnabled(false);
         closeButton = new JButton("Close");
         dropButton = new JButton("Drop");
-        dropButton.setEnabled(false);
+        dropButton.setEnabled(currentWeapon != null || currentConsumable != null);
 
         buttonPanel = new JPanel();
         dialogPanel = new JPanel();

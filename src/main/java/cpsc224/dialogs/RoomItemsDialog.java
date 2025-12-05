@@ -68,14 +68,20 @@ public class RoomItemsDialog extends JDialog {
 
         itemList = new JList<>(itemListModel);
         itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        itemList.setSelectedIndex(0);
         itemScrollPane = new JScrollPane(itemList);
         itemScrollPane.setPreferredSize(new Dimension(200, 100));
         itemScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         itemScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+        if (!itemListModel.isEmpty())
+            currentItem = itemListModel.get(0);
+        else
+            currentItem = null;
+
         closeButton = new JButton("Close");
         pickUpButton = new JButton("Pick Up");
-        pickUpButton.setEnabled(false);
+        pickUpButton.setEnabled(!itemListModel.isEmpty());
 
         buttonPanel = new JPanel();
         itemPanel = new JPanel();

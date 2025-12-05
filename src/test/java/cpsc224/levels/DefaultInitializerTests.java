@@ -13,13 +13,13 @@ public class DefaultInitializerTests {
 
     @Test
     void initializeLevelCreatesCorrectNumberOfRooms() {
-        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool());
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool());
         Room[][] rooms = init.initializeLevel();
 
         int count = 0;
-        for (int i = 0; i < rooms.length; i++) {
-            for (int j = 0; j < rooms[i].length; j++) {
-                if (rooms[i][j] != null)
+        for (Room[] room : rooms) {
+            for (Room value : room) {
+                if (value != null)
                     count++;
             }
         }
@@ -30,17 +30,17 @@ public class DefaultInitializerTests {
 
     @Test
     void initializeLevelCreatesCorrectLengthRoomsArray() {
-        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool());
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool());
         Room[][] rooms = init.initializeLevel();
 
         assertEquals(5, rooms.length);
-        for (int i = 0; i < rooms.length; i++)
-            assertEquals(5, rooms[i].length);
+        for (Room[] room : rooms)
+            assertEquals(5, room.length);
     }
 
     @Test
     void getStartRoomNotNull() {
-        LevelInitializer init = new DefaultLevelInitializer(5, 10, new DefaultCreaturePool(), new DefaultItemPool());
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool());
         Room[][] rooms = init.initializeLevel();
         assertNotNull(init.getStartRoom());
     }

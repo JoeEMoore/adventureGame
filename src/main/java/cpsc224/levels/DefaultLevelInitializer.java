@@ -48,6 +48,8 @@ public class DefaultLevelInitializer extends LevelInitializer {
         return rooms;
     }
 
+
+
     @Override
     public Coordinate getStartRoom() {
         return startRoom;
