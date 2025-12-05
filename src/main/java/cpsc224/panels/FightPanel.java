@@ -49,6 +49,8 @@ public class FightPanel extends JPanel implements GamePanel {
         initComponents();
         layoutComponents();
         addListeners();
+
+        checkForWeapon();
     }
 
     /**
@@ -153,6 +155,15 @@ public class FightPanel extends JPanel implements GamePanel {
         }
     }
 
+    private void checkForWeapon() {
+        for (Weapon w : player.getInventory().getWeapons()) {
+            if (w != null)
+                return;
+        }
+
+        repeatedEnemyAttackTimer(500);
+    }
+
     /**
      * The enemy's attack.
      * @param delay the delay in milliseconds for the enemies attack
@@ -177,6 +188,18 @@ public class FightPanel extends JPanel implements GamePanel {
         });   
         timer.setRepeats(false);
         timer.start();   
+    }
+
+    private void repeatedEnemyAttackTimer(int delay) {
+        Timer timer = new Timer(delay, null);
+        timer.addActionListener(e -> {
+            if (player.getHealth() <= 0) {
+                timer.stop();
+                return;
+            }
+            enemyAttackTimer(0);
+        });
+        timer.start();
     }
 
     private void winFight() {
