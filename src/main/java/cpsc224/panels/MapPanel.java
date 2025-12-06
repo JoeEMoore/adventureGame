@@ -92,6 +92,9 @@ public class MapPanel extends JPanel implements GamePanel {
         c.anchor = GridBagConstraints.LINE_END;
         c.fill = GridBagConstraints.BOTH;
         add(levelPanel, c);
+
+        // prevent left panel from resizing as map is explored
+        leftPanel.setMinimumSize(leftPanel.getPreferredSize());
     }
 
     private void addListeners() {

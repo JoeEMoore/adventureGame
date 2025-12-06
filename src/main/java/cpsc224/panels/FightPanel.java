@@ -63,7 +63,9 @@ public class FightPanel extends JPanel implements GamePanel {
         infoLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         infoPanel = new JPanel();
         infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infoPanel.setPreferredSize(infoPanel.getPreferredSize());
         infoPanel.setOpaque(false);
+
 
         playerPanel = new CreaturePanel(player);
         enemyPanel = new CreaturePanel(enemy);
@@ -98,20 +100,19 @@ public class FightPanel extends JPanel implements GamePanel {
         c.insets = new Insets(10, 10, 0, 0);
         c.anchor = GridBagConstraints.FIRST_LINE_START;
         c.fill = GridBagConstraints.NONE;
-        c.weighty = 1;
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 0;
         add(inventoryButton, c);
 
-        c.insets = new Insets(0, 50, 50, 0);
+        c.insets = new Insets(0, 50, 20, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 1;
         add(playerPanel, c);
 
-        c.insets = new Insets(0, 0, 50, 50);
+        c.insets = new Insets(0, 0, 20, 50);
         c.anchor = GridBagConstraints.LAST_LINE_END;
         c.gridx = 2;
         c.gridy = 1;
