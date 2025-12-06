@@ -1,5 +1,6 @@
 package cpsc224.levels;
 
+import cpsc224.creatures.CreatureFactory;
 import cpsc224.levels.rooms.Room;
 
 public class Level {

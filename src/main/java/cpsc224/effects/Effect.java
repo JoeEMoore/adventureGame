@@ -90,6 +90,4 @@ public abstract class Effect {
      * @return the result as a string
      */
     protected abstract String apply(Creature creature);
-
-    public abstract String effectMessage(Creature creature);
 }

@@ -53,19 +53,25 @@ public class Fight {
         
         double damage = move.getDamage() * source.getTurnModifiers().getDamage();
         double damageDealt = target.applyDamage(damage, move.getDamageType());
-        
-        // apply each effect
-        for (Effect e : move.createEffects()) {
-            target.addEffect(e);
-        }
 
-        String result = source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " on " + target.getName() + ".";
+        // result of move
+        StringBuilder result = new StringBuilder();
+        result.append(source.getName()).append(" used ")
+                .append(move.getName()).append(" with their ")
+                .append(weapon.getName()).append(" on ")
+                .append(target.getName()).append(".");
 
         // display damage dealt if greater than zero
         if (damageDealt > 0)
-            result += " They dealt " + damageDealt + " damage!";
+            result.append(" They dealt ").append(damageDealt).append(" damage!");
+
+        // apply each effect and get result
+        result.append("<br>");
+        for (Effect e : move.createEffects()) {
+            result.append(target.addEffect(e)).append(". ");
+        }
         
-        return result;
+        return result.toString();
     }
 
     /**

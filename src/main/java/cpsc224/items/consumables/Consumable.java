@@ -6,7 +6,6 @@ import cpsc224.effects.EffectsFactory;
 import cpsc224.items.Item;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,37 +14,37 @@ import java.util.List;
 public class Consumable extends Item {
     
     private EffectsFactory effects;
-    private boolean affectsPlayer;
+    private boolean affectsSelf;
 
     /**
-     * Creates a consumabel with the specified name and effects factory.
+     * Creates a consumable with the specified name and effects factory.
      * @param name the name
      * @param effects the EffectsFactory functional interface
      */
-    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsPlayer) {
+    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsSelf) {
         super(name, tier);
         this.effects = effects;
-        this.affectsPlayer = affectsPlayer;
+        this.affectsSelf = affectsSelf;
     }
 
-    public boolean getAffectsPlayer(){
-        return affectsPlayer;
+    /**
+     * Get if the consumable targets the creature using it.
+     * @return true if it targets self
+     */
+    public boolean getAffectsSelf(){
+        return affectsSelf;
     }
 
     /**
      * Applies effects to a creature.
      * @param creature the creature
+     * @return the result of applying the effect as a String
      */
-    public void applyEffects(Creature creature) {
+    public String applyEffects(Creature creature) {
+        List<String> messages = new ArrayList<>();
         for (Effect e : effects.createEffects())
-                creature.addEffect(e);
-    }
+                messages.add(creature.addEffect(e));
 
-    public String effectMessage(Creature creature) {
-    List<String> messages = new ArrayList<>();
-    for (Effect e : effects.createEffects()) {
-        messages.add(e.effectMessage(creature));
+        return String.join(", ", messages);
     }
-    return String.join(", ", messages);
-}
 }

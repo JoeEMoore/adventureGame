@@ -37,7 +37,7 @@ public class FightPanel extends JPanel implements GamePanel {
     /**
      * Creates a panel for the specified player and enemy.
      * @param player the player
-     * @param room the toom
+     * @param room the room
      */
     public FightPanel(Player player, Room room) {
         this.player = player;
@@ -148,8 +148,7 @@ public class FightPanel extends JPanel implements GamePanel {
                     updateDisplay();
 
                     if (!isWinner())
-                        enemyAttackTimer(3000);
-                    isPlayersTurn = true;
+                        enemyAttackTimer(3000, 5000);
                 });
             }
         }
@@ -166,28 +165,50 @@ public class FightPanel extends JPanel implements GamePanel {
 
     /**
      * The enemy's attack.
-     * @param delay the delay in milliseconds for the enemies attack
+     * @param enemyTurnDelay the delay in milliseconds for the enemies attack
+     * @param playerTurnDelay the delay in milliseconds for the player's turn to begin after the enemy's turn
+     *                        only if the player has effects
      */
-    private void enemyAttackTimer(int delay) {
-        Timer timer = new Timer(delay, e -> {
-            enemy.calculateEffects();
+    private void enemyAttackTimer(int enemyTurnDelay, int playerTurnDelay) {
+        Timer timer = new Timer(enemyTurnDelay, e -> {
+            String result = enemy.calculateEffects();
             updateDisplay();
 
-            if (isWinner())
+            if (isWinner()) {
+                displayMoveInfo(result);
                 return;
+            }
+            if (!result.isBlank())
+                result += "<br>";
 
-            displayMoveInfo(fight.creatureTurn(enemy, player));
+            displayMoveInfo(result + fight.creatureTurn(enemy, player));
 
-            player.calculateEffects();
-            updateDisplay();
-
-            if (isWinner())
-                return;
-
-            playerPanel.enableWeaponButtons(true);
+            // delay before showing player effect results if player has effects
+            if (!player.getEffects().isEmpty())
+                playerStartTurnTimer(playerTurnDelay);
+            else
+                playerStartTurnTimer(0);
         });   
         timer.setRepeats(false);
         timer.start();   
+    }
+
+    private void playerStartTurnTimer(int delay) {
+        Timer timer = new Timer(delay, e -> {
+            String result = player.calculateEffects();
+            if (!result.isBlank())
+                displayMoveInfo(result);
+
+            updateDisplay();
+
+            if (isWinner())
+                return;
+
+            isPlayersTurn = true;
+            updateDisplay();
+        });
+        timer.setRepeats(false);
+        timer.start();
     }
 
     private void repeatedEnemyAttackTimer(int delay) {
@@ -197,7 +218,7 @@ public class FightPanel extends JPanel implements GamePanel {
                 timer.stop();
                 return;
             }
-            enemyAttackTimer(0);
+            enemyAttackTimer(delay / 4, delay / 4);
         });
         timer.start();
     }
@@ -224,7 +245,7 @@ public class FightPanel extends JPanel implements GamePanel {
      */
     public void displayMoveInfo(String text) {
 
-        infoLabel.setText(text);
+        infoLabel.setText("<html>" + text + "</html>");
 
         updateDisplay();
     }

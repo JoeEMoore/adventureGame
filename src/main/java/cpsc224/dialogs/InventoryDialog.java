@@ -1,6 +1,5 @@
 package cpsc224.dialogs;
 
-import cpsc224.Fight;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
@@ -150,10 +149,14 @@ public class InventoryDialog extends JDialog {
             if (cons == null)
                 return;
 
-            // use consumable on enemy
-            if (!cons.getAffectsPlayer() && gamePanel instanceof FightPanel fightPanel) {
-                cons.applyEffects(fightPanel.getEnemy());
-                fightPanel.displayMoveInfo(cons.effectMessage(fightPanel.getEnemy()));
+            // use consumable while in a fight
+            if (gamePanel instanceof FightPanel fightPanel) {
+
+                // display result of consumable
+                if (!cons.getAffectsSelf())
+                    fightPanel.displayMoveInfo(cons.applyEffects(fightPanel.getEnemy()));
+                else
+                    fightPanel.displayMoveInfo(cons.applyEffects(creature));
 
                 // dispose this dialog if the fight is over
                 if (fightPanel.isWinner())

@@ -127,10 +127,6 @@ public class CreaturePanel extends JPanel implements GamePanel{
     }
 
     public void updateDisplay() {
-        StringBuilder infoText = new StringBuilder();
-        for (String s : creature.getInfo())
-            infoText.append(s).append("\n");
-
         updateHealthBar();
         updateWeaponButtons();
     }

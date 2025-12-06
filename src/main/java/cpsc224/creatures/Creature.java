@@ -21,7 +21,6 @@ public class Creature {
     private CreatureModifiers baseModifiers;
     private CreatureModifiers turnModifiers;
     private List<Effect> effects = new ArrayList<>();
-    private List<String> info = new ArrayList<>();
     private Inventory inventory;
     private ImageIcon icon;
     private List<Double> weaponWeights;
@@ -81,19 +80,24 @@ public class Creature {
      * Adds an effect to the creature. The effect is
      * only applied if it is an instantly applied effect.
      * @param effect the effect
+     * @return the result of the effect as a string
      */
-    public void addEffect(Effect effect) {
+    public String addEffect(Effect effect) {
         String result = null;
 
+        // apply effect if it is applied instantly and set result accordingly
         if (effect.isAppliedInstantly()) {
             result = effect.applyEffect(this);
-            info.add(result);
+        } else {
+            result = "Added " + effect.toString() + " to " + name;
         }
 
+        // don't add the effect if it is out of turns
         if (effect.getTurns() <= 0)
-            return;
-        
+            return result;
+
         effects.add(effect);
+        return result;
     }
 
     /**
@@ -116,7 +120,7 @@ public class Creature {
      * The creature's turn modifiers are reset to the base modifiers.
      * Effects that run out of turns are removed.
      */
-    public void calculateEffects() {
+    public String calculateEffects() {
         resetTurnModifiers();
 
         List<String> results = new ArrayList<>();
@@ -129,22 +133,7 @@ public class Creature {
                 i--;
             }
         }
-        info = results;
-    }
-
-    /**
-     * Gets recent info about this creature.
-     * @return the info as a collection of strings
-     */
-    public Collection<String> getInfo() {
-        return info;
-    }
-
-    /**
-     * Clears recent info about this creature.
-     */
-    public void clearInfo() {
-        info.clear();
+        return String.join(", ", results);
     }
 
     /**

@@ -7,7 +7,7 @@ import cpsc224.damagetypes.DamageType;
  * An effect that deals instant damage to a creature.
  */
 
-public class DamageEffect extends Effect{
+public class DamageEffect extends Effect {
 
     private double damageAmount;
 
@@ -18,15 +18,12 @@ public class DamageEffect extends Effect{
     public DamageEffect(int turns, double damageAmount) {
         super(turns, true);
         this.damageAmount = damageAmount;
+        isAppliedInstantly = true;
     }
 
     @Override
     public String apply(Creature creature) {
         creature.applyDamage(damageAmount, DamageType.Pure);
-        return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
-    }
-
-    public String effectMessage(Creature creature) {
         return creature.getName() + " was dealt " + (int)damageAmount + " damage.";
     }
 }
