@@ -11,6 +11,14 @@ public abstract class Item {
         this.tier = tier;
     }
 
+    public static double mapTierToMultiplier(int tier) {
+        return switch (tier) {
+            case 2 -> 1.5;
+            case 3 -> 2.0;
+            default -> 1.0;
+        };
+    }
+
     @Override
     public String toString() {
         return name;

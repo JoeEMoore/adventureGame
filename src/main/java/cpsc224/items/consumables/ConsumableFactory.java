@@ -3,11 +3,7 @@ package cpsc224.items.consumables;
 import java.util.Arrays;
 import java.util.List;
 
-import cpsc224.effects.DamageEffect;
-import cpsc224.effects.EffectsFactory;
-import cpsc224.effects.HealEffect;
-import cpsc224.effects.PoisonEffect;
-import cpsc224.effects.RefillEffect;
+import cpsc224.effects.*;
 
 /**
  * A factory class to create consumables.
@@ -102,6 +98,16 @@ public class ConsumableFactory {
         };
 
         return new Consumable(name, tier, effects, false);
+    }
+
+    public static Consumable createStrengthPotion() {
+        final String name = "Strength Potion";
+        final int tier = 3;
+        final EffectsFactory effects = () -> {
+            return List.of(new StrengthEffect(2,2));
+        };
+
+        return new Consumable(name, tier, effects, true);
     }
 
     public static Consumable createWeaponRefillPotion() {

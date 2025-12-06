@@ -149,7 +149,7 @@ public class FightPanel extends JPanel implements GamePanel {
                     updateDisplay();
 
                     if (!isWinner())
-                        enemyAttackTimer(3000, 5000);
+                        enemyAttackTimer(3000, 3000);
                 });
             }
         }

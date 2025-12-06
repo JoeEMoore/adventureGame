@@ -11,6 +11,8 @@ import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.DefaultCreaturePool;
 import cpsc224.creatures.Player;
 import cpsc224.items.DefaultItemPool;
+import cpsc224.items.Inventory;
+import cpsc224.items.consumables.ConsumableFactory;
 import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
@@ -37,9 +39,14 @@ public class Application {
         game.setPlayer(player);
         game.setLevel(level);
 
-        player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
-        player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
-        player.getInventory().setWeapon(3, WeaponFactory.createRoyalSword());
+        Inventory inv = player.getInventory();
+        inv.setWeapon(1, WeaponFactory.createToxicStaff());
+        inv.setWeapon(2, WeaponFactory.createHealStaff());
+        inv.setWeapon(3, WeaponFactory.createRoyalSword());
+        inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
+        inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
+        inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
+
 
         new SplashWindow();
     }

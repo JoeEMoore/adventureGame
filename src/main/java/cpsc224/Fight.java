@@ -6,6 +6,7 @@ import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureAI;
 import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
+import cpsc224.items.Item;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.items.weapons.moves.Move;
 import cpsc224.utils.DoubleUtils;
@@ -39,7 +40,7 @@ public class Fight {
      * @return the result of the move as a string
      */
     public String performMove(Creature source, Creature target, Weapon weapon) {
-        double multplier = mapTierToMultiplier(weapon.getTier());
+        double multplier = Item.mapTierToMultiplier(weapon.getTier());
         Move move = weapon.getMove();
 
         if (move.getUses() > 0)
@@ -87,13 +88,5 @@ public class Fight {
         CreatureAI move = new CreatureAI(creature);
         int index = move.calculateMove();
         return performMove(creature, enemy, creature.getInventory().getWeapon(index));
-    }
-
-    private static double mapTierToMultiplier(int tier) {
-        return switch (tier) {
-            case 2 -> 1.5;
-            case 3 -> 2.0;
-            default -> 1.0;
-        };
     }
 }
