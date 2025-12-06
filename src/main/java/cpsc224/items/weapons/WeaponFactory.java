@@ -24,12 +24,20 @@ public class WeaponFactory {
 
     // *** PLAYER STARTER WEAPONS ***
 
-    public static Weapon createDullSword() {
-        final String name = "Dull Sword";
+    public static Weapon createRustyDagger() {
+        final String name = "Rusty Dagger";
         final int tier = 1;
         final Move move = MoveFactory.createSlashMove();
 
-        return new Weapon(name, tier, move, getIcon(0, 2));
+        return new Weapon(name, tier, move, getIcon(0, 0));
+    }
+
+    public static Weapon createBow() {
+        final String name = "Bow";
+        final int tier = 1;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move);
     }
 
 
@@ -62,7 +70,7 @@ public class WeaponFactory {
 
     public static Weapon createToxicStaff() {
         final String name = "Toxic Staff";
-        final int tier = 1;
+        final int tier = 2;
         final Move move = MoveFactory.createToxicBoltMove();
 
         return new Weapon(name, tier, move, getIcon(10, 2));
@@ -76,20 +84,20 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(10, 1));
     }
 
+    public static Weapon createSteelSword() {
+        final String name = "Steel Sword";
+        final int tier = 1;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(0, 2));
+    }
+
     public static Weapon createRoyalSword() {
         final String name = "Royal Sword";
         final int tier = 2;
         final Move move = MoveFactory.createSlashMove();
 
         return new Weapon(name, tier, move);
-    }
-
-    public static Weapon createRustyDagger() {
-        final String name = "Rusty Dagger";
-        final int tier = 1;
-        final Move move = MoveFactory.createSlashMove();
-
-        return new Weapon(name, tier, move, getIcon(0, 0));
     }
 
     public static Weapon createSteelHammer() {
@@ -100,11 +108,4 @@ public class WeaponFactory {
         return new Weapon(name, tier, move);
     }
 
-    public static Weapon createBow() {
-        final String name = "Bow";
-        final int tier = 1;
-        final Move move = MoveFactory.createShootMove();
-
-        return new Weapon(name, tier, move);
-    }
 }

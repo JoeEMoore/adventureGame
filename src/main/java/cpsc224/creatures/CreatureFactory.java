@@ -39,7 +39,7 @@ public class CreatureFactory {
         final int health = 100;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createDullSword());
+        inv.setWeapon(0, WeaponFactory.createSteelSword());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
@@ -89,7 +89,7 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
-        inv.setWeapon(1, WeaponFactory.createDullSword());
+        inv.setWeapon(1, WeaponFactory.createSteelSword());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(4.0);
         weaponWeights.add(1.0);
@@ -118,7 +118,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setWeapon(1, WeaponFactory.createWoodClub());
-        inv.setWeapon(2, WeaponFactory.createDullSword());
+        inv.setWeapon(2, WeaponFactory.createSteelSword());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(1.5);
         weaponWeights.add(1.0);

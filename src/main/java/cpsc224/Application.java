@@ -39,6 +39,7 @@ public class Application {
 
         player.getInventory().setWeapon(1, WeaponFactory.createToxicStaff());
         player.getInventory().setWeapon(2, WeaponFactory.createHealStaff());
+        player.getInventory().setWeapon(3, WeaponFactory.createRoyalSword());
 
         new SplashWindow();
     }

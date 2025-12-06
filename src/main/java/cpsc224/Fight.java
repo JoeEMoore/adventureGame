@@ -8,6 +8,7 @@ import cpsc224.creatures.Player;
 import cpsc224.effects.Effect;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.items.weapons.moves.Move;
+import cpsc224.utils.DoubleUtils;
 
 /**
  * A class to represent a fight between two creatures.
@@ -38,6 +39,7 @@ public class Fight {
      * @return the result of the move as a string
      */
     public String performMove(Creature source, Creature target, Weapon weapon) {
+        double multplier = mapTierToMultiplier(weapon.getTier());
         Move move = weapon.getMove();
 
         if (move.getUses() > 0)
@@ -51,7 +53,7 @@ public class Fight {
                 return source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " against " + target.getName() + ". They Missed!";
         }
         
-        double damage = move.getDamage() * source.getTurnModifiers().getDamage();
+        double damage = move.getDamage() * multplier * source.getTurnModifiers().getDamage();
         double damageDealt = target.applyDamage(damage, move.getDamageType());
 
         // result of move
@@ -63,11 +65,12 @@ public class Fight {
 
         // display damage dealt if greater than zero
         if (damageDealt > 0)
-            result.append(" They dealt ").append(damageDealt).append(" damage!");
+            result.append(" They dealt ").append(DoubleUtils.roundDouble(damageDealt)).append(" damage!");
 
         // apply each effect and get result
         result.append("<br>");
         for (Effect e : move.createEffects()) {
+            e.multiplyEffect(multplier);
             result.append(target.addEffect(e)).append(". ");
         }
         
@@ -84,5 +87,13 @@ public class Fight {
         CreatureAI move = new CreatureAI(creature);
         int index = move.calculateMove();
         return performMove(creature, enemy, creature.getInventory().getWeapon(index));
+    }
+
+    private static double mapTierToMultiplier(int tier) {
+        return switch (tier) {
+            case 2 -> 1.5;
+            case 3 -> 2.0;
+            default -> 1.0;
+        };
     }
 }

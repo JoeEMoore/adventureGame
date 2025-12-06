@@ -6,7 +6,7 @@ public class WeaponPool {
 
     public WeaponPool() {
         allWeapons = List.of(
-            WeaponFactory.createDullSword(),
+            WeaponFactory.createSteelSword(),
             WeaponFactory.createRatClaws(),
             WeaponFactory.createBirdTalons(),
             WeaponFactory.createWoodClub(),

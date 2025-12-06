@@ -19,7 +19,7 @@ public class FightTests {
     public void PerformingMoves (){
         Player p = CreatureFactory.createPlayer();
         Creature rat = CreatureFactory.createRat();
-        Weapon s = WeaponFactory.createDullSword();
+        Weapon s = WeaponFactory.createSteelSword();
         Fight f = new Fight(p, rat);
         double intitialRhealth = rat.getHealth();
         String t1 = f.performMove(p,rat,s);

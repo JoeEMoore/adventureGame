@@ -2,10 +2,21 @@ package cpsc224.effects;
 
 import cpsc224.creatures.Creature;
 
-public class RefillEffect extends Effect{
+import javax.naming.OperationNotSupportedException;
+
+public class RefillEffect extends Effect {
 
     public RefillEffect(int turns) {
         super(turns, true);
+    }
+
+    /**
+     * Has no effect on RefillEffect.
+     * @param multiplier the multiplier
+     */
+    @Override
+    public void multiplyEffect(double multiplier) {
+        // do nothing
     }
 
     @Override

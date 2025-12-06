@@ -1,6 +1,7 @@
 package cpsc224.effects;
 
 import cpsc224.creatures.Creature;
+import cpsc224.utils.DoubleUtils;
 
 /**
  * An effect that heals creatures. It is instantly applied.
@@ -18,6 +19,15 @@ public class HealEffect extends Effect {
     }
 
     /**
+     * Multiplies the heal amount.
+     * @param multiplier the multiplier
+     */
+    @Override
+    public void multiplyEffect(double multiplier) {
+        healAmount *= (int) multiplier;
+    }
+
+    /**
      * Creates a heal effect with a heal amount and number of turns.
      * @param healAmount the amount to heal
      * @param turns the number of turns
@@ -31,6 +41,6 @@ public class HealEffect extends Effect {
     @Override
     public String apply(Creature creature) {
         double health = creature.addHealth(healAmount);
-        return creature.getName() + " gained " + roundDouble(health) + " health";
+        return creature.getName() + " gained " + DoubleUtils.roundDouble(health) + " health";
     }
 }

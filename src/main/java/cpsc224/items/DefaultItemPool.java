@@ -13,7 +13,7 @@ public class DefaultItemPool implements ItemPool {
         int randValue = rand.nextInt(1000);
 
         if(randValue < 30){
-            return WeaponFactory.createDullSword();
+            return WeaponFactory.createSteelSword();
         } else if(randValue < 60){
             return WeaponFactory.createWoodClub();
         } else if(randValue < 90){

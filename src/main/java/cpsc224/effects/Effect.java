@@ -75,14 +75,16 @@ public abstract class Effect {
     }
 
     /**
+     * Increases the potency of the effect by applying a multiplier.
+     * @param multiplier the multiplier
+     */
+    public abstract void multiplyEffect(double multiplier);
+
+    /**
      * Rounds a double to one digit after the decimal place.
      * @param d the double
      * @return the rounded value as a string
      */
-    protected static String roundDouble(double d) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        return df.format(d);
-    }
 
     /**
      * Applies the effect to the creature.
