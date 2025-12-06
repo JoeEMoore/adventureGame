@@ -110,6 +110,16 @@ public class ConsumableFactory {
         return new Consumable(name, tier, effects, true);
     }
 
+    public static Consumable createResistancePotion() {
+        final String name = "Resistance Potion";
+        final int tier = 3;
+        final EffectsFactory effects = () -> {
+            return List.of(new ResistanceEffect(2,0.5));
+        };
+
+        return new Consumable(name, tier, effects, true);
+    }
+
     public static Consumable createWeaponRefillPotion() {
         final String name = "Weapon Refill Potion";
         final int tier = 2;

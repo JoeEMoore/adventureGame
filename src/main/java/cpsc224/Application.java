@@ -40,12 +40,15 @@ public class Application {
         game.setLevel(level);
 
         Inventory inv = player.getInventory();
+        inv.incrementMaxConsumables();
+        inv.incrementMaxConsumables();
         inv.setWeapon(1, WeaponFactory.createToxicStaff());
         inv.setWeapon(2, WeaponFactory.createHealStaff());
         inv.setWeapon(3, WeaponFactory.createRoyalSword());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
         inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
+        inv.setConsumable(4, ConsumableFactory.createResistancePotion());
 
 
         new SplashWindow();

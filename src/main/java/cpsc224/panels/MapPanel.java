@@ -108,7 +108,7 @@ public class MapPanel extends JPanel implements GamePanel {
 
             if (option == JOptionPane.YES_OPTION) {
                 SwingUtilities.getWindowAncestor(this).dispose();
-                new SplashWindow();
+                Application.main(null);
             }
         });
 
