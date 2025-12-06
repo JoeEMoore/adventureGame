@@ -39,16 +39,15 @@ public class FightTests {
     }
     
     @Test
-    public void createsTurns () {
-        Player p = CreatureFactory.createPlayer();
-        Creature rat = CreatureFactory.createRat();
+    public void creatureTurnReturnsResultAsString() {
+        Creature rat = TestUtils.createTestRat();
+        Player p = TestUtils.createTestPlayer();
         Fight f = new Fight(p, rat);
-        String t1 = f.creatureTurn(p, rat);
+        String t1 = f.creatureTurn(rat, p);
 
-        assertTrue(t1.contains("Dull Sword"));
-        assertTrue(t1.contains("Rat"));
-        assertTrue(t1.contains(p.getInventory().getWeapon(0).getName()));
-        assertTrue(t1.contains("Player"));
+        assertTrue(t1.contains(rat.getName()));
+        assertTrue(t1.contains(rat.getInventory().getWeapon(0).getName()));
+        assertTrue(t1.contains(p.getName()));
 
     }
 

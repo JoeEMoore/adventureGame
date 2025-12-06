@@ -61,6 +61,17 @@ public class CreatureTests {
     }
 
     @Test
+    void addEffectReturnsResultAsString() {
+        Creature rat = CreatureFactory.createRat();
+        Effect effect = new PoisonEffect(2);
+        Effect effect2 = new HealEffect(25, 2);
+        String result = rat.addEffect(effect);
+
+        assertTrue(result.contains(rat.getName()));
+        assertTrue(result.contains(effect.getName()));
+    }
+
+    @Test
     void clearEffectsClearsEffects() {
         Creature rat = TestUtils.createTestRat();
         Effect effect = new PoisonEffect(2);
@@ -128,25 +139,16 @@ public class CreatureTests {
     }
 
     @Test
-    void getInfoReturnsCorrectInfo() {
+    void calculateEffectsReturnsResultOfEffectsAsString() {
         Creature rat = TestUtils.createTestRat();
-        rat.applyDamage(5, DamageType.Pure);
-        rat.addEffect(new HealEffect(5));
+        Effect effect = new PoisonEffect(2);
+        Effect effect2 = new HealEffect(2);
+        rat.addEffect(effect);
+        rat.addEffect(effect2);
+        String result = rat.calculateEffects();
 
-        assertTrue(rat.getInfo().contains("Rat was healed by 5"));
-    }
-
-    @Test
-    void clearInfoClearsCreatureInfo() {
-        Creature rat = TestUtils.createTestRat();
-        rat.applyDamage(5, DamageType.Pure);
-        rat.addEffect(new HealEffect(5, 2));
-        rat.addEffect(new PoisonEffect(2));
-        rat.calculateEffects();
-        assertEquals(2, rat.getInfo().size());
-
-        rat.clearInfo();
-        assertEquals(0, rat.getInfo().size());
+        assertTrue(result.contains(rat.getName()));
+        assertTrue(result.contains(rat.getName()));
     }
 
     @Test

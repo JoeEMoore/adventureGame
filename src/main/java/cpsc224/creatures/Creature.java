@@ -119,6 +119,7 @@ public class Creature {
      * Applies all effects to the creature for the turn. 
      * The creature's turn modifiers are reset to the base modifiers.
      * Effects that run out of turns are removed.
+     * @return the result as a String
      */
     public String calculateEffects() {
         resetTurnModifiers();
