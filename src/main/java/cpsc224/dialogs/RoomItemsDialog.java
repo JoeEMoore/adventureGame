@@ -108,7 +108,7 @@ public class RoomItemsDialog extends JDialog {
     private void addListeners() {
         pickUpButton.addActionListener(e -> {
             if (!creature.getInventory().addItem(currentItem)) {
-                    JOptionPane.showMessageDialog(this, "No room in your inventory", "No Room", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(this, "No room in your inventory", "No Room", JOptionPane.ERROR_MESSAGE);
             } else {
                 room.removeItem(currentItem);
                 itemListModel.removeElement(currentItem);

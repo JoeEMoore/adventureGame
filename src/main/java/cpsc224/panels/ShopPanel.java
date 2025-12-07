@@ -1,18 +1,23 @@
 package cpsc224.panels;
 import cpsc224.creatures.Player;
 import cpsc224.items.shop.ShopEntry;
+import cpsc224.levels.rooms.ShopRoom;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
-public class ShopPanel extends JPanel {
+public class ShopPanel extends JPanel implements GamePanel {
     private final Player player;
-    
-    JPanel ShopPanel;
+    private GamePanel gamePanel;
+    private List<ItemBoxPanel> itemBoxPanels = new ArrayList<>();
 
-    public ShopPanel(List<ShopEntry> weapons, List<ShopEntry> consumables, Player player){
+    public ShopPanel(ShopRoom shop, Player player, GamePanel gamePanel){
         this.player = player;
+        this.gamePanel = gamePanel;
         
         setLayout(new BorderLayout());
 
@@ -21,19 +26,20 @@ public class ShopPanel extends JPanel {
         add(title, BorderLayout.NORTH);
 
 
-        JPanel itemsContainer = new JPanel(new GridLayout(2, 1, 0, 20));
+        JPanel itemsContainer = new JPanel();
+        itemsContainer.setLayout(new BoxLayout(itemsContainer, BoxLayout.Y_AXIS));
         itemsContainer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        JPanel weaponsRow = createRowPanel(weapons, "Weapons");
-        JPanel consumablesRow = createRowPanel(consumables, "Consumables");
+        JPanel weaponsRow = createRowPanel(shop.getWeaponEntries(), "Weapons");
+        JPanel consumablesRow = createRowPanel(shop.getConsumableEntries(), "Consumables");
 
         itemsContainer.add(weaponsRow);
         itemsContainer.add(consumablesRow);
 
-         add(itemsContainer, BorderLayout.CENTER);
-
+        add(itemsContainer, BorderLayout.CENTER);
+        updateDisplay();
     }
 
-    private JPanel createRowPanel(List<ShopEntry> items, String labelName){
+    private JPanel createRowPanel(Collection<ShopEntry> items, String labelName){
         JPanel rowPanel = new JPanel();
         rowPanel.setLayout(new BorderLayout());
 
@@ -42,53 +48,22 @@ public class ShopPanel extends JPanel {
         rowPanel.add(rowLabel, BorderLayout.NORTH);
 
 
-        JPanel itemsGrid = new JPanel(new GridLayout(1, 5, 15, 0));
+        JPanel itemsGrid = new JPanel(new GridLayout(1, items.size(), 15, 0));
 
         for (ShopEntry entry : items) {
-            itemsGrid.add(createItemBox(entry));
+            ItemBoxPanel panel = new ItemBoxPanel(entry, player, gamePanel, this);
+            itemsGrid.add(panel);
+            itemBoxPanels.add(panel);
         }
 
         rowPanel.add(itemsGrid, BorderLayout.CENTER);
         return rowPanel;
     }
 
-    private JPanel createItemBox(ShopEntry entry){
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2,1));
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        panel.setPreferredSize(new Dimension(120, 80));
-
-        JLabel name = new JLabel(entry.getItem().getName(),SwingConstants.CENTER);
-        JLabel quantity = new JLabel("Qty" + entry.getQuantity(), SwingConstants.CENTER);
-        JLabel price = new JLabel("Price: " + entry.getPrice(), SwingConstants.CENTER);
-        
-        JButton buyButton = new JButton("BUY");
-        buyButton.addActionListener(e->{
-            
-            if(entry.getQuantity() <= 0){
-                JOptionPane.showMessageDialog(this, "Sold out!");
-                return;
-            }
-            
-             if (player.getGold() < entry.getPrice()) {
-                JOptionPane.showMessageDialog(this, "Not enough gold!");
-                return;
-            }
-
-            
-           
-            player.subractGold(entry.getPrice());
-
-
-            
-        });
-        panel.add(name);
-        panel.add(quantity);
-        panel.add(price);
-        panel.add(buyButton);
-        return panel;
-    
-    
+    @Override
+    public void updateDisplay() {
+        for (ItemBoxPanel panel : itemBoxPanels) {
+            panel.updateDisplay();
+        }
     }
-
 }

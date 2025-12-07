@@ -13,6 +13,10 @@ import cpsc224.creatures.Player;
 import cpsc224.items.DefaultItemPool;
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.ConsumableFactory;
+import cpsc224.items.consumables.ShopConsumablePool;
+import cpsc224.items.shop.DefaultShopInitializer;
+import cpsc224.items.shop.ShopInitializer;
+import cpsc224.items.weapons.ShopWeaponPool;
 import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
@@ -30,9 +34,9 @@ public class Application {
     public static void main(String[] args) {
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
 
-
+        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool());
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
         Level level = new Level(levelInit);
         Player player = CreatureFactory.createPlayer();
 
@@ -49,6 +53,7 @@ public class Application {
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
         inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
         inv.setConsumable(4, ConsumableFactory.createResistancePotion());
+        player.addGold(100);
 
 
         new SplashWindow();

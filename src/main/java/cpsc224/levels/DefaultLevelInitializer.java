@@ -6,6 +6,7 @@ import java.util.Random;
 import cpsc224.creatures.CreaturePool;
 import cpsc224.items.Item;
 import cpsc224.items.ItemPool;
+import cpsc224.items.shop.ShopInitializer;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.ShopRoom;
@@ -18,8 +19,8 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
     Random rand = new Random();
 
-    public DefaultLevelInitializer(int numRooms, int roomLength, CreaturePool creaturePool, ItemPool roomPool) {
-        super(numRooms, roomLength, creaturePool, roomPool);
+    public DefaultLevelInitializer(int numRooms, int roomLength, CreaturePool creaturePool, ItemPool roomPool, ShopInitializer shopInitializer) {
+        super(numRooms, roomLength, creaturePool, roomPool, shopInitializer);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
-            room.setCreature(creaturePool.getCreature());
+            //room.setCreature(creaturePool.getCreature());
 
             // add item
             Item item = roomPool.getItem();
@@ -42,9 +43,7 @@ public class DefaultLevelInitializer extends LevelInitializer {
         }
         
         startRoom = addRoom(new Room()); // second last room is empty start room
-
-        addRoom(new ShopRoom());
-
+        addRoom(new ShopRoom(shopInitializer));
         return rooms;
     }
 

@@ -35,7 +35,7 @@ public class MapPanel extends JPanel implements GamePanel {
     }
 
     private void initComponents() {
-        levelPanel = new LevelPanel(Game.getInstance().getLevel(), player);
+        levelPanel = new LevelPanel(Game.getInstance().getLevel(), player, this);
         healthBar = new JProgressBar(0, (int)player.getMaxHealth());
         //healthBar.setPreferredSize(new Dimension(150, 20));
 

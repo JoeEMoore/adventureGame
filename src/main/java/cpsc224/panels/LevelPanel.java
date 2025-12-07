@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
-import cpsc224.items.shop.ShopGenerator;
+import cpsc224.items.shop.DefaultShopInitializer;
 
+import cpsc224.items.shop.ShopInitializer;
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
 import cpsc224.levels.rooms.BossRoom;
@@ -26,13 +27,15 @@ public class LevelPanel extends JPanel implements GamePanel {
 
     Level level;
     Player player;
+    GamePanel mapPanel;
     Room[][] rooms;
     JButton[][] roomButtons;
     Coordinate playerPosition;
 
-    public LevelPanel(Level level, Player player) {
+    public LevelPanel(Level level, Player player, GamePanel mapPanel) {
         this.level = level;
         this.player = player;
+        this.mapPanel = mapPanel;
         rooms = level.getRooms();
         playerPosition = level.getCurrentPosition();
         
@@ -89,12 +92,8 @@ public class LevelPanel extends JPanel implements GamePanel {
                     updateDisplay();
 
                     // open shop dialog
-                    if (room instanceof ShopRoom){
-                        ShopGenerator generator = new ShopGenerator();
-                        var weaponEntries = generator.generateWeaponEntries();
-                        var consumableEntries = generator.generateConsumableEntries();
-
-                        ShopPanel shopPanel = new ShopPanel(weaponEntries, consumableEntries, player);
+                    if (room instanceof ShopRoom shop){
+                        ShopPanel shopPanel = new ShopPanel(shop, player, mapPanel);
                         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                         JDialog shopDialog = new JDialog(frame, "SHOP", true);
                         shopDialog.setContentPane(shopPanel);
