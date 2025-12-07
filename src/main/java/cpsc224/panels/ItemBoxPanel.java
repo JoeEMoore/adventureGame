@@ -30,12 +30,12 @@ public class ItemBoxPanel extends JPanel implements GamePanel {
     }
 
     private void initComponents() {
-        nameLabel = new JLabel(entry.getItem().getName(),SwingConstants.CENTER);
+        nameLabel = new JLabel("<html> <p style=\"text-align:center;\">" + entry.getItem().getName() + "</p></html>",SwingConstants.CENTER);
         quantityLabel = new JLabel("Qty: " + entry.getQuantity(), SwingConstants.CENTER);
         priceLabel = new JLabel("Price: " + entry.getPrice(), SwingConstants.CENTER);
         buyButton = new JButton("BUY");
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        setPreferredSize(new Dimension(200, 80));
+        setPreferredSize(new Dimension(220, 100));
     }
 
     private void layoutComponents() {
@@ -72,7 +72,6 @@ public class ItemBoxPanel extends JPanel implements GamePanel {
 
     @Override
     public void updateDisplay() {
-        nameLabel.setText(entry.getItem().getName());
         quantityLabel.setText("Qty: " + entry.getQuantity());
         priceLabel.setText("Price: " + entry.getPrice());
         buyButton.setEnabled(entry.getQuantity() > 0 && shopper.getGold() >= entry.getPrice());

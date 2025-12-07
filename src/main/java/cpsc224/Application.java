@@ -46,9 +46,9 @@ public class Application {
         inv.incrementMaxConsumables();
         inv.incrementMaxConsumables();
 
-        inv.setWeapon(0, WeaponFactory.createSteelMace());
+        inv.setWeapon(0, WeaponFactory.createHealStaff());
         inv.setWeapon(1, WeaponFactory.createSteelHammer());
-        inv.setWeapon(2, WeaponFactory.createBasicWand());
+        inv.setWeapon(2, WeaponFactory.createCrossbow());
         inv.setWeapon(3, WeaponFactory.createEnchantedStaff());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());

@@ -35,7 +35,7 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
             // 85% chance to add creature
             if (rand.nextInt(100) < 85)
-                room.setCreature(creaturePool.createNew());
+                //room.setCreature(creaturePool.createNew());
 
             // 40% chance to add item
             if (rand.nextInt(100) < 40)

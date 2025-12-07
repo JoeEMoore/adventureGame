@@ -22,7 +22,7 @@ public class ShopPanel extends JPanel implements GamePanel {
         setLayout(new BorderLayout());
 
         JLabel title = new JLabel("SHOP", SwingConstants.CENTER);
-         title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         add(title, BorderLayout.NORTH);
 
 
@@ -33,6 +33,7 @@ public class ShopPanel extends JPanel implements GamePanel {
         JPanel consumablesRow = createRowPanel(shop.getConsumableEntries(), "Consumables");
 
         itemsContainer.add(weaponsRow);
+        itemsContainer.add(Box.createRigidArea(new Dimension(0, 20)));
         itemsContainer.add(consumablesRow);
 
         add(itemsContainer, BorderLayout.CENTER);
