@@ -1,7 +1,6 @@
-package cpsc224.levels.rooms;
+package cpsc224.levels.rooms.shop;
 
-import cpsc224.items.shop.ShopEntry;
-import cpsc224.items.shop.ShopInitializer;
+import cpsc224.levels.rooms.Room;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package cpsc224.items.shop;
+package cpsc224.levels.rooms.shop;
 
 import cpsc224.items.Item;
 

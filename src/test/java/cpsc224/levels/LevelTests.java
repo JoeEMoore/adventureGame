@@ -1,11 +1,11 @@
 package cpsc224.levels;
 
-import cpsc224.creatures.DefaultCreaturePool;
-import cpsc224.items.DefaultItemPool;
-import cpsc224.items.consumables.ShopConsumablePool;
-import cpsc224.items.shop.DefaultShopInitializer;
-import cpsc224.items.shop.ShopInitializer;
-import cpsc224.items.weapons.ShopWeaponPool;
+import cpsc224.pools.DefaultCreaturePool;
+import cpsc224.pools.DefaultItemPool;
+import cpsc224.pools.ShopConsumablePool;
+import cpsc224.levels.rooms.shop.DefaultShopInitializer;
+import cpsc224.levels.rooms.shop.ShopInitializer;
+import cpsc224.pools.ShopWeaponPool;
 import cpsc224.levels.rooms.Room;
 import org.junit.jupiter.api.Test;
 

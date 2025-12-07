@@ -12,14 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import cpsc224.creatures.Player;
-import cpsc224.items.shop.DefaultShopInitializer;
 
-import cpsc224.items.shop.ShopInitializer;
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
-import cpsc224.levels.rooms.ShopRoom;
+import cpsc224.levels.rooms.shop.ShopRoom;
 import cpsc224.utils.BufferedImageBuilder;
 
 

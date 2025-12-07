@@ -1,16 +1,17 @@
 package cpsc224.levels;
 
-import cpsc224.creatures.CreaturePool;
-import cpsc224.items.ItemPool;
-import cpsc224.items.shop.ShopInitializer;
+import cpsc224.creatures.Creature;
+import cpsc224.items.Item;
+import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.Room;
+import cpsc224.pools.Pool;
 
 public abstract class LevelInitializer {
 
     protected int numRooms;
     protected int roomLength;
-    protected CreaturePool creaturePool;
-    protected ItemPool roomPool;
+    protected Pool<Creature> creaturePool;
+    protected Pool<Item> roomPool;
     protected ShopInitializer shopInitializer;
 
     /**
@@ -21,7 +22,7 @@ public abstract class LevelInitializer {
      * @param roomItemPool the pool of items that can generate in normal rooms
      * @param shopInitializer the shop generator
      */
-    public LevelInitializer(int numRooms, int roomLength, CreaturePool creaturePool, ItemPool roomItemPool, ShopInitializer shopInitializer) {
+    public LevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomItemPool, ShopInitializer shopInitializer) {
         this.numRooms = numRooms;
         this.roomLength = roomLength;
         this.creaturePool = creaturePool;

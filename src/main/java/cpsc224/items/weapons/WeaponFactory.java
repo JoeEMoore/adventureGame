@@ -141,7 +141,7 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(4, 4));
     }
 
-    public static Weapon createEnchantedWand() {
+    public static Weapon createEnchantedStaff() {
         final String name = "Enchanted Staff";
         final int tier = 3;
         final Move move = MoveFactory.createMagicMissileMove();

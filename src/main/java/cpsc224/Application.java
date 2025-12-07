@@ -5,15 +5,15 @@ import java.awt.Color;
 import javax.swing.ToolTipManager;
 
 import cpsc224.creatures.CreatureFactory;
-import cpsc224.creatures.DefaultCreaturePool;
+import cpsc224.pools.DefaultCreaturePool;
 import cpsc224.creatures.Player;
-import cpsc224.items.DefaultItemPool;
+import cpsc224.pools.DefaultItemPool;
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.ConsumableFactory;
-import cpsc224.items.consumables.ShopConsumablePool;
-import cpsc224.items.shop.DefaultShopInitializer;
-import cpsc224.items.shop.ShopInitializer;
-import cpsc224.items.weapons.ShopWeaponPool;
+import cpsc224.pools.ShopConsumablePool;
+import cpsc224.levels.rooms.shop.DefaultShopInitializer;
+import cpsc224.levels.rooms.shop.ShopInitializer;
+import cpsc224.pools.ShopWeaponPool;
 import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
@@ -29,7 +29,7 @@ public class Application {
     public static final Color GAME_COLOR = new Color(143, 147, 184);
     public static final Color HEALTH_COLOR = new Color(224, 45, 45);
     public static final Color POISON_COLOR = new Color(32, 148, 16);
-    
+
     public static void main(String[] args) {
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
 
@@ -49,7 +49,7 @@ public class Application {
         inv.setWeapon(0, WeaponFactory.createSteelMace());
         inv.setWeapon(1, WeaponFactory.createSteelHammer());
         inv.setWeapon(2, WeaponFactory.createBasicWand());
-        inv.setWeapon(3, WeaponFactory.createEnchantedWand());
+        inv.setWeapon(3, WeaponFactory.createEnchantedStaff());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
         inv.setConsumable(3, ConsumableFactory.createStrengthPotion());

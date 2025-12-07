@@ -1,7 +1,7 @@
 package cpsc224.panels;
 import cpsc224.creatures.Player;
-import cpsc224.items.shop.ShopEntry;
-import cpsc224.levels.rooms.ShopRoom;
+import cpsc224.levels.rooms.shop.ShopEntry;
+import cpsc224.levels.rooms.shop.ShopRoom;
 
 import javax.swing.*;
 import java.awt.*;

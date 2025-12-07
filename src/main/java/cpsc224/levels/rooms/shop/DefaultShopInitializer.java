@@ -1,14 +1,15 @@
-package cpsc224.items.shop;
+package cpsc224.levels.rooms.shop;
+
+import cpsc224.items.consumables.Consumable;
+import cpsc224.items.weapons.Weapon;
+import cpsc224.pools.Pool;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-import cpsc224.items.ItemPool;
-
 public class DefaultShopInitializer extends ShopInitializer {
 
-    public DefaultShopInitializer(ItemPool weaponPool, ItemPool consumablePool) {
+    public DefaultShopInitializer(Pool<Weapon> weaponPool, Pool<Consumable> consumablePool) {
         super(weaponPool, consumablePool);
     }
 
@@ -17,7 +18,7 @@ public class DefaultShopInitializer extends ShopInitializer {
         List<ShopEntry> entries = new ArrayList<>();
        
         for (int i = 0; i < 3; i++) {
-            entries.add(new ShopEntry(weaponPool.getItem(), 1));
+            entries.add(new ShopEntry(weaponPool.createNew(), 1));
         }
         return entries;
     }
@@ -27,7 +28,7 @@ public class DefaultShopInitializer extends ShopInitializer {
         List<ShopEntry> entries = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            entries.add(new ShopEntry(consumablePool.getItem(), 3));
+            entries.add(new ShopEntry(consumablePool.createNew(), 3));
         }
         return entries;
     }

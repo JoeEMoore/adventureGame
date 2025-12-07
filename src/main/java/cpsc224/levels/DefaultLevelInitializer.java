@@ -3,13 +3,13 @@ package cpsc224.levels;
 import java.util.HashSet;
 import java.util.Random;
 
-import cpsc224.creatures.CreaturePool;
+import cpsc224.creatures.Creature;
 import cpsc224.items.Item;
-import cpsc224.items.ItemPool;
-import cpsc224.items.shop.ShopInitializer;
+import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
-import cpsc224.levels.rooms.ShopRoom;
+import cpsc224.levels.rooms.shop.ShopRoom;
+import cpsc224.pools.Pool;
 
 public class DefaultLevelInitializer extends LevelInitializer {
 
@@ -19,7 +19,7 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
     Random rand = new Random();
 
-    public DefaultLevelInitializer(int numRooms, int roomLength, CreaturePool creaturePool, ItemPool roomPool, ShopInitializer shopInitializer) {
+    public DefaultLevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomPool, ShopInitializer shopInitializer) {
         super(numRooms, roomLength, creaturePool, roomPool, shopInitializer);
     }
 
@@ -32,12 +32,14 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
-            room.setCreature(creaturePool.getCreature());
 
-            // add item
-            Item item = roomPool.getItem();
-            if (item != null)
-                room.addItem(item);
+            // 85% chance to add creature
+            if (rand.nextInt(100) < 85)
+                room.setCreature(creaturePool.createNew());
+
+            // 40% chance to add item
+            if (rand.nextInt(100) < 40)
+                room.addItem(roomPool.createNew());
 
             addRoom(room);
         }
