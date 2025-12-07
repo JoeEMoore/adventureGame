@@ -4,11 +4,25 @@ import java.util.Arrays;
 import java.util.List;
 
 import cpsc224.effects.*;
+import cpsc224.utils.BufferedImageBuilder;
+
+import javax.swing.*;
 
 /**
  * A factory class to create consumables.
  */
 public class ConsumableFactory {
+
+    private static final int ICON_WIDTH = 32;
+    private static final int ICON_HEIGHT = 32;
+
+    private static ImageIcon getIcon(int row, int col) {
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/potions.png");
+        return imageBuilder
+                .sliceToSprite(ICON_WIDTH, ICON_HEIGHT, row, col)
+                .scale(64, 64)
+                .toImageIcon();
+    }
 
     public static Consumable createSmallHealthPotion() {
         final String name = "Small Health Potion";
@@ -17,7 +31,7 @@ public class ConsumableFactory {
             return List.of(new HealEffect(25));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(8, 0));
     }
 
     public static Consumable createMediumHealthPotion() {
@@ -27,7 +41,7 @@ public class ConsumableFactory {
             return List.of(new HealEffect(50));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(5,0));
     }
 
     public static Consumable createLargeHealthPotion() {
@@ -37,7 +51,7 @@ public class ConsumableFactory {
             return List.of(new HealEffect(75));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(2, 0));
     }
 
     public static Consumable createSmallPoisonPotion() {
@@ -47,7 +61,7 @@ public class ConsumableFactory {
             return List.of(new PoisonEffect(2));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(8, 3));
     }
 
     public static Consumable createMediumPoisonPotion() {
@@ -57,7 +71,7 @@ public class ConsumableFactory {
             return List.of(new PoisonEffect(3));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(5, 3));
     }
 
     public static Consumable createLargePoisonPotion() {
@@ -67,7 +81,7 @@ public class ConsumableFactory {
             return List.of(new PoisonEffect(5));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(2, 3));
     }
 
     public static Consumable createSmallDamagePotion() {
@@ -77,7 +91,7 @@ public class ConsumableFactory {
             return List.of(new DamageEffect(1,10));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(8, 2));
     }
 
     public static Consumable createMediumDamagePotion() {
@@ -87,7 +101,7 @@ public class ConsumableFactory {
             return List.of(new DamageEffect(1,15));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(5, 2));
     }
 
     public static Consumable createLargeDamagePotion() {
@@ -97,7 +111,7 @@ public class ConsumableFactory {
             return List.of(new DamageEffect(1,25));
         };
 
-        return new Consumable(name, tier, effects, false);
+        return new Consumable(name, tier, effects, false, getIcon(2, 2));
     }
 
     public static Consumable createStrengthPotion() {
@@ -107,7 +121,7 @@ public class ConsumableFactory {
             return List.of(new StrengthEffect(2,2));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(2, 4));
     }
 
     public static Consumable createResistancePotion() {
@@ -117,7 +131,7 @@ public class ConsumableFactory {
             return List.of(new ResistanceEffect(2,0.5));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(2, 7));
     }
 
     public static Consumable createWeaponRefillPotion() {
@@ -127,6 +141,6 @@ public class ConsumableFactory {
             return List.of(new RefillEffect(1));
         };
 
-        return new Consumable(name, tier, effects, true);
+        return new Consumable(name, tier, effects, true, getIcon(2, 8));
     }
 }

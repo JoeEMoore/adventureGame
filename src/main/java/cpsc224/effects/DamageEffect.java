@@ -19,7 +19,7 @@ public class DamageEffect extends Effect {
     public DamageEffect(int turns, double damageAmount) {
         super(turns, true);
         this.damageAmount = damageAmount;
-        isAppliedInstantly = true;
+        name = "Damage";
     }
 
     /**

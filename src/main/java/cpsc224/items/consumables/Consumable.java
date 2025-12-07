@@ -5,6 +5,7 @@ import cpsc224.effects.Effect;
 import cpsc224.effects.EffectsFactory;
 import cpsc224.items.Item;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,10 +23,19 @@ public class Consumable extends Item {
      * @param name the name
      * @param effects the EffectsFactory functional interface
      */
-    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsSelf) {
-        super(name, tier);
+    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsSelf, ImageIcon icon) {
+        super(name, tier, icon);
         this.effects = effects;
         this.affectsSelf = affectsSelf;
+    }
+
+    /**
+     * Creates a consumable with the specified name and effects factory.
+     * @param name the name
+     * @param effects the EffectsFactory functional interface
+     */
+    public Consumable(String name, int tier, EffectsFactory effects, boolean affectsSelf) {
+        this(name, tier, effects, affectsSelf, null);
     }
 
     /**
@@ -54,11 +64,12 @@ public class Consumable extends Item {
     @Override
     public String getToolTipText() {
         StringBuilder text = new StringBuilder("<b>" + getName() + "</b><br>");
+        text.append("Tier: ").append(tier);
 
         // get effect info
         Collection<Effect> effectCollection = effects.createEffects();
         if (!effectCollection.isEmpty()) {
-            text.append("Effects: ");
+            text.append("<br><br>Effects: ");
             for (Effect e : effectCollection) {
                 text.append("<br>&emsp;").append(e.toString());
             }

@@ -7,26 +7,24 @@ public class ShopEntry {
     private int quantity;
     private int price;
     
-    public ShopEntry(Item item, int quantity) {
+    public ShopEntry(Item item, int quantity, int price) {
         this.item = item;
         this.quantity = quantity;
-        this.price = calcualatePrice(item);
+        this.price = price;
     }
 
-    
-
-    private int calcualatePrice(Item item){
-        int tier = item.getTier();
-
-        switch (tier) {
-            case 1: return 10;
-            case 2: return 20;
-            case 3: return 30;
-                
-            default:
-                return 9999;
-        }
-    }    
+//    private int calculatePrice(Item item) {
+//        int tier = item.getTier();
+//
+//        switch (tier) {
+//            case 1: return 10;
+//            case 2: return 20;
+//            case 3: return 30;
+//
+//            default:
+//                return 9999;
+//        }
+//    }
 
     public int getPrice(){
         return price;

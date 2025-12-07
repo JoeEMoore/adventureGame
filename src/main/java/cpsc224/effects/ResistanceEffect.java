@@ -15,9 +15,8 @@ public class ResistanceEffect extends Effect {
      * @param resistanceMultiplier the multiplier (less than 1 means more resistant)
      */
     public ResistanceEffect(int turns, double resistanceMultiplier) {
-        super(turns);
+        super(turns, true);
         this.resistanceMultiplier = resistanceMultiplier;
-        isAppliedInstantly = true;
         name = "Damage Resistance";
     }
 

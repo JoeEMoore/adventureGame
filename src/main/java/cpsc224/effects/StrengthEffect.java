@@ -8,9 +8,8 @@ public class StrengthEffect extends Effect {
     private double damageMultiplier;
 
     public StrengthEffect(int turns, double damageMultiplier) {
-        super(turns);
+        super(turns, true);
         this.damageMultiplier = damageMultiplier;
-        isAppliedInstantly = true;
         name = "Strength";
     }
 

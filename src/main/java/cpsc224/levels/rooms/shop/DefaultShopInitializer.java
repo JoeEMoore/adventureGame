@@ -18,17 +18,19 @@ public class DefaultShopInitializer extends ShopInitializer {
         List<ShopEntry> entries = new ArrayList<>();
        
         for (int i = 0; i < 3; i++) {
-            entries.add(new ShopEntry(weaponPool.createNew(), 1));
+            Weapon w = weaponPool.createNew();
+            entries.add(new ShopEntry(w, 1, w.getTier() * 40));
         }
         return entries;
     }
 
     @Override
-    public List<ShopEntry> generateConsumableEntries(){
+    public List<ShopEntry> generateConsumableEntries() {
         List<ShopEntry> entries = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            entries.add(new ShopEntry(consumablePool.createNew(), 3));
+            Consumable c = consumablePool.createNew();
+            entries.add(new ShopEntry(c, 3, c.getTier() * 20));
         }
         return entries;
     }

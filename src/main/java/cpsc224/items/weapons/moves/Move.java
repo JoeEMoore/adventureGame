@@ -146,12 +146,12 @@ public class Move {
         if (getMaxUses() > 0)
             text += "Uses: " + getUses() + "/" + getMaxUses() + "<br>";
 
-        text += "Targets Self: " + targetsAllies() + "<br>";
+        text += "Targets Self: " + targetsAllies();
 
         // Effects info
         Collection<Effect> effects = createEffects();
         if (!effects.isEmpty()) {
-            text += "Effects: ";
+            text += "<br><br>Effects: ";
             for (Effect e : effects) {
                 text += "<br>&emsp;" + e.toString();
             }
