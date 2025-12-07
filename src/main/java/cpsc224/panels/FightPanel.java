@@ -70,7 +70,7 @@ public class FightPanel extends JPanel implements GamePanel {
         playerPanel = new CreaturePanel(player);
         enemyPanel = new CreaturePanel(enemy);
 
-        setBackground(new Color(143, 147, 184));
+        setBackground(Application.GAME_COLOR);
     }
 
     /**
@@ -228,6 +228,7 @@ public class FightPanel extends JPanel implements GamePanel {
         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
         room.removeCreature(enemy);
         player.addGold((int)enemy.getMaxHealth());
+        player.clearEffects();
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setContentPane(new MapPanel());
         frame.revalidate();

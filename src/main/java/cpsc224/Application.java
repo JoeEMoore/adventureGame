@@ -1,10 +1,7 @@
 package cpsc224;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.util.Random;
 
-import javax.swing.JFrame;
 import javax.swing.ToolTipManager;
 
 import cpsc224.creatures.CreatureFactory;
@@ -29,8 +26,10 @@ import cpsc224.windows.SplashWindow;
 public class Application {
 
     public static final Color MENU_COLOR = new Color(156, 219, 173);
+    public static final Color GAME_COLOR = new Color(143, 147, 184);
     public static final Color HEALTH_COLOR = new Color(224, 45, 45);
     public static final Color POISON_COLOR = new Color(32, 148, 16);
+    
     public static void main(String[] args) {
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
 
@@ -46,14 +45,16 @@ public class Application {
         Inventory inv = player.getInventory();
         inv.incrementMaxConsumables();
         inv.incrementMaxConsumables();
-        inv.setWeapon(1, WeaponFactory.createToxicStaff());
-        inv.setWeapon(2, WeaponFactory.createHealStaff());
-        inv.setWeapon(3, WeaponFactory.createRoyalSword());
+
+        inv.setWeapon(0, WeaponFactory.createSteelMace());
+        inv.setWeapon(1, WeaponFactory.createSteelHammer());
+        inv.setWeapon(2, WeaponFactory.createBasicWand());
+        inv.setWeapon(3, WeaponFactory.createEnchantedWand());
         inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
         inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
         inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
         inv.setConsumable(4, ConsumableFactory.createResistancePotion());
-        player.addGold(100);
+        //player.addGold(100);
 
 
         new SplashWindow();

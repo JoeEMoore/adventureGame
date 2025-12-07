@@ -22,18 +22,6 @@ public class MoveFactory {
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
-
-    public static Move createScratchMove() {
-        final String name = "Scratch";
-        final int damage = 5;
-        final DamageType dt = DamageType.Slice;
-        final int maxUses = -1;
-        final double accuracy = 0.8;
-        final boolean targetsAllies = false;
-
-        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
-    }
-
     public static Move createSmashMove() {
         final String name = "Smash";
         final int damage = 20;
@@ -45,9 +33,31 @@ public class MoveFactory {
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
     }
 
+    public static Move createShootMove() {
+        final String name = "Shoot";
+        final int damage = 20;
+        final DamageType dt = DamageType.Projectile;
+        final int maxUses = 20;
+        final double accuracy = 0.7;
+        final boolean targetsAllies = false;
+
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
+    }
+
+    public static Move createMagicMissileMove() {
+        final String name = "Magic Missile";
+        final int damage = 10;
+        final DamageType dt = DamageType.Magic;
+        final int maxUses = -1;
+        final double accuracy = 0.9;
+        final boolean targetsAllies = false;
+
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
+    }
+
     public static Move createToxicBoltMove() {
         final String name = "Toxic Bolt";
-        final int damage = 10;
+        final int damage = 8;
         final DamageType dt = DamageType.Magic;
         final int maxUses = 5;
         final double accuracy = 0.9;
@@ -75,13 +85,12 @@ public class MoveFactory {
         return move;
     }
 
-
-    public static Move createShootMove() {
-        final String name = "Shoot";
-        final int damage = 20;
-        final DamageType dt = DamageType.Projectile;
-        final int maxUses = 20;
-        final double accuracy = 0.7;
+    public static Move createScratchMove() {
+        final String name = "Scratch";
+        final int damage = 5;
+        final DamageType dt = DamageType.Slice;
+        final int maxUses = -1;
+        final double accuracy = 0.8;
         final boolean targetsAllies = false;
 
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);

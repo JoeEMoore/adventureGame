@@ -13,7 +13,7 @@ public class ShopWeaponPool implements ItemPool {
         if (randValue < 200) {
             return WeaponFactory.createSteelSword();
         } else if (randValue < 400) {
-            return WeaponFactory.createBow();
+            return WeaponFactory.createCrudeBow();
         } else if (randValue < 600) {
             return WeaponFactory.createWoodClub();
         } else if (randValue < 700) {

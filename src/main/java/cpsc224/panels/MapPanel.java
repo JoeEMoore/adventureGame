@@ -55,10 +55,13 @@ public class MapPanel extends JPanel implements GamePanel {
         exitButton = new JButton("Exit");
 
         levelPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+        setBackground(Application.GAME_COLOR);
     }
 
     private void layoutComponents() {
         JPanel leftPanel = new JPanel();
+        leftPanel.setOpaque(false);
         leftPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;

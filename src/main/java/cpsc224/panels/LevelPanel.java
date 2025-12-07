@@ -49,6 +49,7 @@ public class LevelPanel extends JPanel implements GamePanel {
 
     private void initComponents() {
         roomButtons = new JButton[rooms.length][rooms.length];
+        setOpaque(false);
     }
 
     private void layoutComponents() {

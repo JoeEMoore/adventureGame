@@ -19,7 +19,7 @@ public class DefaultItemPool implements ItemPool {
         } else if(randValue < 90) {
             return WeaponFactory.createRustyDagger();
         } else if(randValue < 120) {
-            return WeaponFactory.createBow();
+            return WeaponFactory.createCrudeBow();
         } else if(randValue < 140) {
             return WeaponFactory.createRoyalSword();
         } else if(randValue < 160) {

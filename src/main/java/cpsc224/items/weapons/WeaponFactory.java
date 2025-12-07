@@ -24,6 +24,14 @@ public class WeaponFactory {
 
     // *** PLAYER STARTER WEAPONS ***
 
+    public static Weapon createWoodClub() {
+        final String name = "Wood Club";
+        final int tier = 1;
+        final Move move = MoveFactory.createSmashMove();
+
+        return new Weapon(name, tier, move, getIcon(8, 2));
+    }
+
     public static Weapon createRustyDagger() {
         final String name = "Rusty Dagger";
         final int tier = 1;
@@ -32,12 +40,20 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(0, 0));
     }
 
-    public static Weapon createBow() {
-        final String name = "Bow";
+    public static Weapon createCrudeBow() {
+        final String name = "Crude Bow";
         final int tier = 1;
         final Move move = MoveFactory.createShootMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(9, 2));
+    }
+
+    public static Weapon createBasicWand() {
+        final String name = "Basic Wand";
+        final int tier = 1;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 7));
     }
 
 
@@ -60,17 +76,26 @@ public class WeaponFactory {
     }
 
     // *** OTHER WEAPONS ***
-    public static Weapon createWoodClub() {
-        final String name = "Wood Club";
-        final int tier = 1;
-        final Move move = MoveFactory.createSmashMove();
 
-        return new Weapon(name, tier, move);
+    public static Weapon createLongBow() {
+        final String name = "Long Bow";
+        final int tier = 2;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move, getIcon(9, 3));
+    }
+
+    public static Weapon createCrossbow() {
+        final String name = "Crossbow";
+        final int tier = 3;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move, getIcon(9, 4));
     }
 
     public static Weapon createToxicStaff() {
         final String name = "Toxic Staff";
-        final int tier = 2;
+        final int tier = 3;
         final Move move = MoveFactory.createToxicBoltMove();
 
         return new Weapon(name, tier, move, getIcon(10, 2));
@@ -86,7 +111,7 @@ public class WeaponFactory {
 
     public static Weapon createSteelSword() {
         final String name = "Steel Sword";
-        final int tier = 1;
+        final int tier = 2;
         final Move move = MoveFactory.createSlashMove();
 
         return new Weapon(name, tier, move, getIcon(0, 2));
@@ -94,18 +119,34 @@ public class WeaponFactory {
 
     public static Weapon createRoyalSword() {
         final String name = "Royal Sword";
-        final int tier = 2;
+        final int tier = 3;
         final Move move = MoveFactory.createSlashMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(0, 8));
+    }
+
+    public static Weapon createSteelMace() {
+        final String name = "Steel Mace";
+        final int tier = 2;
+        final Move move = MoveFactory.createSmashMove();
+
+        return new Weapon(name, tier, move, getIcon(5, 0));
     }
 
     public static Weapon createSteelHammer() {
         final String name = "Steel Hammer";
-        final int tier = 2;
+        final int tier = 3;
         final Move move = MoveFactory.createSmashMove();
 
-        return new Weapon(name, tier, move);
+        return new Weapon(name, tier, move, getIcon(4, 4));
+    }
+
+    public static Weapon createEnchantedWand() {
+        final String name = "Enchanted Staff";
+        final int tier = 3;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
     }
 
 }

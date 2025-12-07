@@ -36,10 +36,10 @@ public class CreatureFactory {
 
     public static Player createPlayer() {
         final String name = "Player";
-        final int health = 100;
+        final int health = 200;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createSteelSword());
+        inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
 
         return new Player(name, health, cm, inv, getIcon(name, false));
@@ -130,7 +130,7 @@ public class CreatureFactory {
         final int health = 50;
         final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(1.5, 0.5, 0.5, 2.0)));
         final Inventory inv = new Inventory(4,0);
-        inv.setWeapon(0, WeaponFactory.createBow());
+        inv.setWeapon(0, WeaponFactory.createCrossbow());
         inv.setWeapon(1, WeaponFactory.createRustyDagger());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(3.0);
