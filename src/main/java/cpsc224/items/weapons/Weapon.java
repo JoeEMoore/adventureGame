@@ -13,8 +13,6 @@ public class Weapon extends Item {
 
     private Move move;
 
-    private ImageIcon icon;
-
     /**
      * Creates a weapon with the specified name, tier, and move.
      * @param name the name
@@ -32,9 +30,8 @@ public class Weapon extends Item {
      * @param move the move
      */
     public Weapon(String name, int tier, Move move, ImageIcon icon) {
-        super(name, tier);
+        super(name, tier, icon);
         this.move = move;
-        this.icon = icon;
     }
 
     /**
@@ -45,12 +42,6 @@ public class Weapon extends Item {
         return move;
     }
 
-    /**
-     * Gets the icon.
-     * @return the icon
-     */
-    public ImageIcon getIcon() { return icon; }
-
     @Override
     public String toString() {
         if (move.getMaxUses() < 0)
@@ -59,6 +50,7 @@ public class Weapon extends Item {
         return name + " (" + move.getUses() + ")";
     }
 
+    @Override
     public String getToolTipText() {
         String text = "<b>" + getName() + "</b><br>";
         text += "Tier: " + getTier() + "<br><br>";

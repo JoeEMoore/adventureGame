@@ -30,12 +30,13 @@ public class ItemBoxPanel extends JPanel implements GamePanel {
     }
 
     private void initComponents() {
-        nameLabel = new JLabel("<html> <p style=\"text-align:center;\">" + entry.getItem().getName() + "</p></html>",SwingConstants.CENTER);
+        nameLabel = new JLabel(entry.getItem().getIcon());
+        nameLabel.setToolTipText("<html><p width=\"150\">" + entry.getItem().getToolTipText() + "</p></html>");
         quantityLabel = new JLabel("Qty: " + entry.getQuantity(), SwingConstants.CENTER);
         priceLabel = new JLabel("Price: " + entry.getPrice(), SwingConstants.CENTER);
         buyButton = new JButton("BUY");
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        setPreferredSize(new Dimension(220, 100));
+        setPreferredSize(new Dimension(220, 120));
     }
 
     private void layoutComponents() {

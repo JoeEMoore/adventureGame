@@ -6,6 +6,7 @@ import cpsc224.effects.EffectsFactory;
 import cpsc224.items.Item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -49,4 +50,20 @@ public class Consumable extends Item {
 
         return String.join(", ", messages);
     }
+
+    @Override
+    public String getToolTipText() {
+        StringBuilder text = new StringBuilder("<b>" + getName() + "</b><br>");
+
+        // get effect info
+        Collection<Effect> effectCollection = effects.createEffects();
+        if (!effectCollection.isEmpty()) {
+            text.append("Effects: ");
+            for (Effect e : effectCollection) {
+                text.append("<br>&emsp;").append(e.toString());
+            }
+        }
+
+        return text.toString();
+    };
 }
