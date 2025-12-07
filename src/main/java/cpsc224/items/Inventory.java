@@ -166,13 +166,13 @@ public class Inventory {
     public boolean addItem(Item item) {
         if (item instanceof Weapon w) {
             weapons.add(w);
-            if (weapons.indexOf(w) >= maxWeapons) {
+            if (weapons.size() > maxWeapons) {
                 weapons.remove(w);
                 return false;
             }
         } else if (item instanceof Consumable c) {
             consumables.add(c);
-            if (consumables.indexOf(c) >= maxConsumables) {
+            if (consumables.size() > maxConsumables) {
                 consumables.remove(c);
                 return false;
             }

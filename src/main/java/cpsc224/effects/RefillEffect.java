@@ -11,12 +11,13 @@ public class RefillEffect extends Effect {
     }
 
     /**
-     * Has no effect on RefillEffect.
+     * Not supported for this class
      * @param multiplier the multiplier
+     * @throws UnsupportedOperationException this operation is not supported
      */
     @Override
-    public void multiplyEffect(double multiplier) {
-        // do nothing
+    public void multiplyEffect(double multiplier) throws UnsupportedOperationException {
+        throw new UnsupportedOperationException();
     }
 
     @Override

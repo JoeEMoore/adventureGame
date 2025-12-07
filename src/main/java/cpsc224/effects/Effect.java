@@ -77,8 +77,9 @@ public abstract class Effect {
     /**
      * Increases the potency of the effect by applying a multiplier.
      * @param multiplier the multiplier
+     * @throws UnsupportedOperationException if the operation is not supported by the implementing Effect class
      */
-    public abstract void multiplyEffect(double multiplier);
+    public abstract void multiplyEffect(double multiplier) throws UnsupportedOperationException;
 
     /**
      * Rounds a double to one digit after the decimal place.
