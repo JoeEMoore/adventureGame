@@ -1,4 +1,4 @@
-package cpsc224.panels;
+package cpsc224.views.panels;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;

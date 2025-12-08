@@ -1,7 +1,6 @@
-package cpsc224.windows;
+package cpsc224.views.windows;
 
 import javax.swing.*;
-import cpsc224.Application;
 import java.awt.*;
 
 public class SplashWindow extends JWindow {

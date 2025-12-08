@@ -4,22 +4,17 @@ import java.awt.Color;
 
 import javax.swing.ToolTipManager;
 
-import cpsc224.creatures.CreatureFactory;
 import cpsc224.pools.BossCreaturePool;
 import cpsc224.pools.DefaultCreaturePool;
-import cpsc224.creatures.Player;
 import cpsc224.pools.DefaultItemPool;
-import cpsc224.items.Inventory;
-import cpsc224.items.consumables.ConsumableFactory;
 import cpsc224.pools.ShopConsumablePool;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
 import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.pools.ShopWeaponPool;
-import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
 import cpsc224.levels.LevelInitializer;
-import cpsc224.windows.SplashWindow;
+import cpsc224.views.windows.SplashWindow;
 
 /**
  * A turn-based fighting game.

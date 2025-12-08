@@ -1,13 +1,12 @@
-package cpsc224.panels;
+package cpsc224.views.panels;
 
 import cpsc224.Application;
 import cpsc224.Game;
 import cpsc224.creatures.Player;
-import cpsc224.dialogs.InventoryDialog;
-import cpsc224.dialogs.RoomItemsDialog;
+import cpsc224.views.dialogs.InventoryDialog;
+import cpsc224.views.dialogs.RoomItemsDialog;
 import cpsc224.levels.Level;
 import cpsc224.utils.BufferedImageBuilder;
-import cpsc224.windows.SplashWindow;
 
 import javax.swing.*;
 import java.awt.*;
