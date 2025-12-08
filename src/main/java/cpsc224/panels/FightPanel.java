@@ -6,13 +6,11 @@ import java.awt.*;
 
 import cpsc224.Application;
 import cpsc224.Fight;
-import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
 import cpsc224.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
-import cpsc224.windows.SplashWindow;
 
 /**
  * A panel to visualize a fight.
@@ -226,7 +224,7 @@ public class FightPanel extends JPanel implements GamePanel {
 
     private void winFight() {
         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
-        room.removeCreature(enemy);
+        room.removeCreature();
         player.addGold((int)enemy.getMaxHealth());
         player.clearEffects();
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
