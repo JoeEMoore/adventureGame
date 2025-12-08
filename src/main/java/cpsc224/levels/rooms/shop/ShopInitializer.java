@@ -7,16 +7,9 @@ import cpsc224.pools.Pool;
 
 import java.util.List;
 
-public abstract class ShopInitializer {
-    protected final Pool<Item> weaponPool;
-    protected final Pool<Item> consumablePool;
+public interface ShopInitializer {
 
-    public ShopInitializer(Pool<Item> weaponPool, Pool<Item> consumablePool) {
-        this.weaponPool = weaponPool;
-        this.consumablePool = consumablePool;
-    }
+    List<ShopEntry> generateWeaponEntries();
 
-    public abstract List<ShopEntry> generateWeaponEntries();
-
-    public abstract List<ShopEntry> generateConsumableEntries();
+    List<ShopEntry> generateConsumableEntries();
 }

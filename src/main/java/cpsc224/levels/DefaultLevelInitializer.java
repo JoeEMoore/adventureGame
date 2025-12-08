@@ -16,7 +16,6 @@ public class DefaultLevelInitializer implements LevelInitializer {
     private Room[][] rooms;
     private Coordinate startRoom;
     private HashSet<Coordinate> validPositions = new HashSet<>();
-
     protected int numRooms;
     protected int roomLength;
     protected Pool<Creature> creaturePool;
