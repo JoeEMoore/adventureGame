@@ -105,6 +105,7 @@ public class Creature {
      */
     public void clearEffects() {
         effects.clear();
+        resetTurnModifiers();
     }
 
     /**
