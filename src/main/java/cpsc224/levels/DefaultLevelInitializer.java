@@ -3,6 +3,7 @@ package cpsc224.levels;
 import java.util.HashSet;
 import java.util.Random;
 
+import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.items.Item;
@@ -53,8 +54,6 @@ public class DefaultLevelInitializer extends LevelInitializer {
         addRoom(new ShopRoom(shopInitializer));
         return rooms;
     }
-
-
 
     @Override
     public Coordinate getStartRoom() {

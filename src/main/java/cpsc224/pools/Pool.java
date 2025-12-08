@@ -41,13 +41,21 @@ public abstract class Pool<T> {
      * @return the new object
      */
     public T createNew() {
+        return getCreator().createItem();
+    }
+
+    /**
+     * Gets a random ObjectCreator from the pool.
+     * @return the ObjectCreator
+     */
+    public ObjectCreator<T> getCreator() {
         double randValue = rand.nextDouble() * totalWeight;
         double cumulativeWeight = 0.0;
 
         for (ObjectCreator<T> itemCreator : objectCreators.keySet()) {
             cumulativeWeight += objectCreators.get(itemCreator);
             if (randValue <= cumulativeWeight) {
-                return itemCreator.createItem();
+                return itemCreator;
             }
         }
         return null;
