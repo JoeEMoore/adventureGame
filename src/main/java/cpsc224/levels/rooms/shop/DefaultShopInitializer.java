@@ -9,10 +9,14 @@ import cpsc224.pools.Pool;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultShopInitializer extends ShopInitializer {
+public class DefaultShopInitializer implements ShopInitializer {
+
+    private final Pool<Item> weaponPool;
+    private final Pool<Item> consumablePool;
 
     public DefaultShopInitializer(Pool<Item> weaponPool, Pool<Item> consumablePool) {
-        super(weaponPool, consumablePool);
+        this.weaponPool = weaponPool;
+        this.consumablePool = consumablePool;
     }
 
     @Override

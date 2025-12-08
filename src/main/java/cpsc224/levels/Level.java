@@ -20,7 +20,6 @@ public class Level {
         setCurrentPosition(currentPosition);
 
         numRooms = initializer.getNumRooms() + 2;
-        roomLength = initializer.getRoomLength();
     }
 
     /**
