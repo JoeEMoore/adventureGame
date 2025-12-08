@@ -37,27 +37,7 @@ public class Application {
         Game game = Game.getInstance();
         LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
         Level level = new Level(levelInit);
-        //Player player = CreatureFactory.createPlayer();
-
-        //game.setPlayer(player);
         game.setLevel(level);
-
-        /* 
-        Inventory inv = player.getInventory();
-        inv.incrementMaxConsumables();
-        inv.incrementMaxConsumables();
-
-        inv.setWeapon(0, WeaponFactory.createHealStaff());
-        inv.setWeapon(1, WeaponFactory.createSteelHammer());
-        inv.setWeapon(2, WeaponFactory.createCrossbow());
-        inv.setWeapon(3, WeaponFactory.createEnchantedStaff());
-        inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
-        inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
-        inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
-        inv.setConsumable(4, ConsumableFactory.createResistancePotion());
-        //player.addGold(100);
-        */
-
 
         new SplashWindow();
     }
