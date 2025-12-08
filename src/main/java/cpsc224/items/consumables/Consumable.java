@@ -61,6 +61,14 @@ public class Consumable extends Item {
         return String.join(", ", messages);
     }
 
+    /**
+     * Delegate method to create the effects of its effects
+     * @return a collection of effects
+     */
+    public Collection<Effect> createEffects() {
+        return effects.createEffects();
+    }
+
     @Override
     public String getToolTipText() {
         StringBuilder text = new StringBuilder("<b>" + getName() + "</b><br>");
