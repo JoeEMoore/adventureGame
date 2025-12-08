@@ -144,8 +144,6 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
         player2Button.addActionListener(e -> {
             Player player = CreatureFactory.createMagePlayer();
             Game.getInstance().setPlayer(player);
-            player.getInventory().setWeapon(2, WeaponFactory.createToxicStaff());
-            player.getInventory().setWeapon(3, WeaponFactory.createHealStaff());
             startGame();
         });
 

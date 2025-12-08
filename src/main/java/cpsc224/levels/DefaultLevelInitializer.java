@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import cpsc224.creatures.Creature;
+import cpsc224.creatures.CreatureFactory;
 import cpsc224.items.Item;
 import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.BossRoom;
@@ -37,8 +38,8 @@ public class DefaultLevelInitializer extends LevelInitializer {
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
 
-            // 85% chance to add creature
-            if (rand.nextInt(100) < 85)
+            // 80% chance to add creature
+            if (rand.nextInt(100) < 80)
                 room.setCreature(creaturePool.createNew());
 
             // 40% chance to add item

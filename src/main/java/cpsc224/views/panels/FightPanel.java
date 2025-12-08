@@ -8,6 +8,7 @@ import cpsc224.Application;
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
+import cpsc224.levels.rooms.BossRoom;
 import cpsc224.views.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
@@ -235,11 +236,19 @@ public class FightPanel extends JPanel implements GamePanel {
     }
 
     private void winFight() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        if (room instanceof BossRoom) {
+            frame.setContentPane(new WinPanel());
+            frame.revalidate();
+            frame.repaint();
+            return;
+        }
+
         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
         room.removeCreature();
         player.addGold((int)enemy.getMaxHealth());
         player.clearEffects();
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setContentPane(new MapPanel());
         frame.revalidate();
         frame.repaint();
@@ -292,15 +301,4 @@ public class FightPanel extends JPanel implements GamePanel {
     public Creature getEnemy(){
         return enemy;
     }
-
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        ImageIcon icon = ImageUtils.getImageIcon("images/backgrounds/StoneWall.png");
-//        BufferedImage image = ImageUtils.toBufferedImage(icon.getImage());
-//        RescaleOp op = new RescaleOp(1f, 100, null);
-//        op.filter(image, image);
-//
-//        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-//    }
-
 }
