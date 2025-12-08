@@ -1,8 +1,5 @@
 package cpsc224.items.weapons.moves;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
@@ -11,6 +8,8 @@ import cpsc224.TestUtils;
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.items.weapons.moves.Move;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MoveTests {
 
@@ -66,6 +65,26 @@ public class MoveTests {
         for (Effect e1 : effects1) {
             for (Effect e2 : effects2)
                 assertNotEquals(e1, e2);
+        }
+    }
+
+    @Test
+    void getToolTipTextContainsCorrectInformation() {
+        Move move = TestUtils.createTestToxicBoltMove();
+        move.decrementUses();
+        Collection<Effect> effects = move.createEffects();
+
+        String text = move.getToolTipText();
+        assertTrue(text.contains(move.getName()));
+        assertTrue(text.contains(move.getDamageType().toString()));
+        assertTrue(text.contains(String.valueOf(move.getDamage())));
+        assertTrue(text.contains(String.valueOf(move.getAccuracy() * 100)));
+        assertTrue(text.contains(String.valueOf(move.getUses())));
+        assertTrue(text.contains(String.valueOf(move.getMaxUses())));
+        assertTrue(text.contains(String.valueOf(move.targetsAllies())));
+
+        for (Effect e : effects) {
+            assertTrue(text.contains(e.toString()));
         }
     }
 

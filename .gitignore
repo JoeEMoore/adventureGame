@@ -10,6 +10,9 @@ target/
 #IDEA files
 .idea/
 
+# Generated coverage repots
+/htmlReport
+
 # BlueJ files
 *.ctxt
 

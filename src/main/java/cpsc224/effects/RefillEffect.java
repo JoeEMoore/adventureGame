@@ -24,7 +24,7 @@ public class RefillEffect extends Effect {
     @Override
     public String apply(Creature creature ){
         for (int i = 0; i < creature.getInventory().getWeapons().size(); i++){
-            creature.getInventory().getWeapon(i).getMove().setUsesToMax();
+            creature.getInventory().getWeapon(i).getMove().resetUses();
         }
         return creature.getName() + " refilled all of their weapon uses!";
     }
