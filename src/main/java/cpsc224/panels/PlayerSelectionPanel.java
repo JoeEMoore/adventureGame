@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import cpsc224.Application;
+import cpsc224.Game;
+import cpsc224.creatures.CreatureFactory;
+import cpsc224.creatures.Player;
 import cpsc224.utils.BufferedImageBuilder;
 
 public class PlayerSelectionPanel extends JPanel implements GamePanel {
@@ -51,10 +54,10 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
         player3Image.setIcon(icon);
         player4Image.setIcon(icon);
 
-        player1Button = new JButton("Player 1");
-        player2Button = new JButton("Player 2");
-        player3Button = new JButton("Player 3");
-        player4Button = new JButton("Player 4");
+        player1Button = new JButton("Knight");
+        player2Button = new JButton("Mage");
+        player3Button = new JButton("Ranger");
+        player4Button = new JButton("Barbarian");
 
         titleLabel = new JLabel("Choose Your Character");
         titleLabel.setFont(new Font("Dialog", Font.BOLD, 36));
@@ -106,18 +109,26 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
 
     private void addListeners() {
         player1Button.addActionListener(e -> {
+            Player player = CreatureFactory.createSlashPlayer();
+            Game.getInstance().setPlayer(player);
             startGame();
         });
 
         player2Button.addActionListener(e -> {
+            Player player = CreatureFactory.createMagePlayer();
+            Game.getInstance().setPlayer(player);
             startGame();
         });
 
         player3Button.addActionListener(e -> {
+            Player player = CreatureFactory.createRangePlayer();
+            Game.getInstance().setPlayer(player);
             startGame();
         });
 
         player4Button.addActionListener(e -> {
+            Player player = CreatureFactory.createBluntPlayer();
+            Game.getInstance().setPlayer(player);
             startGame();
         });
     }

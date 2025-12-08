@@ -42,8 +42,53 @@ public class CreatureFactory {
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
 
-        return new Player(name, health, cm, inv, getIcon(name, false));
+        return new Player(name, health, cm, inv);
     }
+
+    public static Player createMagePlayer() {
+        final String name = "Mage";
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final Inventory inv = new Inventory(4, 4);
+        inv.setWeapon(0, WeaponFactory.createBasicWand());
+        inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+
+        return new Player(name, health, cm, inv);
+    }
+
+    public static Player createBluntPlayer() {
+        final String name = "Barbarian";
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final Inventory inv = new Inventory(4, 4);
+        inv.setWeapon(0, WeaponFactory.createWoodClub());
+        inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+
+        return new Player(name, health, cm, inv);
+    }
+
+    public static Player createSlashPlayer() {
+        final String name = "Knight";
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final Inventory inv = new Inventory(4, 4);
+        inv.setWeapon(0, WeaponFactory.createRustyDagger());
+        inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+
+        return new Player(name, health, cm, inv);
+    }
+
+    public static Player createRangePlayer() {
+        final String name = "Ranger";
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final Inventory inv = new Inventory(4, 4);
+        inv.setWeapon(0, WeaponFactory.createCrudeBow());
+        inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+
+        return new Player(name, health, cm, inv);
+    }
+
 
     public static Creature createRat() {
         final String name = "Rat";
