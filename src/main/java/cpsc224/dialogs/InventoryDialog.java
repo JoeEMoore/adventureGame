@@ -19,9 +19,6 @@ import java.awt.*;
  */
 public class InventoryDialog extends JDialog {
 
-    private static final int ICON_WIDTH = 16;
-    private static final int ICON_HEIGHT = 16;
-
     private Creature creature;
     private Creature enemy;
     private GamePanel gamePanel;
@@ -246,16 +243,6 @@ public class InventoryDialog extends JDialog {
         });
     }
 
-    private static ImageIcon getIcon(int row, int col) {
-
-    BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/items.png");
-        return imageBuilder
-                .sliceToSprite(ICON_WIDTH, ICON_HEIGHT, row, col)
-                .scale(64, 64)
-                .toImageIcon();
-    }
-
-    
     public void updateDisplay() {
         Weapon weapon = weaponList.getSelectedValue();
         Consumable cons = consumableList.getSelectedValue();
