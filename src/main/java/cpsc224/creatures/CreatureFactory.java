@@ -203,8 +203,8 @@ public class CreatureFactory {
 
     public static Creature createFireGolem() {
         final String name = "Fire golem";
-        final int health = 500;
-        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.5, 0.5)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.05, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.5, 0.5)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.creatFireHeal());
         inv.setWeapon(1, WeaponFactory.createFireBall());
@@ -222,8 +222,8 @@ public class CreatureFactory {
 
     public static Creature createRockGolem() {
         final String name = "Rock golem";
-        final int health = 800;
-        final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(0.5,0.5,0.5,2.0)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, 0.05, new LinkedList<>(Arrays.asList(0.5,0.5,0.5,2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRockHeal());
         inv.setWeapon(1, WeaponFactory.createRockSlam());
@@ -242,8 +242,8 @@ public class CreatureFactory {
 
     public static Creature createIceGolem() {
         final String name = "Ice golem";
-        final int health = 500;
-        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.5, 1.5, 1.0, 0.5)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.05, new LinkedList<>(Arrays.asList(1.5, 1.5, 1.0, 0.5)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.creatFrostHeal());
         inv.setWeapon(1, WeaponFactory.createIceball());

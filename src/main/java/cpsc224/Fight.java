@@ -84,7 +84,10 @@ public class Fight {
      */
     public String creatureTurn(Creature creature, Creature enemy) {
         CreatureAI move = new CreatureAI(creature);
-        int index = move.calculateMove();
-        return performMove(creature, enemy, creature.getInventory().getWeapon(index));
+        Weapon weapon = creature.getInventory().getWeapon(move.calculateMove());
+        if (!weapon.getMove().targetsAllies())
+            return performMove(creature, enemy, weapon);
+        else
+            return performMove(creature, creature, weapon);
     }
 }
