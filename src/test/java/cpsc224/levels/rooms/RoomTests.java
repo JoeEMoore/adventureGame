@@ -1,14 +1,12 @@
 package cpsc224.levels.rooms;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
 import cpsc224.TestUtils;
 import cpsc224.creatures.Creature;
 import cpsc224.items.Item;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RoomTests {
 
@@ -27,6 +25,32 @@ public class RoomTests {
         room.setCreature(c);
 
         assertEquals(c, room.getCreature());
+    }
+
+    @Test
+    void removeCreatureSetsCreatureToNull() {
+        Creature c = TestUtils.createTestRat();
+        Room room = new Room();
+        room.setCreature(c);
+        assertTrue(room.hasCreature());
+
+        room.removeCreature();
+        assertNull(room.getCreature());
+    }
+
+    @Test
+    void hasCreatureReturnsTrueIfCreatureIsPresent() {
+        Creature c = TestUtils.createTestRat();
+        Room room = new Room();
+        room.setCreature(c);
+
+        assertTrue(room.hasCreature());
+    }
+
+    @Test
+    void hasCreatureReturnsFalseIfCreatureIsNotPresent() {
+        Room room = new Room();
+        assertFalse(room.hasCreature());
     }
 
     @Test
@@ -65,5 +89,38 @@ public class RoomTests {
         room.clearItems();
         assertFalse(room.getItems().contains(sword));
         assertFalse(room.getItems().contains(potion));
+    }
+
+    @Test
+    void hasItemsTrueIfRoomHasItems() {
+        Room room = new Room();
+        room.addItem(TestUtils.createTestSword());
+        room.addItem(TestUtils.createTestPoisonPotion());
+        assertTrue(room.hasItems());
+    }
+
+    @Test
+    void hasItemsFalseIfRoomHasNoItems() {
+        Room room = new Room();
+    }
+
+    @Test
+    void setDiscoveredSetsRoomToDiscovered() {
+        Room room = new Room();
+        assertFalse(room.isDiscovered());
+
+        room.setDiscovered(true);
+        assertTrue(room.isDiscovered());
+    }
+
+    @Test
+    void setExploredSetsRoomToExploredAndDiscovered() {
+        Room room = new Room();
+        assertFalse(room.isExplored());
+        assertFalse(room.isDiscovered());
+
+        room.setExplored(true);
+        assertTrue(room.isExplored());
+        assertTrue(room.isDiscovered());
     }
 }

@@ -1,12 +1,12 @@
 package cpsc224.items;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
+import cpsc224.TestUtils;
 import org.junit.jupiter.api.Test;
 
 import cpsc224.items.consumables.Consumable;
 import cpsc224.items.weapons.Weapon;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTests {
     
@@ -88,7 +88,7 @@ public class InventoryTests {
     }
     
     @Test
-    public void settingItems (){
+    public void settingItems () {
         Inventory inv = new Inventory(4, 4);
 
         Weapon sword = new Weapon("sword", 1, null);
@@ -116,6 +116,60 @@ public class InventoryTests {
         assertEquals(inv.getConsumable(0), smallHealthPotion);
         assertEquals(inv.getConsumable(1), BigHealthPotion);
      
+    }
+
+    @Test
+    void setWeaponReturnsWeaponWhenSlotIsGreaterThanMaxWeapons() {
+        Inventory inv = new Inventory(4, 4);
+        Weapon w = TestUtils.createTestSword();
+        assertEquals(w, inv.setWeapon(5, w));
+    }
+
+    @Test
+    void setConsumableReturnsConsumableWhenSlotIsGreaterThanMaxConsumables() {
+        Inventory inv = new Inventory(4, 4);
+        Consumable c = TestUtils.createTestPoisonPotion();
+        assertEquals(c, inv.setConsumable(5, c));
+    }
+
+    @Test
+    void addItemAddsWeaponToInventoryWhenThereIsRoom() {
+        Inventory inv = new Inventory(1, 1);
+        Weapon w = TestUtils.createTestSword();
+
+        assertTrue(inv.addItem(w));
+        assertTrue(inv.getWeapons().contains(w));
+    }
+
+    @Test
+    void addItemAddsConsumableToInventoryWhenThereIsRoom() {
+        Inventory inv = new Inventory(1, 1);
+        Consumable c = TestUtils.createTestPoisonPotion();
+
+        assertTrue(inv.addItem(c));
+        assertTrue(inv.getConsumables().contains(c));
+    }
+
+    @Test
+    void addItemDoesNotAddWeaponIfThereIsNoRoom() {
+        Inventory inv = new Inventory(1, 1);
+        Weapon w = TestUtils.createTestSword();
+        Weapon w2 = TestUtils.createTestSword();
+        assertTrue(inv.addItem(w));
+
+        assertFalse(inv.addItem(w2));
+        assertFalse(inv.getWeapons().contains(w2));
+    }
+
+    @Test
+    void addItemDoesNotAddConsumableIfThereIsNoRoom() {
+        Inventory inv = new Inventory(1, 1);
+        Consumable c1 = TestUtils.createTestPoisonPotion();
+        Consumable c2 = TestUtils.createTestHealthPotion();
+        assertTrue(inv.addItem(c1));
+
+        assertFalse(inv.addItem(c2));
+        assertFalse(inv.getConsumables().contains(c2));
     }
 }
 

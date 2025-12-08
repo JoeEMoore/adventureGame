@@ -9,6 +9,7 @@ import cpsc224.creatures.Creature;
 import cpsc224.creatures.CreatureModifiers;
 import cpsc224.creatures.Player;
 import cpsc224.damagetypes.DamageType;
+import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.Inventory;
 import cpsc224.items.consumables.Consumable;
@@ -142,6 +143,10 @@ public class TestUtils {
 
     public static Consumable createTestPoisonPotion() {
         return new Consumable("Poison Potion", 1, () -> {return List.of(new PoisonEffect(2));}, false);
+    }
+
+    public static Consumable createTestHealthPotion() {
+        return new Consumable("Health Potion", 1, () -> {return List.of(new HealEffect(1));}, true);
     }
 
     // MODIFIERS

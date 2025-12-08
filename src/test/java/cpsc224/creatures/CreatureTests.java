@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.LinkedList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,19 +17,23 @@ import cpsc224.effects.HealEffect;
 import cpsc224.effects.PoisonEffect;
 import cpsc224.items.Inventory;
 
+import javax.swing.*;
+
 public class CreatureTests {
 
     @Test
     void creatureCreatesCorrectCreature() {
         CreatureModifiers modifiers = new CreatureModifiers(1, 0.1, new LinkedList<>());
         Inventory inv = new Inventory();
-        Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
+        ImageIcon icon = new ImageIcon();
+        Creature c = new Creature("Creature", 100, modifiers, inv, icon, Arrays.asList(1.0));
 
         assertEquals("Creature", c.getName());
         assertEquals(100, c.getMaxHealth());
         assertEquals(100, c.getHealth());
         assertEquals(modifiers, c.getBaseModifiers());
         assertEquals(inv, c.getInventory());
+        assertEquals(icon, c.getIcon());
         assertEquals(Arrays.asList(1.0), c.getWeaponWeights());
     }
 
@@ -206,6 +211,15 @@ public class CreatureTests {
         Creature c = new Creature("Creature", 100, modifiers, inv, Arrays.asList(1.0));
 
         assertEquals(Arrays.asList(1.0), c.getWeaponWeights());
+   }
+
+   @Test
+   void setWeaponWeightsSetsCorrectWeaponWeights() {
+        Creature c = TestUtils.createTestRat();
+        List<Double> weights = Arrays.asList(1.0, 2.0, 3.0);
+        c.setWeaponWeights(weights);
+
+        assertEquals(weights, c.getWeaponWeights());
    }
 
     @Test

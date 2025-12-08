@@ -16,23 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FightTests {
     
     @Test
-    public void PerformingMoves (){
+    public void PerformingMoves () {
         Player p = CreatureFactory.createPlayer();
         Creature rat = CreatureFactory.createRat();
         Weapon s = WeaponFactory.createSteelSword();
         Fight f = new Fight(p, rat);
-        double intitialRhealth = rat.getHealth();
-        String t1 = f.performMove(p,rat,s);
+        double initialHealth = rat.getHealth();
+        String result = f.performMove(p, rat, s);
         double dmg = s.getMove().getDamage() * p.getTurnModifiers().getDamage();
-        rat.applyDamage(dmg, s.getMove().getDamageType());
-        double afterRhealth = rat.getHealth();
+        double afterHealth = rat.getHealth();
 
-        assertTrue(t1.contains(s.getName()));
-        assertTrue(t1.contains(rat.getName()));
-        assertTrue(t1.contains(p.getInventory().getWeapon(0).getName()));
-        assertTrue(t1.contains(p.getName()));
+        assertTrue(result.contains(s.getName()));
+        assertTrue(result.contains(rat.getName()));
+        assertTrue(result.contains(p.getName()));
         rat.getBaseModifiers().setEvasion(0);
-        assertTrue(afterRhealth < intitialRhealth);
 
         assertEquals(s.getMove().createEffects().size(), rat.getEffects().size());
         

@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,6 +35,8 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
 
     private JLabel titleLabel;
 
+    private Image backgroundImage;
+
     public PlayerSelectionPanel() {
 
         initComponents();
@@ -40,6 +45,8 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
     }
 
     private void initComponents() {
+        backgroundImage = new ImageIcon(getClass().getResource("/images/backgrounds/selectBackground2.png")
+        ).getImage();
         BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/creatures/Player.png");
         ImageIcon icon = imageBuilder
             .scale(256, 256)
@@ -61,8 +68,15 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
 
         titleLabel = new JLabel("Choose Your Character");
         titleLabel.setFont(new Font("Dialog", Font.BOLD, 36));
+        titleLabel.setForeground(Color.WHITE);
 
         setBackground(Application.MENU_COLOR);
+    }
+
+     @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     private void layoutComponents() {

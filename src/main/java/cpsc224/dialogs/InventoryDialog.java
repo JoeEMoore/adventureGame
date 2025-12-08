@@ -87,6 +87,7 @@ public class InventoryDialog extends JDialog {
 
             Consumable cons = (Consumable) value;
             label.setIcon(cons.getIcon());
+            label.setToolTipText("<html><p width=\"150\">" + cons.getToolTipText() + "</p></html>");
 
             return label;
         }
@@ -105,7 +106,7 @@ public class InventoryDialog extends JDialog {
         weaponScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         weaponScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        weaponList.setCellRenderer(new DefaultListCellRenderer(){
+        weaponList.setCellRenderer(new DefaultListCellRenderer() {
 
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -115,22 +116,14 @@ public class InventoryDialog extends JDialog {
             Weapon weapon = (Weapon) value;
             
             label.setIcon(weapon.getIcon());
+                label.setToolTipText("<html><p width=\"150\">" + weapon.getToolTipText() + "</p></html>");
             return label;
         }
     });
 
-//        if (!weaponListModel.isEmpty())
-//            currentWeapon = weaponListModel.get(0);
-//        else if (!consumableListModel.isEmpty())
-//            currentConsumable = consumableListModel.get(0);
-//        else
-//            currentWeapon = null;
-
         useButton = new JButton("Use");
-        //useButton.setEnabled(false);
         closeButton = new JButton("Close");
         dropButton = new JButton("Drop");
-        //dropButton.setEnabled(!(weaponListModel.isEmpty() && consumableListModel.isEmpty()));
 
         buttonPanel = new JPanel();
         dialogPanel = new JPanel();

@@ -13,7 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MapPanel extends JPanel implements GamePanel {
-
+    private Image backgroundImage;
     Player player;
 
     LevelPanel levelPanel;
@@ -35,7 +35,11 @@ public class MapPanel extends JPanel implements GamePanel {
     }
 
     private void initComponents() {
+        backgroundImage = new ImageIcon(getClass().getResource("/images/backgrounds/mapBackground.png")).getImage();
+
+
         levelPanel = new LevelPanel(Game.getInstance().getLevel(), player, this);
+        levelPanel.setOpaque(false); // transparent so background is visible
         healthBar = new JProgressBar(0, (int)player.getMaxHealth());
         //healthBar.setPreferredSize(new Dimension(150, 20));
 
@@ -57,6 +61,12 @@ public class MapPanel extends JPanel implements GamePanel {
         levelPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
         setBackground(Application.GAME_COLOR);
+    }
+
+     @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     private void layoutComponents() {
