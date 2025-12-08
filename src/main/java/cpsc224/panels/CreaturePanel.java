@@ -53,7 +53,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         // creature name
         nameLabel = new JLabel(creature.getName());
         nameLabel.setFont(new Font("Dialog", Font.BOLD, 14));
-
+        nameLabel.setForeground(Color.WHITE);
         // make panel transparent
         setOpaque(false);
 
@@ -66,6 +66,7 @@ public class CreaturePanel extends JPanel implements GamePanel{
         healthBar.setValue((int)creature.getHealth());
         healthBar.setForeground(Application.HEALTH_COLOR);
         healthNumber = new JLabel(String.valueOf((int)creature.getHealth()));
+        healthNumber.setForeground(Color.WHITE);
         healthPanel = new JPanel();
         healthPanel.setOpaque(false);
 

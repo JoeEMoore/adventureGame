@@ -24,6 +24,8 @@ public class FightPanel extends JPanel implements GamePanel {
     private Fight fight;
     private Room room;
     private boolean isPlayersTurn;
+    
+    private Image backgroundImage;
 
     private JButton inventoryButton;
 
@@ -57,18 +59,26 @@ public class FightPanel extends JPanel implements GamePanel {
      * Initializes the panel's components
      */
     private void initComponents() {
+        backgroundImage = new ImageIcon(getClass().getResource("/images/backgrounds/fightBackground.png")).getImage();
+
         inventoryButton = new JButton("Inventory");
 
         infoLabel = new JLabel("Start of fight between " + player.getName() + " and " + enemy.getName());
         infoLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         infoPanel = new JPanel();
-        infoPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        infoPanel.setBorder(null);
         infoPanel.setPreferredSize(infoPanel.getPreferredSize());
         infoPanel.setOpaque(false);
+        infoLabel.setForeground(Color.WHITE);
+
 
 
         playerPanel = new CreaturePanel(player);
         enemyPanel = new CreaturePanel(enemy);
+
+        playerPanel.setOpaque(false);
+        enemyPanel.setOpaque(false);
+
 
         setBackground(Application.GAME_COLOR);
     }
@@ -105,14 +115,14 @@ public class FightPanel extends JPanel implements GamePanel {
         c.gridy = 0;
         add(inventoryButton, c);
 
-        c.insets = new Insets(0, 50, 20, 0);
+        c.insets = new Insets(0, 50, -185, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 1;
         add(playerPanel, c);
 
-        c.insets = new Insets(0, 0, 20, 50);
+        c.insets = new Insets(0, 0, -185, 50);
         c.anchor = GridBagConstraints.LAST_LINE_END;
         c.gridx = 2;
         c.gridy = 1;
@@ -239,6 +249,13 @@ public class FightPanel extends JPanel implements GamePanel {
         JOptionPane.showMessageDialog(this, "You were killed by " + enemy.getName() + "!", "You Died!", JOptionPane.INFORMATION_MESSAGE);
         SwingUtilities.getWindowAncestor(this).dispose();
         Application.main(null);
+    }
+
+
+    @Override
+    protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     /**
