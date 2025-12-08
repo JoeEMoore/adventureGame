@@ -14,7 +14,7 @@ public abstract class LevelInitializer {
     protected Pool<Creature> creaturePool;
     protected Pool<Item> roomPool;
     protected ShopInitializer shopInitializer;
-    protected BossCreaturePool bossPool;
+    protected Pool<Creature> bossPool;
 
     /**
      * Creates a level initializer,
@@ -24,7 +24,7 @@ public abstract class LevelInitializer {
      * @param roomItemPool the pool of items that can generate in normal rooms
      * @param shopInitializer the shop generator
      */
-    public LevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomItemPool, ShopInitializer shopInitializer, BossCreaturePool bossPool) {
+    public LevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomItemPool, Pool<Creature> bossPool, ShopInitializer shopInitializer) {
         this.numRooms = numRooms;
         this.roomLength = roomLength;
         this.creaturePool = creaturePool;

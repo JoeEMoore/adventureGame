@@ -19,6 +19,7 @@ import cpsc224.Application;
 import cpsc224.Game;
 import cpsc224.creatures.CreatureFactory;
 import cpsc224.creatures.Player;
+import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.utils.BufferedImageBuilder;
 
 public class PlayerSelectionPanel extends JPanel implements GamePanel {
@@ -49,8 +50,8 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
         ).getImage();
 
          ImageIcon knightIcon = new BufferedImageBuilder("/images/creatures/knight2.png")
-            .scale(256, 256)
-            .toImageIcon();
+                .scale(256, 256)
+                .toImageIcon();
 
         ImageIcon mageIcon = new BufferedImageBuilder("/images/creatures/mage2.png")
                 .scale(256, 256)
@@ -143,6 +144,8 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
         player2Button.addActionListener(e -> {
             Player player = CreatureFactory.createMagePlayer();
             Game.getInstance().setPlayer(player);
+            player.getInventory().setWeapon(2, WeaponFactory.createToxicStaff());
+            player.getInventory().setWeapon(3, WeaponFactory.createHealStaff());
             startGame();
         });
 

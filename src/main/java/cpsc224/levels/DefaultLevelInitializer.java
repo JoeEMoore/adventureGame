@@ -21,8 +21,8 @@ public class DefaultLevelInitializer extends LevelInitializer {
 
     Random rand = new Random();
 
-    public DefaultLevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomPool, ShopInitializer shopInitializer, BossCreaturePool bossPool) {
-        super(numRooms, roomLength, creaturePool, roomPool, shopInitializer, bossPool);
+    public DefaultLevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomPool, Pool<Creature> bossPool, ShopInitializer shopInitializer) {
+        super(numRooms, roomLength, creaturePool, roomPool, bossPool, shopInitializer);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Collection;
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.effects.EffectsFactory;
+import cpsc224.items.Item;
 
 
 /**
@@ -20,6 +21,7 @@ public class Move {
     private int uses;
     private final double accuracy;
     private final boolean targetsAllies;
+    private int tier;
 
     private EffectsFactory effectsFactory;
 
@@ -41,8 +43,9 @@ public class Move {
         this.accuracy = accuracy;
         this.targetsAllies = targetAllies;
         
-        effectsFactory = () -> {return new ArrayList<>();};
+        effectsFactory = ArrayList::new;
         uses = maxUses;
+        tier = 1;
     }
 
     /**
@@ -58,7 +61,7 @@ public class Move {
      * @return the damage
      */
     public double getDamage() {
-        return damage;
+        return damage * Item.mapTierToMultiplier(tier);
     }
     
     /**
@@ -70,7 +73,7 @@ public class Move {
     }
 
     /**
-     * Gets the the max uses.
+     * Gets the max uses.
      * @return the max uses
      */
     public int getMaxUses() {
@@ -108,12 +111,29 @@ public class Move {
         return accuracy;
     }
 
+
     /**
      * Predicate for if the move targets allies.
      * @return true if the move targets allies
      */
     public boolean targetsAllies() {
         return targetsAllies;
+    }
+
+    /**
+     * Gets the tier.
+     * @return the tier
+     */
+    public int getTier() {
+        return tier;
+    }
+
+    /**
+     * Sets the tier.
+     * @param tier the tier
+     */
+    public void setTier(int tier) {
+        this.tier = tier;
     }
 
     /**
@@ -129,13 +149,17 @@ public class Move {
      * @return the effects as a collection
      */
     public Collection<Effect> createEffects() {
-        return effectsFactory.createEffects();
+        Collection<Effect> effects = effectsFactory.createEffects();
+        for (Effect e : effects)
+            e.multiplyEffect(Item.mapTierToMultiplier(tier));
+
+        return effects;
     }
 
     public String getToolTipText() {
         String text = "<b>Move: " + getName() + "</b><br>";
         text += "Damage Type: " + getDamageType().toString() + "<br>";
-        text += "Damage: " + getDamage() + "<br>";
+        text += "Damage: " + getDamage() + " (" + Item.mapTierToMultiplier(tier) + "x) <br>";
         text += "Accuracy: " + getAccuracy() * 100 + "% <br>";
 
         // shows uses if there are limited uses
@@ -147,7 +171,7 @@ public class Move {
         // Effects info
         Collection<Effect> effects = createEffects();
         if (!effects.isEmpty()) {
-            text += "<br><br>Effects: ";
+            text += "<br><br>Effects: (" + Item.mapTierToMultiplier(tier) + "x)" ;
             for (Effect e : effects) {
                 text += "<br>&emsp;" + e.toString();
             }

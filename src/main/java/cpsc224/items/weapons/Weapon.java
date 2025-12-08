@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class Weapon extends Item {
 
-    private Move move;
+    private final Move move;
 
     /**
      * Creates a weapon with the specified name, tier, and move.
@@ -32,6 +32,9 @@ public class Weapon extends Item {
     public Weapon(String name, int tier, Move move, ImageIcon icon) {
         super(name, tier, icon);
         this.move = move;
+
+        if (move != null)
+            move.setTier(tier);
     }
 
     /**
