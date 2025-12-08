@@ -46,7 +46,7 @@ public class Room {
         items.add(i);
     }
 
-    public void removeCreature(Creature c) {
+    public void removeCreature() {
         creature = null;
     }
 

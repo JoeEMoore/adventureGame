@@ -20,6 +20,14 @@ public class ResistanceEffect extends Effect {
         name = "Damage Resistance";
     }
 
+    /**
+     * Gets the resistance multiplier.
+     * @return the resistance multiplier
+     */
+    public double getResistanceMultiplier() {
+        return resistanceMultiplier;
+    }
+
     @Override
     public void multiplyEffect(double multiplier) {
         resistanceMultiplier *= multiplier;
