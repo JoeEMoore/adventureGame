@@ -10,7 +10,7 @@ public class ShopRoomTests {
 
     @Test
     void createShopCreatesCorrectShop() {
-        ShopInitializer init = new TestShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
+        ShopInitializer init = new TestShopInitializer();
         ShopRoom s = new ShopRoom(init);
 
         assertEquals(init.generateWeaponEntries(), s.getWeaponEntries());

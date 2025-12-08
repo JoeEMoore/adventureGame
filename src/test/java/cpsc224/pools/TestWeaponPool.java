@@ -5,14 +5,7 @@ import cpsc224.items.weapons.Weapon;
 
 public class TestWeaponPool extends Pool<Item> {
 
-    Weapon w;
-
-    public TestWeaponPool(Weapon w) {
-        this.w = w;
-    }
-
-    @Override
-    public Weapon createNew() {
-        return w;
+    public TestWeaponPool(ObjectCreator<Item> creator) {
+        addObjectCreator(creator, 1);
     }
 }

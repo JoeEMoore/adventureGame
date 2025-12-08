@@ -29,7 +29,7 @@ public class Application {
     public static void main(String[] args) {
         ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE); // make tool tips not disappear
 
-        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
+        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool(), 3, 1, 3, 3);
         Game game = Game.getInstance();
         LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Level level = new Level(levelInit);

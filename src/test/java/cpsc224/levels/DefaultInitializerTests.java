@@ -12,9 +12,10 @@ import cpsc224.levels.rooms.Room;
 
 public class DefaultInitializerTests {
 
+    DefaultShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool(), 1, 1, 1, 1);
+
     @Test
     void initializeLevelCreatesCorrectNumberOfRooms() {
-        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
 
@@ -32,7 +33,6 @@ public class DefaultInitializerTests {
 
     @Test
     void initializeLevelCreatesCorrectLengthRoomsArray() {
-        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
 
@@ -43,7 +43,6 @@ public class DefaultInitializerTests {
 
     @Test
     void getStartRoomNotNull() {
-        ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
         assertNotNull(init.getStartRoom());

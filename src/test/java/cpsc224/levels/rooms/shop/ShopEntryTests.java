@@ -18,19 +18,19 @@ public class ShopEntryTests {
         Item i = TestUtils.createTestPoisonPotion();
         int price = 20;
         int quantity = 3;
-        ShopEntry shopEntry = new ShopEntry(i, quantity, price);
+        ShopEntry shopEntry = new ShopEntry(TestUtils::createTestPoisonPotion, quantity, price);
 
-        assertEquals(i, shopEntry.getItem());
+        assertEquals(i.getName(), shopEntry.getItem().getName());
+        assertEquals(i.getTier(), shopEntry.getItem().getTier());
         assertEquals(price, shopEntry.getPrice());
         assertEquals(quantity, shopEntry.getQuantity());
     }
 
     @Test
     void decrementQuantityDecrementsQuantityIfQuantityGreaterThanZero() {
-        Item i = TestUtils.createTestPoisonPotion();
         int price = 20;
         int quantity = 3;
-        ShopEntry shopEntry = new ShopEntry(i, quantity, price);
+        ShopEntry shopEntry = new ShopEntry(TestUtils::createTestPoisonPotion, quantity, price);
         shopEntry.decreaseQuantity();
 
         assertEquals(quantity - 1, shopEntry.getQuantity());
@@ -38,10 +38,9 @@ public class ShopEntryTests {
 
     @Test
     void decrementQuantityDoesNotDecrementsQuantityIfQuantityEqualToZero() {
-        Item i = TestUtils.createTestPoisonPotion();
         int price = 20;
         int quantity = 0;
-        ShopEntry shopEntry = new ShopEntry(i, quantity, price);
+        ShopEntry shopEntry = new ShopEntry(TestUtils::createTestPoisonPotion, quantity, price);
         shopEntry.decreaseQuantity();
 
         assertEquals(0, shopEntry.getQuantity());

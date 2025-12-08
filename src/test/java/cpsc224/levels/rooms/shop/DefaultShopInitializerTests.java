@@ -15,12 +15,13 @@ public class DefaultShopInitializerTests {
     void generateWeaponEntriesGeneratesEntries() {
         Weapon w = TestUtils.createTestSword();
         Consumable c = TestUtils.createTestPoisonPotion();
-        TestWeaponPool weaponPool = new TestWeaponPool(w);
-        TestConsumablePool consumablePool = new TestConsumablePool(c);
-        ShopInitializer init = new DefaultShopInitializer(weaponPool, consumablePool);
+        TestWeaponPool weaponPool = new TestWeaponPool(TestUtils::createTestSword);
+        TestConsumablePool consumablePool = new TestConsumablePool(TestUtils::createTestPoisonPotion);
+        ShopInitializer init = new DefaultShopInitializer(weaponPool, consumablePool, 3, 1, 3, 3);
 
         for (ShopEntry e : init.generateWeaponEntries()) {
-            assertEquals(w, e.getItem());
+            assertEquals(w.getName(), e.getItem().getName());
+            assertEquals(w.getTier(), e.getItem().getTier());
         }
     }
 
@@ -28,12 +29,13 @@ public class DefaultShopInitializerTests {
     void generateConsumableEntriesGeneratesEntries() {
         Weapon w = TestUtils.createTestSword();
         Consumable c = TestUtils.createTestPoisonPotion();
-        TestWeaponPool weaponPool = new TestWeaponPool(w);
-        TestConsumablePool consumablePool = new TestConsumablePool(c);
-        ShopInitializer init = new DefaultShopInitializer(weaponPool, consumablePool);
+        TestWeaponPool weaponPool = new TestWeaponPool(TestUtils::createTestSword);
+        TestConsumablePool consumablePool = new TestConsumablePool(TestUtils::createTestPoisonPotion);
+        ShopInitializer init = new DefaultShopInitializer(weaponPool, consumablePool, 3, 1, 3, 3);
 
         for (ShopEntry e : init.generateConsumableEntries()) {
-            assertEquals(c, e.getItem());
+            assertEquals(c.getName(), e.getItem().getName());
+            assertEquals(c.getTier(), e.getItem().getTier());
         }
     }
 }
