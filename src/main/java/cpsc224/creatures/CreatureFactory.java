@@ -18,9 +18,10 @@ import javax.swing.*;
 
 public class CreatureFactory {
 
+   
+
     private static ImageIcon getIcon(String name, boolean flipHorizontally) {
         BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/creatures/" + name + ".png");
-
         if (flipHorizontally)
             imageBuilder.flipHorizontally();
 
@@ -33,6 +34,8 @@ public class CreatureFactory {
         return getIcon(name, true);
     }
 
+
+   
 
     public static Player createPlayer() {
         final String name = "Player";
@@ -54,9 +57,10 @@ public class CreatureFactory {
         inv.setWeapon(0, WeaponFactory.createBasicWand());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
+        return new Player(name, health, cm, inv, getIcon("mage2", false));
+        
 
-
-        return new Player(name, health, cm, inv);
+        
     }
 
     public static Player createBluntPlayer() {
@@ -68,7 +72,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+         return new Player(name, health, cm, inv, getIcon("Barb2", false));
     }
 
     public static Player createSlashPlayer() {
@@ -80,7 +84,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+        return new Player(name, health, cm, inv, getIcon("knight2", false));
     }
 
     public static Player createRangePlayer() {
@@ -92,7 +96,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+        return new Player(name, health, cm, inv, getIcon("Ranger", false));
     }
 
 

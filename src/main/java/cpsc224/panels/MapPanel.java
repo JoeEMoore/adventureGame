@@ -53,6 +53,7 @@ public class MapPanel extends JPanel implements GamePanel {
         goldLabel = new JLabel();
         goldLabel.setIcon(goldIcon);
         goldLabel.setFont(new Font("Dialog", Font.PLAIN, 18));
+        goldLabel.setForeground(Color.WHITE);
 
         inventoryButton = new JButton("Inventory");
         roomItemsButton = new JButton("Room Items");

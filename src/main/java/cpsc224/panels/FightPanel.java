@@ -95,14 +95,14 @@ public class FightPanel extends JPanel implements GamePanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.insets = new Insets(0, 50, 30, 50);
-        c.anchor = GridBagConstraints.PAGE_END;
+        c.insets = new Insets(0, 50, 0, 50);
+        c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 3;
         c.weightx = 1;
-        c.weighty = 1;
+        c.weighty = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 0;
         add(infoPanel, c);
 
         c.insets = new Insets(10, 10, 0, 0);
@@ -113,17 +113,20 @@ public class FightPanel extends JPanel implements GamePanel {
         c.gridy = 0;
         add(inventoryButton, c);
 
-        c.insets = new Insets(0, 50, -185, 0);
+        c.insets = new Insets(0, 50, 20, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.weightx = 1;
+        c.weighty = 1;                 
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         add(playerPanel, c);
 
-        c.insets = new Insets(0, 0, -185, 50);
+        c.insets = new Insets(0, 0, 20, 50);
         c.anchor = GridBagConstraints.LAST_LINE_END;
+         c.weightx = 1;
+        c.weighty = 1;
         c.gridx = 2;
-        c.gridy = 1;
+        c.gridy = 2;
         add(enemyPanel, c);
     }
 

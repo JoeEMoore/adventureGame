@@ -1,13 +1,13 @@
 package cpsc224.panels;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,19 +47,31 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
     private void initComponents() {
         backgroundImage = new ImageIcon(getClass().getResource("/images/backgrounds/selectBackground2.png")
         ).getImage();
-        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/creatures/Player.png");
-        ImageIcon icon = imageBuilder
+
+         ImageIcon knightIcon = new BufferedImageBuilder("/images/creatures/knight2.png")
             .scale(256, 256)
             .toImageIcon();
+
+        ImageIcon mageIcon = new BufferedImageBuilder("/images/creatures/mage2.png")
+                .scale(256, 256)
+                .toImageIcon();
+
+        ImageIcon rangerIcon = new BufferedImageBuilder("/images/creatures/Ranger.png")
+                .scale(256, 256)
+                .toImageIcon();
+
+        ImageIcon barbIcon = new BufferedImageBuilder("/images/creatures/Barb2.png")
+                .scale(256, 256)
+                .toImageIcon();
 
         player1Image = new JLabel();
         player2Image = new JLabel();
         player3Image = new JLabel();
         player4Image = new JLabel();
-        player1Image.setIcon(icon);
-        player2Image.setIcon(icon);
-        player3Image.setIcon(icon);
-        player4Image.setIcon(icon);
+        player1Image.setIcon(knightIcon);
+        player2Image.setIcon(mageIcon);
+        player3Image.setIcon(rangerIcon);
+        player4Image.setIcon(barbIcon);
 
         player1Button = new JButton("Knight");
         player2Button = new JButton("Mage");
