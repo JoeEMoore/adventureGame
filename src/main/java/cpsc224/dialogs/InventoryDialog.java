@@ -5,6 +5,7 @@ import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.levels.Level;
 import cpsc224.panels.GamePanel;
+import cpsc224.utils.BufferedImageBuilder;
 import cpsc224.panels.FightPanel;
 import cpsc224.items.weapons.*;
 
@@ -18,6 +19,9 @@ import java.awt.*;
  */
 public class InventoryDialog extends JDialog {
 
+    private static final int ICON_WIDTH = 16;
+    private static final int ICON_HEIGHT = 16;
+
     private Creature creature;
     private Creature enemy;
     private GamePanel gamePanel;
@@ -28,7 +32,7 @@ public class InventoryDialog extends JDialog {
     private JPanel weaponPanel;
     private JPanel consumablePanel;
 
-    private JList<Consumable> consumableList;
+    private static JList<Consumable> consumableList;
     private JList<Weapon> weaponList;
     DefaultListModel<Consumable> consumableListModel;
     DefaultListModel<Weapon> weaponListModel;
@@ -69,12 +73,27 @@ public class InventoryDialog extends JDialog {
             consumableListModel.addElement(cons);
         }
 
+
         consumableList = new JList<>(consumableListModel);
         consumableList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         consumableScrollPane = new JScrollPane(consumableList);
-        consumableScrollPane.setPreferredSize(new Dimension(200, 100));
+        consumableScrollPane.setPreferredSize(new Dimension(250, 290));
         consumableScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         consumableScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        consumableList.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            Consumable cons = (Consumable) value;
+            label.setIcon(cons.getIcon());
+
+            return label;
+        }
+    });
 
         weaponListModel = new DefaultListModel<>();
         for (Weapon weapon : creature.getInventory().getWeapons()) {
@@ -85,9 +104,23 @@ public class InventoryDialog extends JDialog {
         weaponList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         weaponList.setSelectedIndex(0);
         weaponScrollPane = new JScrollPane(weaponList);
-        weaponScrollPane.setPreferredSize(new Dimension(200, 100));
+        weaponScrollPane.setPreferredSize(new Dimension(250, 290));
         weaponScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         weaponScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        weaponList.setCellRenderer(new DefaultListCellRenderer(){
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            
+            Weapon weapon = (Weapon) value;
+            
+            label.setIcon(weapon.getIcon());
+            return label;
+        }
+    });
 
 //        if (!weaponListModel.isEmpty())
 //            currentWeapon = weaponListModel.get(0);
@@ -213,6 +246,16 @@ public class InventoryDialog extends JDialog {
         });
     }
 
+    private static ImageIcon getIcon(int row, int col) {
+
+    BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/items.png");
+        return imageBuilder
+                .sliceToSprite(ICON_WIDTH, ICON_HEIGHT, row, col)
+                .scale(64, 64)
+                .toImageIcon();
+    }
+
+    
     public void updateDisplay() {
         Weapon weapon = weaponList.getSelectedValue();
         Consumable cons = consumableList.getSelectedValue();
