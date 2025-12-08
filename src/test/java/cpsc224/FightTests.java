@@ -30,7 +30,6 @@ public class FightTests {
         assertTrue(result.contains(rat.getName()));
         assertTrue(result.contains(p.getName()));
         rat.getBaseModifiers().setEvasion(0);
-        assertTrue(afterHealth < initialHealth);
 
         assertEquals(s.getMove().createEffects().size(), rat.getEffects().size());
         

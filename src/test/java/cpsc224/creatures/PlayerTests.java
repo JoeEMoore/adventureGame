@@ -32,4 +32,13 @@ public class PlayerTests {
         assertEquals(7, p.getGold());
     }
 
+    @Test
+    void subtratGoldRemovesCorrectAmountOfGold() {
+        Player p = CreatureFactory.createPlayer();
+        p.addGold(10);
+
+        p.subractGold(3);
+        assertEquals(7, p.getGold());
+    }
+
 }
