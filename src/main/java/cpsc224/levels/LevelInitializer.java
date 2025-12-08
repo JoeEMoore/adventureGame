@@ -4,6 +4,7 @@ import cpsc224.creatures.Creature;
 import cpsc224.items.Item;
 import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.Room;
+import cpsc224.pools.BossCreaturePool;
 import cpsc224.pools.Pool;
 
 public abstract class LevelInitializer {
@@ -13,6 +14,7 @@ public abstract class LevelInitializer {
     protected Pool<Creature> creaturePool;
     protected Pool<Item> roomPool;
     protected ShopInitializer shopInitializer;
+    protected BossCreaturePool bossPool;
 
     /**
      * Creates a level initializer,
@@ -22,14 +24,15 @@ public abstract class LevelInitializer {
      * @param roomItemPool the pool of items that can generate in normal rooms
      * @param shopInitializer the shop generator
      */
-    public LevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomItemPool, ShopInitializer shopInitializer) {
+    public LevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomItemPool, ShopInitializer shopInitializer, BossCreaturePool bossPool) {
         this.numRooms = numRooms;
         this.roomLength = roomLength;
         this.creaturePool = creaturePool;
         this.roomPool = roomItemPool;
         this.shopInitializer = shopInitializer;
+        this.bossPool = bossPool;
     }
-
+    
     /**
      * Gets the number of rooms not counting the shop or boss room.
      * @return number of rooms
