@@ -1,4 +1,4 @@
-package cpsc224.panels;
+package cpsc224.views.panels;
 
 import javax.swing.*;
 
@@ -8,7 +8,7 @@ import cpsc224.Application;
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
-import cpsc224.dialogs.InventoryDialog;
+import cpsc224.views.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
 

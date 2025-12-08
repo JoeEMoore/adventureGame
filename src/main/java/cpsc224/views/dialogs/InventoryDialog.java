@@ -1,12 +1,11 @@
-package cpsc224.dialogs;
+package cpsc224.views.dialogs;
 
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.levels.Level;
-import cpsc224.panels.GamePanel;
-import cpsc224.utils.BufferedImageBuilder;
-import cpsc224.panels.FightPanel;
+import cpsc224.views.panels.GamePanel;
+import cpsc224.views.panels.FightPanel;
 import cpsc224.items.weapons.*;
 
 import javax.swing.*;

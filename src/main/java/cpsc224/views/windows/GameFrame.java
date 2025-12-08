@@ -1,16 +1,7 @@
-package cpsc224.windows;
+package cpsc224.views.windows;
 
 import cpsc224.Game;
-import cpsc224.creatures.CreatureFactory;
-import cpsc224.creatures.Player;
-import cpsc224.items.weapons.WeaponFactory;
-import cpsc224.levels.DefaultLevelInitializer;
-import cpsc224.levels.Level;
-import cpsc224.levels.LevelInitializer;
-import cpsc224.panels.FightPanel;
-import cpsc224.panels.LevelPanel;
-import cpsc224.panels.MapPanel;
-import cpsc224.panels.PlayerSelectionPanel;
+import cpsc224.views.panels.PlayerSelectionPanel;
 
 import javax.swing.*;
 import java.awt.*;

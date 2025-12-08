@@ -8,10 +8,11 @@ public class ShopWeaponPool extends Pool<Weapon> {
         addObjectCreator(WeaponFactory::createSteelSword, 2);
         addObjectCreator(WeaponFactory::createLongBow, 2);
         addObjectCreator(WeaponFactory::createSteelMace, 2);
+        addObjectCreator(WeaponFactory::createEnchantedStaff, 2);
         addObjectCreator(WeaponFactory::createRoyalSword, 1.5);
         addObjectCreator(WeaponFactory::createCrossbow, 1.5);
         addObjectCreator(WeaponFactory::createSteelHammer, 1.5);
-        addObjectCreator(WeaponFactory::createEnchantedStaff, 1.5);
+        addObjectCreator(WeaponFactory::createStaffOfPower, 1.5);
         addObjectCreator(WeaponFactory::createToxicStaff, 1.5);
         addObjectCreator(WeaponFactory::createHealStaff, 1.5);
     }

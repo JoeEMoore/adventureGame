@@ -1,7 +1,6 @@
-package cpsc224.panels;
+package cpsc224.views.panels;
 
 import java.awt.*;
-import java.util.Collection;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

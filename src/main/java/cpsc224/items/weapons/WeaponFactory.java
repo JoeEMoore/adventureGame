@@ -22,41 +22,6 @@ public class WeaponFactory {
                 .toImageIcon();
     }
 
-    // *** PLAYER STARTER WEAPONS ***
-
-    public static Weapon createWoodClub() {
-        final String name = "Wood Club";
-        final int tier = 1;
-        final Move move = MoveFactory.createSmashMove();
-
-        return new Weapon(name, tier, move, getIcon(8, 2));
-    }
-
-    public static Weapon createRustyDagger() {
-        final String name = "Rusty Dagger";
-        final int tier = 1;
-        final Move move = MoveFactory.createSlashMove();
-
-        return new Weapon(name, tier, move, getIcon(0, 0));
-    }
-
-    public static Weapon createCrudeBow() {
-        final String name = "Crude Bow";
-        final int tier = 1;
-        final Move move = MoveFactory.createShootMove();
-
-        return new Weapon(name, tier, move, getIcon(9, 2));
-    }
-
-    public static Weapon createBasicWand() {
-        final String name = "Basic Wand";
-        final int tier = 1;
-        final Move move = MoveFactory.createMagicMissileMove();
-
-        return new Weapon(name, tier, move, getIcon(10, 7));
-    }
-
-
     // *** CREATURE-SPECIFIC WEAPONS ***
 
     public static Weapon createRatClaws() {
@@ -76,6 +41,14 @@ public class WeaponFactory {
     }
 
     // *** OTHER WEAPONS ***
+
+    public static Weapon createCrudeBow() {
+        final String name = "Crude Bow";
+        final int tier = 1;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move, getIcon(9, 2));
+    }
 
     public static Weapon createLongBow() {
         final String name = "Long Bow";
@@ -109,6 +82,14 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(10, 1));
     }
 
+    public static Weapon createRustyDagger() {
+        final String name = "Rusty Dagger";
+        final int tier = 1;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(0, 0));
+    }
+
     public static Weapon createSteelSword() {
         final String name = "Steel Sword";
         final int tier = 2;
@@ -123,6 +104,14 @@ public class WeaponFactory {
         final Move move = MoveFactory.createSlashMove();
 
         return new Weapon(name, tier, move, getIcon(0, 8));
+    }
+
+    public static Weapon createWoodClub() {
+        final String name = "Wood Club";
+        final int tier = 1;
+        final Move move = MoveFactory.createSmashMove();
+
+        return new Weapon(name, tier, move, getIcon(8, 2));
     }
 
     public static Weapon createSteelMace() {
@@ -141,12 +130,136 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(4, 4));
     }
 
+    public static Weapon createRudimentaryStaff() {
+        final String name = "Rudimentary Staff";
+        final int tier = 1;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 0));
+    }
+
     public static Weapon createEnchantedStaff() {
         final String name = "Enchanted Staff";
+        final int tier = 2;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 7));
+    }
+
+    public static Weapon createStaffOfPower() {
+        final String name = "Staff Of Power";
         final int tier = 3;
         final Move move = MoveFactory.createMagicMissileMove();
 
         return new Weapon(name, tier, move, getIcon(10, 6));
     }
 
+    // boss weapons
+
+    // Rock golem moves
+    public static Weapon createRockHeal() {
+        final String name = "Rock heal";
+        final int tier = 3;
+        final Move move = MoveFactory.createHealMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createRockSlam() {
+        final String name = "Rock Slam";
+        final int tier = 3;
+        final Move move = MoveFactory.createSmashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createRockThrow() {
+        final String name = "Rock throw";
+        final int tier = 3;
+        final Move move = MoveFactory.createShootMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createRockCut() {
+        final String name = "Rock Cut";
+        final int tier = 3;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+
+    }
+
+    // Ice golem moves
+
+    public static Weapon creatFrostHeal() {
+        final String name = "Frost heal";
+        final int tier = 3;
+        final Move move = MoveFactory.createHealMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createIceball() {
+        final String name = "Ice ball";
+        final int tier = 3;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createIceSpear() {
+        final String name = "Ice spear attack";
+        final int tier = 3;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createIceClaws() {
+        final String name = "Ice Claws";
+        final int tier = 3;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+
+    }
+
+    // Fire golem moves
+
+    public static Weapon creatFireHeal() {
+        final String name = "Fire heal";
+        final int tier = 3;
+        final Move move = MoveFactory.createHealMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createFireBall() {
+        final String name = "Fireball";
+        final int tier = 3;
+        final Move move = MoveFactory.createMagicMissileMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createFireSword() {
+        final String name = "Fire sword attack";
+        final int tier = 3;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+    }
+
+    public static Weapon createFireClaws() {
+        final String name = "Fire Claws";
+        final int tier = 3;
+        final Move move = MoveFactory.createSlashMove();
+
+        return new Weapon(name, tier, move, getIcon(10, 6));
+
+    }
+
+
+    
 }

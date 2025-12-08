@@ -1,4 +1,4 @@
-package cpsc224.dialogs;
+package cpsc224.views.dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -20,11 +20,9 @@ import javax.swing.ScrollPaneConstants;
 import cpsc224.Game;
 import cpsc224.creatures.Creature;
 import cpsc224.items.Item;
-import cpsc224.items.consumables.Consumable;
-import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.Level;
 import cpsc224.levels.rooms.Room;
-import cpsc224.panels.GamePanel;
+import cpsc224.views.panels.GamePanel;
 
 public class RoomItemsDialog extends JDialog {
 

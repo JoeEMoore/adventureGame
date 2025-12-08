@@ -4,21 +4,17 @@ import java.awt.Color;
 
 import javax.swing.ToolTipManager;
 
-import cpsc224.creatures.CreatureFactory;
+import cpsc224.pools.BossCreaturePool;
 import cpsc224.pools.DefaultCreaturePool;
-import cpsc224.creatures.Player;
 import cpsc224.pools.DefaultItemPool;
-import cpsc224.items.Inventory;
-import cpsc224.items.consumables.ConsumableFactory;
 import cpsc224.pools.ShopConsumablePool;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
 import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.pools.ShopWeaponPool;
-import cpsc224.items.weapons.WeaponFactory;
 import cpsc224.levels.DefaultLevelInitializer;
 import cpsc224.levels.Level;
 import cpsc224.levels.LevelInitializer;
-import cpsc224.windows.SplashWindow;
+import cpsc224.views.windows.SplashWindow;
 
 /**
  * A turn-based fighting game.
@@ -35,29 +31,9 @@ public class Application {
 
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit, new BossCreaturePool());
         Level level = new Level(levelInit);
-        //Player player = CreatureFactory.createPlayer();
-
-        //game.setPlayer(player);
         game.setLevel(level);
-
-        /* 
-        Inventory inv = player.getInventory();
-        inv.incrementMaxConsumables();
-        inv.incrementMaxConsumables();
-
-        inv.setWeapon(0, WeaponFactory.createHealStaff());
-        inv.setWeapon(1, WeaponFactory.createSteelHammer());
-        inv.setWeapon(2, WeaponFactory.createCrossbow());
-        inv.setWeapon(3, WeaponFactory.createEnchantedStaff());
-        inv.setConsumable(1, ConsumableFactory.createLargeDamagePotion());
-        inv.setConsumable(2, ConsumableFactory.createWeaponRefillPotion());
-        inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
-        inv.setConsumable(4, ConsumableFactory.createResistancePotion());
-        //player.addGold(100);
-        */
-
 
         new SplashWindow();
     }

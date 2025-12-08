@@ -1,4 +1,4 @@
-package cpsc224.panels;
+package cpsc224.views.panels;
 
 import cpsc224.creatures.Player;
 import cpsc224.levels.rooms.shop.ShopEntry;
