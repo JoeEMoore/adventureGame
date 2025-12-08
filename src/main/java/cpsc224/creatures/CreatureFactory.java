@@ -51,7 +51,8 @@ public class CreatureFactory {
         final int health = 200;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createBasicWand());
+        inv.setWeapon(0, WeaponFactory.createEnchantedStaff());
+        inv.setWeapon(1, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
@@ -64,7 +65,8 @@ public class CreatureFactory {
         final int health = 200;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createWoodClub());
+        inv.setWeapon(0, WeaponFactory.createSteelMace());
+        inv.setWeapon(1, WeaponFactory.createCrudeBow());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
@@ -76,7 +78,8 @@ public class CreatureFactory {
         final int health = 200;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createRustyDagger());
+        inv.setWeapon(0, WeaponFactory.createSteelSword());
+        inv.setWeapon(1, WeaponFactory.createWoodClub());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
@@ -88,7 +91,8 @@ public class CreatureFactory {
         final int health = 200;
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
-        inv.setWeapon(0, WeaponFactory.createCrudeBow());
+        inv.setWeapon(0, WeaponFactory.createLongBow());
+        inv.setWeapon(0, WeaponFactory.createRudimentaryStaff());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
