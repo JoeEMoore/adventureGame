@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.ToolTipManager;
 
 import cpsc224.creatures.CreatureFactory;
+import cpsc224.pools.BossCreaturePool;
 import cpsc224.pools.DefaultCreaturePool;
 import cpsc224.creatures.Player;
 import cpsc224.pools.DefaultItemPool;
@@ -35,7 +36,7 @@ public class Application {
 
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit, new BossCreaturePool());
         Level level = new Level(levelInit);
         //Player player = CreatureFactory.createPlayer();
 

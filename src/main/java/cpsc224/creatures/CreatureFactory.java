@@ -184,4 +184,64 @@ public class CreatureFactory {
         return new Creature(name, health, cm, inv, weaponWeights);
     }
 
+
+    // Bosses
+
+    public static Creature createFireGolem() {
+        final String name = "Fire golem";
+        final int health = 500;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.5, 0.5)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.creatFireHeal());
+        inv.setWeapon(1, WeaponFactory.createFireBall());
+        inv.setWeapon(2, WeaponFactory.createFireSword());
+        inv.setWeapon(3, WeaponFactory.createFireClaws());
+        List<Double> weaponWeights = new ArrayList<Double>();
+
+        weaponWeights.add(1.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(1.5);
+
+        return new Creature(name, health, cm, inv, getIcon("FireGolemBoss"),weaponWeights);
+    }
+
+    public static Creature createRockGolem() {
+        final String name = "Rock golem";
+        final int health = 800;
+        final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(0.5,0.5,0.5,2.0)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createRockHeal());
+        inv.setWeapon(1, WeaponFactory.createRockSlam());
+        inv.setWeapon(2, WeaponFactory.createRockThrow());
+        inv.setWeapon(3, WeaponFactory.createRockCut());
+        List<Double> weaponWeights = new ArrayList<Double>();
+
+
+        weaponWeights.add(1.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(1.5);
+
+        return new Creature(name, health, cm, inv, getIcon("RockGolemBoss"), weaponWeights);
+    }
+
+    public static Creature createIceGolem() {
+        final String name = "Ice golem";
+        final int health = 500;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.5, 1.5, 1.0, 0.5)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.creatFrostHeal());
+        inv.setWeapon(1, WeaponFactory.createIceball());
+        inv.setWeapon(2, WeaponFactory.createIceSpear());
+        inv.setWeapon(3, WeaponFactory.createIceClaws());
+        List<Double> weaponWeights = new ArrayList<Double>();
+
+        weaponWeights.add(1.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(1.5);
+
+        return new Creature(name, health, cm, inv, getIcon("IceGolemBoss"), weaponWeights);
+    }
 }

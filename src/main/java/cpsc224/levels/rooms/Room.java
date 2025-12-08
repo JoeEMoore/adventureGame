@@ -12,7 +12,7 @@ public class Room {
 
     protected Creature creature;
     protected List<Item> items = new ArrayList<>();
-
+    protected List<Creature> bossPool;
     protected boolean isDiscovered;
     protected boolean isExplored;
 

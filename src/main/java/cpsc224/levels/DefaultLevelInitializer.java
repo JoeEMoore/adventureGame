@@ -9,6 +9,7 @@ import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.shop.ShopRoom;
+import cpsc224.pools.BossCreaturePool;
 import cpsc224.pools.Pool;
 
 public class DefaultLevelInitializer extends LevelInitializer {
@@ -17,10 +18,11 @@ public class DefaultLevelInitializer extends LevelInitializer {
     private Coordinate startRoom;
     private HashSet<Coordinate> validPositions = new HashSet<>();
 
+
     Random rand = new Random();
 
-    public DefaultLevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomPool, ShopInitializer shopInitializer) {
-        super(numRooms, roomLength, creaturePool, roomPool, shopInitializer);
+    public DefaultLevelInitializer(int numRooms, int roomLength, Pool<Creature> creaturePool, Pool<Item> roomPool, ShopInitializer shopInitializer, BossCreaturePool bossPool) {
+        super(numRooms, roomLength, creaturePool, roomPool, shopInitializer, bossPool);
     }
 
     @Override
@@ -28,15 +30,15 @@ public class DefaultLevelInitializer extends LevelInitializer {
         rooms = new Room[roomLength][roomLength];
         validPositions.add(new Coordinate(rand.nextInt(roomLength), rand.nextInt(roomLength)));
 
-        addRoom(new BossRoom());
+        Room bossRoom = new BossRoom();
+        addRoom(bossRoom);
+        bossRoom.setCreature(bossPool.createNew());
 
         for (int i = 0; i < numRooms - 1; i++) {
             Room room = new Room();
 
             // 85% chance to add creature
-            if (rand.nextInt(100) < 85)
-                room.setCreature(creaturePool.createNew());
-
+            
             // 40% chance to add item
             if (rand.nextInt(100) < 40)
                 room.addItem(roomPool.createNew());
