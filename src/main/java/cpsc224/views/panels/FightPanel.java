@@ -65,7 +65,6 @@ public class FightPanel extends JPanel implements GamePanel {
         infoLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         infoPanel = new JPanel();
         infoPanel.setBorder(null);
-        infoPanel.setPreferredSize(infoPanel.getPreferredSize());
         infoPanel.setOpaque(false);
         infoLabel.setForeground(Color.WHITE);
 
@@ -264,8 +263,7 @@ public class FightPanel extends JPanel implements GamePanel {
      * @param text the move info
      */
     public void displayMoveInfo(String text) {
-
-        infoLabel.setText("<html>" + text + "</html>");
+        infoLabel.setText("<html><p style=\"text-align: center;\">" + text + "</p></html>");
 
         updateDisplay();
     }

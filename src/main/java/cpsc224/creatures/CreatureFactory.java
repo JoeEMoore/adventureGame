@@ -157,7 +157,7 @@ public class CreatureFactory {
     public static Creature createGuardian() {
         final String name = "Guardian";
         final int health = 105;
-        final CreatureModifiers cm = new CreatureModifiers(2, .15, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
+        final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRoyalSword());
         inv.setWeapon(1, WeaponFactory.createSteelHammer());
