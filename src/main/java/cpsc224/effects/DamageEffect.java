@@ -23,12 +23,20 @@ public class DamageEffect extends Effect {
     }
 
     /**
+     * Gets the damage amount for the effect.
+     * @return the damage amount
+     */
+    public double getDamageAmount() {
+        return damageAmount;
+    }
+
+    /**
      * Multiplies the damage amount.
      * @param multiplier the multiplier
      */
     @Override
     public void multiplyEffect(double multiplier) {
-        damageAmount *= (int) multiplier;
+        damageAmount *= multiplier;
     }
 
     @Override
