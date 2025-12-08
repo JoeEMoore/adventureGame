@@ -1,21 +1,31 @@
 package cpsc224.windows;
 
 import javax.swing.*;
-
 import cpsc224.Application;
-
 import java.awt.*;
 
 public class SplashWindow extends JWindow {
 
     public SplashWindow() {
-        JPanel panel = new JPanel();
+
+        
+        JPanel panel = new JPanel() {
+            private Image bg = new ImageIcon(getClass().getResource("/images/backgrounds/selectBackground2.png")).getImage();
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Application.MENU_COLOR);
+        panel.setOpaque(false);  
 
         JLabel title = new JLabel("Adventure Game");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font("Dialog", Font.BOLD, 36));
+        title.setForeground(Color.WHITE);
 
         JButton newGameButton = new JButton("New Game");
         newGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -29,9 +39,7 @@ public class SplashWindow extends JWindow {
             new GameFrame();
         });
 
-        exitButton.addActionListener(e -> {
-            dispose();
-        });
+        exitButton.addActionListener(e -> dispose());
 
         panel.add(Box.createRigidArea(new Dimension(0, 50)));
         panel.add(title);
@@ -41,6 +49,7 @@ public class SplashWindow extends JWindow {
         panel.add(exitButton);
 
         add(panel);
+
         setPreferredSize(new Dimension(500, 300));
         pack();
         setLocationRelativeTo(null);
