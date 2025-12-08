@@ -37,11 +37,12 @@ public class Application {
         Game game = Game.getInstance();
         LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
         Level level = new Level(levelInit);
-        Player player = CreatureFactory.createPlayer();
+        //Player player = CreatureFactory.createPlayer();
 
-        game.setPlayer(player);
+        //game.setPlayer(player);
         game.setLevel(level);
 
+        /* 
         Inventory inv = player.getInventory();
         inv.incrementMaxConsumables();
         inv.incrementMaxConsumables();
@@ -55,6 +56,7 @@ public class Application {
         inv.setConsumable(3, ConsumableFactory.createStrengthPotion());
         inv.setConsumable(4, ConsumableFactory.createResistancePotion());
         //player.addGold(100);
+        */
 
 
         new SplashWindow();
