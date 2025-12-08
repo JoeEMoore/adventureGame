@@ -41,6 +41,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+        inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
         return new Player(name, health, cm, inv);
     }
@@ -52,6 +53,8 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createBasicWand());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+        inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
+
 
         return new Player(name, health, cm, inv);
     }
@@ -63,6 +66,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createWoodClub());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+        inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
         return new Player(name, health, cm, inv);
     }
@@ -74,6 +78,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+        inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
         return new Player(name, health, cm, inv);
     }
@@ -85,6 +90,7 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createCrudeBow());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
+        inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
         return new Player(name, health, cm, inv);
     }
