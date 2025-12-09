@@ -5,12 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import cpsc224.pools.*;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
-import cpsc224.levels.rooms.shop.ShopInitializer;
 import org.junit.jupiter.api.Test;
 
 import cpsc224.levels.rooms.Room;
 
-public class DefaultInitializerTests {
+public class DefaultLevelInitializerTests {
 
     DefaultShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool(), 1, 1, 1, 1);
 

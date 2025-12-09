@@ -93,14 +93,6 @@ public class DefaultLevelInitializer implements LevelInitializer {
         return numRooms;
     }
 
-    /**
-     * Gets the length of the level in rooms.
-     * @return the room length of the level
-     */
-    public int getRoomLength() {
-        return roomLength;
-    }
-
     private Coordinate addRoom(Room room) {
         Coordinate roomCoord = randomValidPosition();
         rooms[roomCoord.getRow()][roomCoord.getCol()] = room;
