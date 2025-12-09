@@ -112,7 +112,6 @@ public class LevelPanel extends JPanel implements GamePanel {
     }
 
     private void updateRoomButtons() {
-
         for (int r = 0; r < level.getRoomLength(); r++) {
             for (int c = 0; c < level.getRoomLength(); c++) {
                 roomButtons[r][c].updateDisplay();

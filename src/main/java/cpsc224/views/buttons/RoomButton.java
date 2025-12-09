@@ -1,12 +1,10 @@
 package cpsc224.views.buttons;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -42,63 +40,53 @@ public class RoomButton extends JButton {
         Coordinate playerPosition = Game.getInstance().getPlayer().getCurrentPosition();
         setEnabled(false);
         setOpaque(false);
-        if (room != null) {
-            if (room.isDiscovered()) {
-                setOpaque(true);
-                if (room instanceof BossRoom) {
-                    ImageIcon bossIcon = new ImageIcon(loadSprite(15, 6));
-                    setIcon(bossIcon);
-                    setDisabledIcon(bossIcon);
-                }
 
-                if (room instanceof ShopRoom) {
-                    ImageIcon shopIcon = new ImageIcon(loadSprite(24, 3));
-                    setIcon(shopIcon);
-                    setDisabledIcon(shopIcon);
-                }
-            }
-            if (room.isExplored()) {
-                setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-            }
-            // -----------------------
-            // Adjacent rooms are moveable
-            // -----------------------
-            if (room instanceof ShopRoom || room instanceof BossRoom) {
-                setEnabled(true);
-                return;
-            }
+        // -----------------------
+        // Adjacent rooms are moveable
+        // -----------------------
+        if (room != null && position.isAdjacent(playerPosition))
+            setEnabled(true);
 
-            if (position.isAdjacent(playerPosition)) {
-               ImageIcon fog = new ImageIcon(loadImage("/images/rooms/undiscovered.png"));
-                setIcon(fog);
-                setDisabledIcon(fog);
-                setEnabled(true);
-                setBackground(null);
-            }
-        }
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (room != null && room.isExplored()) {
-            Image image = rotate(baseRoomImage(position), computeRotation(position)).getImage();
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
-            int x = (getWidth() - 128) / 2;
-            int y = (getHeight() - 128) / 2;
-            if (room instanceof BossRoom) {
-                g.drawImage(loadSprite(15, 6), x, y, 128, 128, this);
-            } else if (room instanceof ShopRoom) {
-                g.drawImage(loadSprite(24, 3), x, y, 128, 128, this);
-            } else if (room.hasItems()) {
-                g.drawImage(loadSprite(2, 4), x, y, 128, 128, this);
+        if (room == null)
+            return;
+
+        int imageX = (getWidth() - 128) / 2;
+        int imageY = (getHeight() - 128) / 2;
+
+        // set image to room if explored, fog if only discovered
+        if (room.isExplored()) {
+            Image roomImage = rotate(baseRoomImage(position), computeRotation(position)).getImage();
+            g.drawImage(roomImage, 0, 0, getWidth(), getHeight(), this);
+
+            // add item icon if room has items and is explored
+            if (room.hasItems()) {
+                g.drawImage(loadSprite(2, 4), imageX, imageY, 128, 128, this);
             }
-
-            Player player = Game.getInstance().getPlayer();
-            if (position.equals(player.getCurrentPosition()))
-                g.drawImage(player.getIcon().getImage(), x, y, 128, 128, this);
+        } else if (room.isDiscovered()) {
+            Image fog = loadImage("/images/rooms/undiscovered.png");
+            g.drawImage(fog, 0, 0, getWidth(), getHeight(), this);
         }
+
+        // boss and shop icons
+        if (room.isDiscovered()) {
+            if (room instanceof BossRoom) {
+                g.drawImage(loadSprite(15, 6), imageX, imageY, 128, 128, this);
+            } else if (room instanceof ShopRoom) {
+                g.drawImage(loadSprite(24, 3), imageX, imageY, 128, 128, this);
+            }
+        }
+
+        // player icon
+        Player player = Game.getInstance().getPlayer();
+        if (position.equals(player.getCurrentPosition()))
+            g.drawImage(player.getIcon().getImage(), imageX, imageY, 128, 128, this);
     }
 
     private Image loadImage(String path) {
