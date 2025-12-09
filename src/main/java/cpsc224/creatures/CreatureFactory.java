@@ -52,7 +52,7 @@ public class CreatureFactory {
     public static Player createMagePlayer() {
         final String name = "Mage";
         final int health = 200;
-        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 0.8)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createEnchantedStaff());
         inv.setWeapon(1, WeaponFactory.createRustyDagger());
@@ -67,7 +67,7 @@ public class CreatureFactory {
     public static Player createBluntPlayer() {
         final String name = "Barbarian";
         final int health = 200;
-        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(0.8, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createSteelMace());
         inv.setWeapon(1, WeaponFactory.createCrudeBow());
@@ -80,7 +80,7 @@ public class CreatureFactory {
     public static Player createSlashPlayer() {
         final String name = "Knight";
         final int health = 200;
-        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 0.8, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createSteelSword());
         inv.setWeapon(1, WeaponFactory.createWoodClub());
@@ -93,7 +93,7 @@ public class CreatureFactory {
     public static Player createRangePlayer() {
         final String name = "Ranger";
         final int health = 200;
-        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 0.8, 1.0)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createLongBow());
         inv.setWeapon(1, WeaponFactory.createRudimentaryStaff());
