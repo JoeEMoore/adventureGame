@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Arrays;
 import java.util.List;
 
+import cpsc224.levels.Coordinate;
 import org.junit.jupiter.api.Test;
 
 import cpsc224.TestUtils;
@@ -285,5 +286,12 @@ public class CreatureTests {
 
         assertEquals(15, damage);
         assertEquals(135, troll.getHealth());
+    }
+
+    @Test
+    void setCurrentPositionSetsCurrentPosition() {
+        Creature troll = TestUtils.createTestTroll();
+        troll.setCurrentPosition(new Coordinate(2, 4));
+        assertEquals(new Coordinate(2, 4), troll.getCurrentPosition());
     }
 }

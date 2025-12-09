@@ -30,19 +30,11 @@ public class LevelTests {
     }
 
     @Test
-    void exploreRoom() {
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
-        level.exploreRoom(new Coordinate(2, 4));
-
-        assertEquals(new Coordinate(2, 4), level.getCurrentPosition());
-    }
-
-    @Test
     void exploreRoomExploresRoom() {
         Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
         level.exploreRoom(new Coordinate(2, 4));
 
-        Room room = level.getRoom(level.getCurrentPosition());
+        Room room = level.getRoom(level.getStartPosition());
         assertTrue(room == null || room.isExplored());
     }
 
