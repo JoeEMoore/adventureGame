@@ -195,95 +195,7 @@ public class LevelPanel extends JPanel implements GamePanel {
             }
         }
     }
-        
-        
-        
-        /* 
-        for (int i = 0; i < level.getRoomLength(); i++) {   
-            for (int j = 0; j < level.getRoomLength(); j++) {
-                Room room = rooms[i][j];
-                JButton button = roomButtons[i][j];
-                Coordinate c = new Coordinate(i, j);
-
-                // default value
-                button.setEnabled(false);
-
-
-                /* 
-                if (room != null) {
-
-                // -------------------------
-                // NEW: determine door count
-                // -------------------------
-                int doors = countDoors(i, j);
-                ImageIcon roomIcon = null;
-
-                // choose correct room art
-                switch (doors) {
-                    case 1 -> roomIcon = new ImageIcon(getClass().getResource("/images/rooms/oneDoor.png"));
-                    case 2 -> roomIcon = new ImageIcon(getClass().getResource("/images/rooms/twoDoor.png"));
-                    case 3 -> roomIcon = new ImageIcon(getClass().getResource("/images/rooms/threeDoor.png"));
-                    case 4 -> roomIcon = new ImageIcon(getClass().getResource("/images/rooms/fourDoor.png"));
-                }
-
-                // default icon for discovered rooms
-                if (roomIcon != null) {
-                    button.setIcon(roomIcon);
-                    button.setDisabledIcon(roomIcon);
-                }
-            }
-            
-                if (room != null) {
-
-                    // if room is discovered
-                    if (room.isDiscovered()) {
-                        button.setBackground(Color.LIGHT_GRAY);
-                        button.setOpaque(true);
-                        button.setBorder(BorderFactory.createDashedBorder(Color.RED, 3, 4, 4, false));
-
-                        if (room instanceof BossRoom) {
-                            ImageIcon bossIcon = getIcon(15, 6);
-                            button.setIcon(bossIcon);
-                            button.setDisabledIcon(bossIcon);
-                        }
-                        if (room instanceof ShopRoom) {
-                            ImageIcon shopIcon = getIcon(24, 3);
-                            button.setIcon(shopIcon);
-                            button.setDisabledIcon(shopIcon);
-                        }
-                    }
-
-                    // if room is explored
-                    if (room.isExplored()) {
-                        button.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
-
-                        // indicate room has items if it is explored and not special room
-                        if (!(room instanceof ShopRoom || room instanceof BossRoom)) {
-                            if (room.hasItems()) {
-                                ImageIcon itemIcon = getIcon(2, 4);
-                                button.setIcon(itemIcon);
-                                button.setDisabledIcon(itemIcon);
-                            } else {
-                                button.setIcon(null);
-                                button.setDisabledIcon(null);
-                            }
-                        }
-                    }
-
-                    // if room is adjacent to player
-                    if (c.isAdjacent(playerPosition)) {
-                        button.setEnabled(true);
-                        button.setBackground(Color.YELLOW);
-                    }
-
-                    // if room is at player's position
-                    if (c.equals(playerPosition)) {
-                        button.setBackground(Color.GREEN);
-                    }
-                }
-            }
-        }*/
-    }
+}
 
     private ImageIcon getIcon(int row, int col) {
         BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/sprites/items/items.png");
@@ -317,81 +229,95 @@ public class LevelPanel extends JPanel implements GamePanel {
 
     private ImageIcon baseRoomImage(int r, int c) {
 
-        boolean u = hasUp(r,c);
-        boolean d = hasDown(r,c);
-        boolean l = hasLeft(r,c);
-        boolean rgt = hasRight(r,c);
+    boolean u = hasUp(r,c);
+    boolean d = hasDown(r,c);
+    boolean l = hasLeft(r,c);
+    boolean rgt = hasRight(r,c);
 
-        int doors = (u?1:0) + (d?1:0) + (l?1:0) + (rgt?1:0);
+    int doors = (u?1:0) + (d?1:0) + (l?1:0) + (rgt?1:0);
 
-        return switch (doors) {
-            case 1 -> loadImage("/images/rooms/oneDoor.png");
+    return switch (doors) {
 
-            case 2 -> {
-                // opposite doors → straight hallway
-                boolean opposite = (u && d) || (l && rgt);
-                if (opposite) {
-                    yield loadImage("/images/rooms/twoDoor_opposite.png");
-                }
-                // corner hallway
-                yield loadImage("/images/rooms/twoDoor_adjacent.png");
-            }
+        case 1 -> {
+            if (u)      yield loadImage("/images/rooms/oneDoor_Up.png");
+            if (d)      yield loadImage("/images/rooms/oneDoor_Up.png");     // rotated in computeRotation
+            if (l)      yield loadImage("/images/rooms/oneDoor_Right.png");  // rotated in computeRotation
+            if (rgt)    yield loadImage("/images/rooms/oneDoor_Right.png");
+            yield null;
+        }
 
-            case 3 -> loadImage("/images/rooms/threeDoor.png");
-            case 4 -> loadImage("/images/rooms/fourDoor.png");
-            default -> null;
-        };
-    }
+        case 2 -> {
+            // Opposite doors
+            if (u && d)      yield loadImage("/images/rooms/twoDoor_Up_Down.png");
+            if (l && rgt)    yield loadImage("/images/rooms/twoDoor_Left_Right.png");
+
+            // Corner rooms (your 6 images)
+            if (u && rgt)    yield loadImage("/images/rooms/twoDoor_Right_Up.png");
+            if (u && l)      yield loadImage("/images/rooms/twoDoor_Left_Up.png");
+            if (d && rgt)    yield loadImage("/images/rooms/twoDoor_Right_Down.png");
+            if (d && l)      yield loadImage("/images/rooms/twoDoor_Left_Down.png");
+
+            yield null;
+        }
+
+        case 3 -> {
+            boolean missingUp    = !u;
+            boolean missingDown  = !d;
+            boolean missingLeft  = !l;
+            boolean missingRight = !rgt;
+
+            if (missingDown)  yield loadImage("/images/rooms/threeDoor_Missing_Down.png");
+            if (missingLeft)  yield loadImage("/images/rooms/threeDoor_Missing_Left.png");
+
+            if (missingUp)    yield loadImage("/images/rooms/threeDoor_Missing_Down.png"); // rotation fixes it
+            if (missingRight) yield loadImage("/images/rooms/threeDoor_Missing_Left.png"); // rotation fixes it
+
+            yield null;
+        }
+
+        case 4 -> loadImage("/images/rooms/fourDoor.png");
+
+        default -> null;
+    };
+}
+
 
     private double computeRotation(int r, int c) {
 
-        boolean u = hasUp(r,c);
-        boolean d = hasDown(r,c);
-        boolean l = hasLeft(r,c);
-        boolean rgt = hasRight(r,c);
-        int doors = (u?1:0) + (d?1:0) + (l?1:0) + (rgt?1:0);
+            boolean u   = hasUp(r,c);
+            boolean d   = hasDown(r,c);
+            boolean l   = hasLeft(r,c);
+            boolean rgt = hasRight(r,c);
 
-        // 1 door → rotate so the door faces its neighbor
-        if (doors == 1) {
-            if (rgt) return 0;
-            if (d) return 90;
-            if (l) return 180;
-            if (u) return 270;
+            int doors = (u?1:0) + (d?1:0) + (l?1:0) + (rgt?1:0);
+
+            // -------------------------
+            // 1 DOOR — rotation needed
+            // -------------------------
+            if (doors == 1) {
+                if (u)   return 0;
+                if (d)   return 180;
+                if (rgt) return 0;
+                if (l)   return 180;
+            }
+
+            
+            if (doors == 2) {
+                return 0;
+            }
+
+           
+            if (doors == 3) {
+
+                if (!d)   return 0;    // base Missing_Down image
+                if (!l)   return 0;    // base Missing_Left image
+
+                if (!u)   return 180;  // flip Missing_Down
+                if (!rgt) return 180;  // flip Missing_Left
+            }
+
+            return 0;
         }
 
-        // 2 adjacent → rotate corner piece
-        if (doors == 2 && !((u && d) || (l && rgt))) {
-            if (u && rgt) return 0;
-            if (rgt && d) return 90;
-            if (d && l) return 180;
-            if (l && u) return 270;
-        }
-
-        // 2 opposite → rotate straight hallway
-        if (doors == 2) {
-            if (l && rgt) return 0;    // vertical
-            if (u && d) return 90; // horizontal
-        }
-
-        // 3 door → rotate so missing door points DOWN
-        if (doors == 3) {
-            if (!d) return 0;
-            if (!l) return 90;
-            if (!u) return 180;
-            if (!rgt) return 270;
-        }
-
-        return 0;
-    }
-
-    private int countDoors(int r, int c) {
-        int doors = 0;
-
-        if (r > 0 && rooms[r-1][c] != null) doors++;                 // up
-        if (r < rooms.length - 1 && rooms[r+1][c] != null) doors++;  // down
-        if (c > 0 && rooms[r][c-1] != null) doors++;                 // left
-        if (c < rooms.length - 1 && rooms[r][c+1] != null) doors++;  // right
-
-        return doors;
-    }   
+    
 }
