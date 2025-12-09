@@ -63,7 +63,7 @@ public class MapPanel extends JPanel implements GamePanel {
         setBackground(Application.GAME_COLOR);
     }
 
-     @Override
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
