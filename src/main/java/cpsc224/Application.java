@@ -31,7 +31,7 @@ public class Application {
 
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
         Game game = Game.getInstance();
-        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), shopInit, new BossCreaturePool());
+        LevelInitializer levelInit = new DefaultLevelInitializer(15, 6, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Level level = new Level(levelInit);
         game.setLevel(level);
 

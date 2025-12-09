@@ -18,9 +18,10 @@ import javax.swing.*;
 
 public class CreatureFactory {
 
+   
+
     private static ImageIcon getIcon(String name, boolean flipHorizontally) {
         BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/creatures/" + name + ".png");
-
         if (flipHorizontally)
             imageBuilder.flipHorizontally();
 
@@ -33,6 +34,8 @@ public class CreatureFactory {
         return getIcon(name, true);
     }
 
+
+   
 
     public static Player createPlayer() {
         final String name = "Player";
@@ -55,9 +58,10 @@ public class CreatureFactory {
         inv.setWeapon(1, WeaponFactory.createRustyDagger());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
+        return new Player(name, health, cm, inv, getIcon("mage2", false));
+        
 
-
-        return new Player(name, health, cm, inv);
+        
     }
 
     public static Player createBluntPlayer() {
@@ -70,7 +74,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+         return new Player(name, health, cm, inv, getIcon("Barb2", false));
     }
 
     public static Player createSlashPlayer() {
@@ -83,7 +87,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+        return new Player(name, health, cm, inv, getIcon("knight2", false));
     }
 
     public static Player createRangePlayer() {
@@ -96,7 +100,7 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
-        return new Player(name, health, cm, inv);
+        return new Player(name, health, cm, inv, getIcon("Ranger", false));
     }
 
 
@@ -138,7 +142,7 @@ public class CreatureFactory {
 
     public static Creature createWitch() {
         final String name = "Witch";
-        final int health = 75;
+        final int health = 50;
         final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
@@ -153,7 +157,7 @@ public class CreatureFactory {
     public static Creature createGuardian() {
         final String name = "Guardian";
         final int health = 105;
-        final CreatureModifiers cm = new CreatureModifiers(2, .15, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
+        final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRoyalSword());
         inv.setWeapon(1, WeaponFactory.createSteelHammer());
@@ -185,13 +189,13 @@ public class CreatureFactory {
         final int health = 50;
         final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(1.5, 0.5, 0.5, 2.0)));
         final Inventory inv = new Inventory(4,0);
-        inv.setWeapon(0, WeaponFactory.createCrossbow());
+        inv.setWeapon(0, WeaponFactory.createLongBow());
         inv.setWeapon(1, WeaponFactory.createRustyDagger());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(3.0);
         weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv, weaponWeights);
+        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
     }
 
 
@@ -199,8 +203,8 @@ public class CreatureFactory {
 
     public static Creature createFireGolem() {
         final String name = "Fire golem";
-        final int health = 500;
-        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.5, 0.5)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.05, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.5, 0.5)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.creatFireHeal());
         inv.setWeapon(1, WeaponFactory.createFireBall());
@@ -218,8 +222,8 @@ public class CreatureFactory {
 
     public static Creature createRockGolem() {
         final String name = "Rock golem";
-        final int health = 800;
-        final CreatureModifiers cm = new CreatureModifiers(1, 0.1, new LinkedList<>(Arrays.asList(0.5,0.5,0.5,2.0)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1, 0.05, new LinkedList<>(Arrays.asList(0.5,0.5,0.5,2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRockHeal());
         inv.setWeapon(1, WeaponFactory.createRockSlam());
@@ -238,8 +242,8 @@ public class CreatureFactory {
 
     public static Creature createIceGolem() {
         final String name = "Ice golem";
-        final int health = 500;
-        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.1, new LinkedList<>(Arrays.asList(1.5, 1.5, 1.0, 0.5)));
+        final int health = 200;
+        final CreatureModifiers cm = new CreatureModifiers(1.5, 0.05, new LinkedList<>(Arrays.asList(1.5, 1.5, 1.0, 0.5)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.creatFrostHeal());
         inv.setWeapon(1, WeaponFactory.createIceball());

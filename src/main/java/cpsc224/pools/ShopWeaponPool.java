@@ -1,8 +1,9 @@
 package cpsc224.pools;
+import cpsc224.items.Item;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.items.weapons.WeaponFactory;
 
-public class ShopWeaponPool extends Pool<Weapon> {
+public class ShopWeaponPool extends Pool<Item> {
 
     public ShopWeaponPool() {
         addObjectCreator(WeaponFactory::createSteelSword, 2);

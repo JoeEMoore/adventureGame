@@ -40,7 +40,6 @@ public class Fight {
      * @return the result of the move as a string
      */
     public String performMove(Creature source, Creature target, Weapon weapon) {
-        double multplier = Item.mapTierToMultiplier(weapon.getTier());
         Move move = weapon.getMove();
 
         if (move.getUses() > 0)
@@ -54,7 +53,7 @@ public class Fight {
                 return source.getName() + " used " + move.getName() + " with their " + weapon.getName() + " against " + target.getName() + ". They Missed!";
         }
         
-        double damage = move.getDamage() * multplier * source.getTurnModifiers().getDamage();
+        double damage = move.getDamage() * source.getTurnModifiers().getDamage();
         double damageDealt = target.applyDamage(damage, move.getDamageType());
 
         // result of move
@@ -71,7 +70,6 @@ public class Fight {
         // apply each effect and get result
         result.append("<br>");
         for (Effect e : move.createEffects()) {
-            e.multiplyEffect(multplier);
             result.append(target.addEffect(e)).append(". ");
         }
         
@@ -86,7 +84,10 @@ public class Fight {
      */
     public String creatureTurn(Creature creature, Creature enemy) {
         CreatureAI move = new CreatureAI(creature);
-        int index = move.calculateMove();
-        return performMove(creature, enemy, creature.getInventory().getWeapon(index));
+        Weapon weapon = creature.getInventory().getWeapon(move.calculateMove());
+        if (!weapon.getMove().targetsAllies())
+            return performMove(creature, enemy, weapon);
+        else
+            return performMove(creature, creature, weapon);
     }
 }

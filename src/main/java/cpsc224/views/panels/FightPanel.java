@@ -8,6 +8,7 @@ import cpsc224.Application;
 import cpsc224.Fight;
 import cpsc224.creatures.Creature;
 import cpsc224.creatures.Player;
+import cpsc224.levels.rooms.BossRoom;
 import cpsc224.views.dialogs.InventoryDialog;
 import cpsc224.items.weapons.Weapon;
 import cpsc224.levels.rooms.Room;
@@ -65,7 +66,6 @@ public class FightPanel extends JPanel implements GamePanel {
         infoLabel.setFont(new Font("Dialog", Font.BOLD, 18));
         infoPanel = new JPanel();
         infoPanel.setBorder(null);
-        infoPanel.setPreferredSize(infoPanel.getPreferredSize());
         infoPanel.setOpaque(false);
         infoLabel.setForeground(Color.WHITE);
 
@@ -95,14 +95,14 @@ public class FightPanel extends JPanel implements GamePanel {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.insets = new Insets(0, 50, 30, 50);
-        c.anchor = GridBagConstraints.PAGE_END;
+        c.insets = new Insets(0, 50, 0, 50);
+        c.anchor = GridBagConstraints.PAGE_START;
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = 3;
         c.weightx = 1;
-        c.weighty = 1;
+        c.weighty = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 0;
         add(infoPanel, c);
 
         c.insets = new Insets(10, 10, 0, 0);
@@ -113,17 +113,20 @@ public class FightPanel extends JPanel implements GamePanel {
         c.gridy = 0;
         add(inventoryButton, c);
 
-        c.insets = new Insets(0, 50, -185, 0);
+        c.insets = new Insets(0, 50, 20, 0);
         c.anchor = GridBagConstraints.LAST_LINE_START;
         c.weightx = 1;
+        c.weighty = 1;                 
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         add(playerPanel, c);
 
-        c.insets = new Insets(0, 0, -185, 50);
+        c.insets = new Insets(0, 0, 20, 50);
         c.anchor = GridBagConstraints.LAST_LINE_END;
+         c.weightx = 1;
+        c.weighty = 1;
         c.gridx = 2;
-        c.gridy = 1;
+        c.gridy = 2;
         add(enemyPanel, c);
     }
 
@@ -233,11 +236,19 @@ public class FightPanel extends JPanel implements GamePanel {
     }
 
     private void winFight() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        if (room instanceof BossRoom) {
+            frame.setContentPane(new WinPanel());
+            frame.revalidate();
+            frame.repaint();
+            return;
+        }
+
         JOptionPane.showMessageDialog(this, "You beat " + enemy.getName() + "!", "You won!", JOptionPane.INFORMATION_MESSAGE);
         room.removeCreature();
         player.addGold((int)enemy.getMaxHealth());
         player.clearEffects();
-        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
         frame.setContentPane(new MapPanel());
         frame.revalidate();
         frame.repaint();
@@ -261,8 +272,7 @@ public class FightPanel extends JPanel implements GamePanel {
      * @param text the move info
      */
     public void displayMoveInfo(String text) {
-
-        infoLabel.setText("<html>" + text + "</html>");
+        infoLabel.setText("<html><p style=\"text-align: center;\">" + text + "</p></html>");
 
         updateDisplay();
     }
@@ -291,15 +301,4 @@ public class FightPanel extends JPanel implements GamePanel {
     public Creature getEnemy(){
         return enemy;
     }
-
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        ImageIcon icon = ImageUtils.getImageIcon("images/backgrounds/StoneWall.png");
-//        BufferedImage image = ImageUtils.toBufferedImage(icon.getImage());
-//        RescaleOp op = new RescaleOp(1f, 100, null);
-//        op.filter(image, image);
-//
-//        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-//    }
-
 }

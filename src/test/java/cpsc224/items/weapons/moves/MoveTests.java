@@ -2,6 +2,7 @@ package cpsc224.items.weapons.moves;
 
 import java.util.Collection;
 
+import cpsc224.items.Item;
 import org.junit.jupiter.api.Test;
 
 import cpsc224.TestUtils;
@@ -21,7 +22,7 @@ public class MoveTests {
         assertEquals(10, move.getDamage());
         assertEquals(DamageType.Blunt, move.getDamageType());
         assertEquals(-1, move.getMaxUses());
-        assertEquals(false, move.targetsAllies());
+        assertFalse(move.targetsAllies());
     }
 
     @Test
@@ -50,6 +51,22 @@ public class MoveTests {
         move.resetUses();
 
         assertEquals(5, move.getUses());
+    }
+
+    @Test
+    void setTierSetsTier() {
+        Move m = TestUtils.createTestSlashMove();
+        m.setTier(3);
+        assertEquals(3, m.getTier());
+    }
+
+    @Test
+    void TierMultipliesDamageByMultiplier() {
+        int tier = 3;
+        Move m = TestUtils.createTestSlashMove();
+        double initial = m.getDamage();
+        m.setTier(tier);
+        assertEquals(initial * Item.mapTierToMultiplier(tier), m.getDamage());
     }
 
     @Test

@@ -1,14 +1,15 @@
 package cpsc224.levels.rooms.shop;
 
 import cpsc224.items.Item;
+import cpsc224.pools.ObjectCreator;
 
 public class ShopEntry {
-    private Item item;
+    private ObjectCreator<Item> itemCreator;
     private int quantity;
     private int price;
     
-    public ShopEntry(Item item, int quantity, int price) {
-        this.item = item;
+    public ShopEntry(ObjectCreator<Item> itemCreator, int quantity, int price) {
+        this.itemCreator = itemCreator;
         this.quantity = quantity;
         this.price = price;
     }
@@ -31,7 +32,7 @@ public class ShopEntry {
     }
 
     public Item getItem() {
-        return item;
+        return itemCreator.createItem();
     }
 
     public int getQuantity(){

@@ -1,8 +1,9 @@
 package cpsc224.pools;
+import cpsc224.items.Item;
 import cpsc224.items.consumables.Consumable;
 import cpsc224.items.consumables.ConsumableFactory;
 
-public class ShopConsumablePool extends Pool<Consumable> {
+public class ShopConsumablePool extends Pool<Item> {
 
     public ShopConsumablePool() {
         addObjectCreator(ConsumableFactory::createSmallHealthPotion, 3);

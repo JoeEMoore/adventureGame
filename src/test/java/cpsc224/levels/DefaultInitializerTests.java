@@ -3,14 +3,11 @@ package cpsc224.levels;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import cpsc224.pools.ShopConsumablePool;
+import cpsc224.pools.*;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
 import cpsc224.levels.rooms.shop.ShopInitializer;
-import cpsc224.pools.ShopWeaponPool;
 import org.junit.jupiter.api.Test;
 
-import cpsc224.pools.DefaultCreaturePool;
-import cpsc224.pools.DefaultItemPool;
 import cpsc224.levels.rooms.Room;
 
 public class DefaultInitializerTests {
@@ -18,7 +15,7 @@ public class DefaultInitializerTests {
     @Test
     void initializeLevelCreatesCorrectNumberOfRooms() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
 
         int count = 0;
@@ -36,7 +33,7 @@ public class DefaultInitializerTests {
     @Test
     void initializeLevelCreatesCorrectLengthRoomsArray() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
 
         assertEquals(5, rooms.length);
@@ -47,7 +44,7 @@ public class DefaultInitializerTests {
     @Test
     void getStartRoomNotNull() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit);
+        LevelInitializer init = new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit);
         Room[][] rooms = init.initializeLevel();
         assertNotNull(init.getStartRoom());
     }

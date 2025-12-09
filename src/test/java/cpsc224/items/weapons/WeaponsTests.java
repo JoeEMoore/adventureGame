@@ -9,24 +9,23 @@ import org.junit.jupiter.api.Test;
 import cpsc224.items.weapons.moves.Move;
 import cpsc224.items.weapons.moves.MoveFactory;
 
-import javax.swing.*;
-
 public class WeaponsTests {
     
     @Test
     public void GettingAllAttributes () {
-        Move slash = MoveFactory.createSlashMove();
+        Move slash = TestUtils.createTestSlashMove();
+        Move smash = TestUtils.createTestSmashMove();
 
         Weapon sword = new Weapon("sword", 1, slash);
-        Weapon LongBow = new Weapon("Long bow", 2, null);
+        Weapon Club = new Weapon("Club", 2, smash);
         
         assertEquals(sword.getName(), "sword");
         assertEquals(sword.getTier(), 1);
         assertEquals(sword.getMove(), slash);
 
-        assertEquals(LongBow.getName(), "Long bow");
-        assertEquals(LongBow.getTier(), 2);
-        assertEquals(LongBow.getMove(), null);
+        assertEquals(Club.getName(), "Club");
+        assertEquals(Club.getTier(), 2);
+        assertEquals(Club.getMove(), smash);
 
     }
 

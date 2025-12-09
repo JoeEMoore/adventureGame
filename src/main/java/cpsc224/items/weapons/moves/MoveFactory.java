@@ -24,7 +24,7 @@ public class MoveFactory {
 
     public static Move createSmashMove() {
         final String name = "Smash";
-        final int damage = 20;
+        final int damage = 25;
         final DamageType dt = DamageType.Blunt;
         final int maxUses = -1;
         final double accuracy = 0.6;
@@ -60,7 +60,7 @@ public class MoveFactory {
         final int damage = 8;
         final DamageType dt = DamageType.Magic;
         final int maxUses = 5;
-        final double accuracy = 0.9;
+        final double accuracy = 0.85;
         final boolean targetsAllies = false;
 
         Move move = new Move(name, damage, dt, maxUses, accuracy, targetsAllies);

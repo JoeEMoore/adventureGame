@@ -1,11 +1,8 @@
 package cpsc224.levels;
 
-import cpsc224.pools.DefaultCreaturePool;
-import cpsc224.pools.DefaultItemPool;
-import cpsc224.pools.ShopConsumablePool;
+import cpsc224.pools.*;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
 import cpsc224.levels.rooms.shop.ShopInitializer;
-import cpsc224.pools.ShopWeaponPool;
 import cpsc224.levels.rooms.Room;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +14,7 @@ public class LevelTests {
     @Test
     void createLevelCreatesCorrectLevel() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit));
+        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
 
         assertEquals(5, level.getRoomLength());
         assertEquals(12, level.getNumRooms()); // 2 extra created by DefaultLevelInitializer for boss and shop
@@ -26,7 +23,7 @@ public class LevelTests {
     @Test
     void getRoomReturnsCorrectRoom() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit));
+        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
         Coordinate coord = new Coordinate(1, 2);
         Room[][] rooms = level.getRooms();
 
@@ -36,7 +33,7 @@ public class LevelTests {
     @Test
     void setCurrentPositionCorrectlySetsPosition() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit));
+        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
         level.setCurrentPosition(new Coordinate(2, 4));
 
         assertEquals(new Coordinate(2, 4), level.getCurrentPosition());
@@ -45,7 +42,7 @@ public class LevelTests {
     @Test
     void setCurrentPositionExploresRoom() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit));
+        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
         level.setCurrentPosition(new Coordinate(2, 4));
 
         Room room = level.getRoom(level.getCurrentPosition());
@@ -55,7 +52,7 @@ public class LevelTests {
     @Test
     void setCurrentPositionDiscoversAdjacentRooms() {
         ShopInitializer shopInit = new DefaultShopInitializer(new ShopWeaponPool(), new ShopConsumablePool());
-        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), shopInit));
+        Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
         level.setCurrentPosition(new Coordinate(2, 3));
 
         Room room1 = level.getRoom(new Coordinate(1, 3));
