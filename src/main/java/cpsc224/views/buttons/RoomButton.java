@@ -1,5 +1,7 @@
 package cpsc224.views.buttons;
 
+import cpsc224.Game;
+import cpsc224.creatures.Player;
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
@@ -30,14 +32,24 @@ public class RoomButton extends JButton {
         this.position = position;
     }
 
-    public void updateDisplay(Coordinate playerPosition) {
+    public void updateDisplay() {
+        Coordinate playerPosition = Game.getInstance().getPlayer().getCurrentPosition();
         setEnabled(false);
         setOpaque(false);
         if (room != null) {
             if (room.isDiscovered()) {
                 setOpaque(true);
-                setBackground(Color.LIGHT_GRAY);
-                setBorder(BorderFactory.createDashedBorder(Color.RED, 3, 4, 4, false));
+                if (room instanceof BossRoom) {
+                    ImageIcon bossIcon = new ImageIcon(loadSprite(15, 6));
+                    setIcon(bossIcon);
+                    setDisabledIcon(bossIcon);
+                }
+
+                if (room instanceof ShopRoom) {
+                    ImageIcon shopIcon = new ImageIcon(loadSprite(24, 3));
+                    setIcon(shopIcon);
+                    setDisabledIcon(shopIcon);
+                }
             }
             if (room.isExplored()) {
                 setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
@@ -48,12 +60,6 @@ public class RoomButton extends JButton {
             if (position.isAdjacent(playerPosition)) {
                 setEnabled(true);
                 setBackground(Color.YELLOW);
-            }
-            // -----------------------
-            // Player position room
-            // -----------------------
-            if (position.equals(playerPosition)) {
-                setBackground(Color.GREEN);
             }
         }
     }
@@ -74,6 +80,10 @@ public class RoomButton extends JButton {
             } else if (room.hasItems()) {
                 g.drawImage(loadSprite(2, 4), x, y, 128, 128, this);
             }
+
+            Player player = Game.getInstance().getPlayer();
+            if (position.equals(player.getCurrentPosition()))
+                g.drawImage(player.getIcon().getImage(), x, y, 128, 128, this);
         }
     }
 
@@ -108,7 +118,6 @@ public class RoomButton extends JButton {
     private boolean hasRight(int r, int c) { return c < rooms.length - 1 && rooms[r][c+1] != null; }
 
     private Image baseRoomImage(Coordinate coordinate) {
-
         int row = coordinate.getRow();
         int col = coordinate.getCol();
 

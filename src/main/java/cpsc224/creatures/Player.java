@@ -1,6 +1,7 @@
 package cpsc224.creatures;
 
 import cpsc224.items.Inventory;
+import cpsc224.levels.Coordinate;
 
 import javax.swing.*;
 
@@ -33,6 +34,7 @@ public class Player extends Creature {
         super(creatureName, maxHealth, modifiers, inventory, icon);
 
         gold = 0;
+        setCurrentPosition( new Coordinate(0, 0));
     }
 
     /**

@@ -219,14 +219,14 @@ public class InventoryDialog extends JDialog {
             if (cons != null) {   // Dropping a consumable
                 creature.getInventory().getConsumables().remove(cons);
                 consumableListModel.removeElement(cons);
-                level.getRoom(level.getCurrentPosition()).addItem(cons);
+                level.getRoom(creature.getCurrentPosition()).addItem(cons);
     
                 // reset
                 consumableList.setSelectedIndex(0);
             } else if (weapon != null) {   // Dropping a weapon
                 creature.getInventory().getWeapons().remove(weapon);
                 weaponListModel.removeElement(weapon);
-                level.getRoom(level.getCurrentPosition()).addItem(weapon);
+                level.getRoom(creature.getCurrentPosition()).addItem(weapon);
 
                 // reset
                 weaponList.setSelectedIndex(0);

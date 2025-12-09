@@ -1,14 +1,14 @@
 package cpsc224.levels;
 
-import cpsc224.creatures.CreatureFactory;
 import cpsc224.levels.rooms.Room;
 
 public class Level {
 
     private final Room[][] rooms;
-    private Coordinate currentPosition;
     private int numRooms;
     private int roomLength;
+
+    private Coordinate startPosition;
 
     /**
      * Creates a level using the given initializer.
@@ -16,10 +16,9 @@ public class Level {
      */
     public Level(LevelInitializer initializer) {
         rooms = initializer.initializeLevel();
-        currentPosition = initializer.getStartRoom();
-        setCurrentPosition(currentPosition);
-
         numRooms = initializer.getNumRooms() + 2;
+        startPosition = initializer.getStartRoom();
+        exploreRoom(startPosition);
     }
 
     /**
@@ -47,6 +46,14 @@ public class Level {
     }
 
     /**
+     * Gets the coordinate of the start room for the floor
+     * @return the start coordinate
+     */
+    public Coordinate getStartPosition() {
+        return startPosition;
+    }
+
+    /**
      * Gets a room at a specific coordinate
      * @param coord the coordinate of the room
      * @return the room at the coordinate
@@ -56,20 +63,10 @@ public class Level {
     }
 
     /**
-     * gets the current position of the player
-     * @return the current position
-     */
-    public Coordinate getCurrentPosition() {
-        return currentPosition;
-    }
-
-    /**
      * Sets the current position of the player. Updates what rooms are discovered and explored.
      * @param currentPosition the new position of the player
      */
-    public void setCurrentPosition(Coordinate currentPosition) {
-        this.currentPosition = currentPosition;
-
+    public void exploreRoom(Coordinate currentPosition) {
         int row = currentPosition.getRow();
         int col = currentPosition.getCol();
 

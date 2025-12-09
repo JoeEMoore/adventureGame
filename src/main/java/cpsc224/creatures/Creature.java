@@ -7,6 +7,7 @@ import java.util.List;
 import cpsc224.damagetypes.DamageType;
 import cpsc224.effects.Effect;
 import cpsc224.items.Inventory;
+import cpsc224.levels.Coordinate;
 
 import javax.swing.*;
 
@@ -24,6 +25,7 @@ public class Creature {
     private Inventory inventory;
     private ImageIcon icon;
     private List<Double> weaponWeights;
+    private Coordinate currentPosition;
 
     /**
      * Instantiates a creature.
@@ -204,6 +206,18 @@ public class Creature {
 
     public void setWeaponWeights(List<Double> weights){
         weaponWeights = weights;
+    }
+
+    /**
+     * gets the current position of the player
+     * @return the current position
+     */
+    public Coordinate getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(Coordinate currentPosition) {
+        this.currentPosition = currentPosition;
     }
 
     /**

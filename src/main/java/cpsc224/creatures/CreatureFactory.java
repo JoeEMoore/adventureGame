@@ -143,7 +143,7 @@ public class CreatureFactory {
     public static Creature createWitch() {
         final String name = "Witch";
         final int health = 50;
-        final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
+        final CreatureModifiers cm = new CreatureModifiers(1.5, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
         inv.setWeapon(1, WeaponFactory.createSteelSword());
@@ -157,7 +157,7 @@ public class CreatureFactory {
     public static Creature createGuardian() {
         final String name = "Guardian";
         final int health = 105;
-        final CreatureModifiers cm = new CreatureModifiers(2, .1, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
+        final CreatureModifiers cm = new CreatureModifiers(1.5, .1, new LinkedList<>(Arrays.asList(0.5, 0.8, 1.1, 2.0)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRoyalSword());
         inv.setWeapon(1, WeaponFactory.createSteelHammer());

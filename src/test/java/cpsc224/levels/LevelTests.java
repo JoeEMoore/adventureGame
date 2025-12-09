@@ -2,7 +2,6 @@ package cpsc224.levels;
 
 import cpsc224.pools.*;
 import cpsc224.levels.rooms.shop.DefaultShopInitializer;
-import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.Room;
 import org.junit.jupiter.api.Test;
 
@@ -31,26 +30,26 @@ public class LevelTests {
     }
 
     @Test
-    void setCurrentPositionCorrectlySetsPosition() {
+    void exploreRoom() {
         Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
-        level.setCurrentPosition(new Coordinate(2, 4));
+        level.exploreRoom(new Coordinate(2, 4));
 
         assertEquals(new Coordinate(2, 4), level.getCurrentPosition());
     }
 
     @Test
-    void setCurrentPositionExploresRoom() {
+    void exploreRoomExploresRoom() {
         Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
-        level.setCurrentPosition(new Coordinate(2, 4));
+        level.exploreRoom(new Coordinate(2, 4));
 
         Room room = level.getRoom(level.getCurrentPosition());
         assertTrue(room == null || room.isExplored());
     }
 
     @Test
-    void setCurrentPositionDiscoversAdjacentRooms() {
+    void exploreRoomDiscoversAdjacentRooms() {
         Level level = new Level(new DefaultLevelInitializer(10, 5, new DefaultCreaturePool(), new DefaultItemPool(), new BossCreaturePool(), shopInit));
-        level.setCurrentPosition(new Coordinate(2, 3));
+        level.exploreRoom(new Coordinate(2, 3));
 
         Room room1 = level.getRoom(new Coordinate(1, 3));
         assertTrue(room1 == null || room1.isDiscovered());

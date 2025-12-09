@@ -49,7 +49,7 @@ public class RoomItemsDialog extends JDialog {
         this.gamePanel = gamePanel;
         currentItem = null;
         Level level = Game.getInstance().getLevel();
-        room = level.getRoom(level.getCurrentPosition());
+        room = level.getRoom(creature.getCurrentPosition());
 
         initComponents();
         layoutComponents();

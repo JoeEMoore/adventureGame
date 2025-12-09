@@ -15,15 +15,10 @@ import cpsc224.creatures.Player;
 
 import cpsc224.levels.Coordinate;
 import cpsc224.levels.Level;
-import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.shop.ShopRoom;
 import cpsc224.utils.BufferedImageBuilder;
 import cpsc224.views.buttons.RoomButton;
-
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 
 
 public class LevelPanel extends JPanel implements GamePanel {
@@ -33,21 +28,18 @@ public class LevelPanel extends JPanel implements GamePanel {
     GamePanel mapPanel;
     Room[][] rooms;
     RoomButton[][] roomButtons;
-    Coordinate playerPosition;
 
     public LevelPanel(Level level, Player player, GamePanel mapPanel) {
         this.level = level;
         this.player = player;
         this.mapPanel = mapPanel;
         rooms = level.getRooms();
-        playerPosition = level.getCurrentPosition();
         
         initComponents();
         layoutComponents();
         addListeners();
 
         updateDisplay();
-
     }
 
     private void initComponents() {
@@ -82,8 +74,8 @@ public class LevelPanel extends JPanel implements GamePanel {
                     continue;
 
                 button.addActionListener(e -> {
-                    playerPosition = new Coordinate(row, col);
-                    level.setCurrentPosition(playerPosition);
+                    player.setCurrentPosition(new Coordinate(row, col));
+                    level.exploreRoom(player.getCurrentPosition());
 
                     // start fight if there is a creature
                     if (room.hasCreature()) {
@@ -123,7 +115,7 @@ public class LevelPanel extends JPanel implements GamePanel {
 
         for (int r = 0; r < level.getRoomLength(); r++) {
             for (int c = 0; c < level.getRoomLength(); c++) {
-                roomButtons[r][c].updateDisplay(playerPosition);
+                roomButtons[r][c].updateDisplay();
         }
     }
 }

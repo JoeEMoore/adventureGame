@@ -136,27 +136,19 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
 
     private void addListeners() {
         player1Button.addActionListener(e -> {
-            Player player = CreatureFactory.createSlashPlayer();
-            Game.getInstance().setPlayer(player);
-            startGame();
+            startGame(CreatureFactory.createSlashPlayer());
         });
 
         player2Button.addActionListener(e -> {
-            Player player = CreatureFactory.createMagePlayer();
-            Game.getInstance().setPlayer(player);
-            startGame();
+            startGame(CreatureFactory.createMagePlayer());
         });
 
         player3Button.addActionListener(e -> {
-            Player player = CreatureFactory.createRangePlayer();
-            Game.getInstance().setPlayer(player);
-            startGame();
+            startGame(CreatureFactory.createRangePlayer());
         });
 
         player4Button.addActionListener(e -> {
-            Player player = CreatureFactory.createBluntPlayer();
-            Game.getInstance().setPlayer(player);
-            startGame();
+            startGame(CreatureFactory.createBluntPlayer());
         });
     }
 
@@ -166,7 +158,10 @@ public class PlayerSelectionPanel extends JPanel implements GamePanel {
 
     }
 
-    private void startGame() {
+    private void startGame(Player player) {
+        Game g = Game.getInstance();
+        player.setCurrentPosition(g.getLevel().getStartPosition());
+        Game.getInstance().setPlayer(player);
         JFrame frame = (JFrame)SwingUtilities.getWindowAncestor(this);
         frame.setContentPane(new MapPanel());
         frame.revalidate();

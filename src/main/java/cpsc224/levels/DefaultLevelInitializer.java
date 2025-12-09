@@ -3,7 +3,9 @@ package cpsc224.levels;
 import java.util.HashSet;
 import java.util.Random;
 
+import cpsc224.Game;
 import cpsc224.creatures.Creature;
+import cpsc224.creatures.Player;
 import cpsc224.items.Item;
 import cpsc224.levels.rooms.shop.ShopInitializer;
 import cpsc224.levels.rooms.BossRoom;
@@ -69,8 +71,10 @@ public class DefaultLevelInitializer implements LevelInitializer {
 
             addRoom(room);
         }
-        
+
+        Player player = Game.getInstance().getPlayer();
         startRoom = addRoom(new Room()); // second last room is empty start room
+
         addRoom(new ShopRoom(shopInitializer));
         return rooms;
     }
