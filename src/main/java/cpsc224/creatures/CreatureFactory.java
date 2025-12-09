@@ -92,7 +92,7 @@ public class CreatureFactory {
         final CreatureModifiers cm = new CreatureModifiers(1, .2, new LinkedList<>(Arrays.asList(1.0, 1.0, 1.0, 1.0)));
         final Inventory inv = new Inventory(4, 4);
         inv.setWeapon(0, WeaponFactory.createLongBow());
-        inv.setWeapon(0, WeaponFactory.createRudimentaryStaff());
+        inv.setWeapon(1, WeaponFactory.createRudimentaryStaff());
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
 
