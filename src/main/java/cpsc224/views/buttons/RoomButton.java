@@ -1,5 +1,15 @@
 package cpsc224.views.buttons;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import cpsc224.Game;
 import cpsc224.creatures.Player;
 import cpsc224.levels.Coordinate;
@@ -7,10 +17,6 @@ import cpsc224.levels.rooms.BossRoom;
 import cpsc224.levels.rooms.Room;
 import cpsc224.levels.rooms.shop.ShopRoom;
 import cpsc224.utils.BufferedImageBuilder;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class RoomButton extends JButton {
 
@@ -57,9 +63,17 @@ public class RoomButton extends JButton {
             // -----------------------
             // Adjacent rooms are moveable
             // -----------------------
-            if (position.isAdjacent(playerPosition)) {
+            if (room instanceof ShopRoom || room instanceof BossRoom) {
                 setEnabled(true);
-                setBackground(Color.YELLOW);
+                return;
+            }
+
+            if (position.isAdjacent(playerPosition)) {
+               ImageIcon fog = new ImageIcon(loadImage("/images/rooms/undiscovered.png"));
+                setIcon(fog);
+                setDisabledIcon(fog);
+                setEnabled(true);
+                setBackground(null);
             }
         }
     }
@@ -139,11 +153,11 @@ public class RoomButton extends JButton {
             }
 
             case 2 -> {
-                // Opposite numDoors
+                // Opposite
                 if (up && down)      yield loadImage("/images/rooms/twoDoor_Up_Down.png");
                 if (left && right)    yield loadImage("/images/rooms/twoDoor_Left_Right.png");
 
-                // Corner rooms (your 6 images)
+                // Corner rooms 
                 if (up && right)    yield loadImage("/images/rooms/twoDoor_Right_Up.png");
                 if (up && left)      yield loadImage("/images/rooms/twoDoor_Left_Up.png");
                 if (down && right)    yield loadImage("/images/rooms/twoDoor_Right_Down.png");
@@ -186,7 +200,7 @@ public class RoomButton extends JButton {
 
         int doors = (up ?1:0) + (down ?1:0) + (left ?1:0) + (right ?1:0);
 
-        // -------------------------
+        
         // 1 DOOR — rotation needed
         // -------------------------
         if (doors == 1) {
