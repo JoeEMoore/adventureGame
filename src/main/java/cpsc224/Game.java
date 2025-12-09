@@ -11,7 +11,6 @@ public class Game {
 
     private Player player;
     private Level level;
-    private JPanel rootPanel;
 
     private Game() {}
 
@@ -36,13 +35,5 @@ public class Game {
 
     public void setLevel(Level level) {
         this.level = level;
-    }
-
-    public JPanel getRootPanel() {
-        return rootPanel;
-    }
-
-    public void setRootPanel(JPanel rootPanel) {
-        this.rootPanel = rootPanel;
     }
 }
