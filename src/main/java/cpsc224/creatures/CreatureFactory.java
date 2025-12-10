@@ -35,8 +35,6 @@ public class CreatureFactory {
     }
 
 
-   
-
     public static Player createPlayer() {
         final String name = "Player";
         final int health = 200;
@@ -149,18 +147,30 @@ public class CreatureFactory {
         return new Creature(name, health, cm, inv, weaponWeights);
     }
 
-    public static Creature createWitch() {
-        final String name = "Witch";
-        final int health = 50;
+    public static Creature createSorcerer() {
+        final String name = "Sorcerer";
+        final int health = 75;
         final CreatureModifiers cm = new CreatureModifiers(1.5, .1, new LinkedList<>(Arrays.asList(1.2, 1.4, 0.8, 0.7)));
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createToxicStaff());
-        inv.setWeapon(1, WeaponFactory.createSteelSword());
+        inv.setWeapon(1, WeaponFactory.createEnchantedStaff());
         List<Double> weaponWeights = new ArrayList<Double>();
-        weaponWeights.add(4.0);
+        weaponWeights.add(2.0);
+        weaponWeights.add(3.0);
+
+        return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
+    }
+
+    public static Creature createMushroom() {
+        final String name = "Mushroom";
+        final int health = 40;
+        final CreatureModifiers cm = new CreatureModifiers(1, .1, new LinkedList<>(Arrays.asList(1.2, 1.0, 1.0, 0.8)));
+        final Inventory inv = new Inventory(4,0);
+        inv.setWeapon(0, WeaponFactory.createMushroomCap());
+        List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(1.0);
 
-        return new Creature(name, health, cm, inv, weaponWeights);
+        return new Creature(name, health, cm, inv, getIcon(name, false), weaponWeights);
     }
 
     public static Creature createGuardian() {
@@ -184,11 +194,9 @@ public class CreatureFactory {
         final Inventory inv = new Inventory(4,0);
         inv.setWeapon(0, WeaponFactory.createRustyDagger());
         inv.setWeapon(1, WeaponFactory.createWoodClub());
-        inv.setWeapon(2, WeaponFactory.createSteelSword());
         List<Double> weaponWeights = new ArrayList<Double>();
         weaponWeights.add(1.5);
         weaponWeights.add(1.0);
-        weaponWeights.add(0.5);
 
         return new Creature(name, health, cm, inv, getIcon(name), weaponWeights);
     }

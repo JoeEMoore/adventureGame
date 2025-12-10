@@ -22,6 +22,13 @@ public class WeaponFactory {
                 .toImageIcon();
     }
 
+    private static ImageIcon getIcon(String name) {
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/weapons/" + name + ".png");
+        return imageBuilder
+                .scale(64, 64)
+                .toImageIcon();
+    }
+
     // *** CREATURE-SPECIFIC WEAPONS ***
 
     public static Weapon createRatClaws() {
@@ -30,6 +37,14 @@ public class WeaponFactory {
         final Move move = MoveFactory.createScratchMove();
 
         return new Weapon(name, tier, move, getIcon(2, 4));
+    }
+
+    public static Weapon createMushroomCap() {
+        final String name = "Mushroom Cap";
+        final int tier = 1;
+        final Move move = MoveFactory.createSporeShotMove();
+
+        return new Weapon(name, tier, move, getIcon(name));
     }
 
     public static Weapon createBirdTalons() {

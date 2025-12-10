@@ -24,7 +24,7 @@ public class MoveFactory {
 
     public static Move createSmashMove() {
         final String name = "Smash";
-        final int damage = 25;
+        final int damage = 30;
         final DamageType dt = DamageType.Blunt;
         final int maxUses = -1;
         final double accuracy = 0.6;
@@ -37,8 +37,8 @@ public class MoveFactory {
         final String name = "Shoot";
         final int damage = 20;
         final DamageType dt = DamageType.Projectile;
-        final int maxUses = 20;
-        final double accuracy = 0.7;
+        final int maxUses = 10;
+        final double accuracy = 0.8;
         final boolean targetsAllies = false;
 
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
@@ -91,6 +91,17 @@ public class MoveFactory {
         final DamageType dt = DamageType.Slice;
         final int maxUses = -1;
         final double accuracy = 0.8;
+        final boolean targetsAllies = false;
+
+        return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
+    }
+
+    public static Move createSporeShotMove() {
+        final String name = "Spore Shot";
+        final int damage = 10;
+        final DamageType dt = DamageType.Projectile;
+        final int maxUses = -1;
+        final double accuracy = 0.95;
         final boolean targetsAllies = false;
 
         return new Move(name, damage, dt, maxUses, accuracy, targetsAllies);
