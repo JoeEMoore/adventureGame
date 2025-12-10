@@ -41,12 +41,11 @@ public class RoomButton extends JButton {
         setEnabled(false);
         setOpaque(false);
 
-        // -----------------------
-        // Adjacent rooms are moveable
-        // -----------------------
+        // Adjacent rooms are moveable-
         if (room != null && position.isAdjacent(playerPosition))
             setEnabled(true);
 
+        // ensure button is repainted on each update
         repaint();
     }
 

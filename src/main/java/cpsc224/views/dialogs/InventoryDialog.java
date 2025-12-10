@@ -56,6 +56,7 @@ public class InventoryDialog extends JDialog {
         layoutComponents();
         addListeners();
         updateDisplay();
+
         pack();
         setLocationRelativeTo(owner);
     }
@@ -77,21 +78,6 @@ public class InventoryDialog extends JDialog {
         consumableScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         consumableScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        consumableList.setCellRenderer(new DefaultListCellRenderer() {
-
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-            Consumable cons = (Consumable) value;
-            label.setIcon(cons.getIcon());
-            label.setToolTipText("<html><p width=\"150\">" + cons.getToolTipText() + "</p></html>");
-
-            return label;
-        }
-    });
-
         weaponListModel = new DefaultListModel<>();
         for (Weapon weapon : creature.getInventory().getWeapons()) {
             weaponListModel.addElement(weapon);
@@ -104,21 +90,6 @@ public class InventoryDialog extends JDialog {
         weaponScrollPane.setPreferredSize(new Dimension(250, 290));
         weaponScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         weaponScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        weaponList.setCellRenderer(new DefaultListCellRenderer() {
-
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-
-            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            
-            Weapon weapon = (Weapon) value;
-            
-            label.setIcon(weapon.getIcon());
-                label.setToolTipText("<html><p width=\"150\">" + weapon.getToolTipText() + "</p></html>");
-            return label;
-        }
-    });
 
         useButton = new JButton("Use");
         closeButton = new JButton("Close");
@@ -240,5 +211,39 @@ public class InventoryDialog extends JDialog {
         Consumable cons = consumableList.getSelectedValue();
         dropButton.setEnabled(weapon != null || cons != null);
         useButton.setEnabled(cons != null);
+
+        setCellRenderers();
+    }
+
+    private void setCellRenderers() {
+        weaponList.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                Weapon weapon = (Weapon) value;
+
+                label.setIcon(weapon.getIcon());
+                label.setToolTipText("<html><p width=\"150\">" + weapon.getToolTipText() + "</p></html>");
+                return label;
+            }
+        });
+
+        consumableList.setCellRenderer(new DefaultListCellRenderer() {
+
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                Consumable cons = (Consumable) value;
+                label.setIcon(cons.getIcon());
+                label.setToolTipText("<html><p width=\"150\">" + cons.getToolTipText() + "</p></html>");
+
+                return label;
+            }
+        });
     }
 }

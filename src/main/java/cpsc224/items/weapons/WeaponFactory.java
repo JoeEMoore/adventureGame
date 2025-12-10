@@ -159,7 +159,7 @@ public class WeaponFactory {
     // Rock golem moves
     public static Weapon createRockHeal() {
         final String name = "Rock heal";
-        final int tier = 3;
+        final int tier = 1;
         final Move move = MoveFactory.createHealMove();
 
         return new Weapon(name, tier, move, getIcon(10, 6));
@@ -194,7 +194,7 @@ public class WeaponFactory {
 
     public static Weapon creatFrostHeal() {
         final String name = "Frost heal";
-        final int tier = 3;
+        final int tier = 1;
         final Move move = MoveFactory.createHealMove();
 
         return new Weapon(name, tier, move, getIcon(10, 6));
@@ -229,7 +229,7 @@ public class WeaponFactory {
 
     public static Weapon creatFireHeal() {
         final String name = "Fire heal";
-        final int tier = 3;
+        final int tier = 1;
         final Move move = MoveFactory.createHealMove();
 
         return new Weapon(name, tier, move, getIcon(10, 6));
@@ -259,7 +259,4 @@ public class WeaponFactory {
         return new Weapon(name, tier, move, getIcon(10, 6));
 
     }
-
-
-    
 }
