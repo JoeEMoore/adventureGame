@@ -12,5 +12,8 @@ public class DefaultCreaturePool extends Pool<Creature> {
         addObjectCreator(CreatureFactory::createWitch, 1);
         addObjectCreator(CreatureFactory::createTroll, 1);
         addObjectCreator(CreatureFactory::createGuardian, 1);
+        addObjectCreator(CreatureFactory::createSlime, 1);
+
+
     }
 }

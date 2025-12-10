@@ -59,9 +59,6 @@ public class CreatureFactory {
         inv.setConsumable(0, ConsumableFactory.createSmallHealthPotion());
         inv.setConsumable(1, ConsumableFactory.createWeaponRefillPotion());
         return new Player(name, health, cm, inv, getIcon("mage2", false));
-        
-
-        
     }
 
     public static Player createBluntPlayer() {
@@ -126,6 +123,18 @@ public class CreatureFactory {
         weaponWeights.add(1.0);
 
         return new Creature(name, health, cm, inv, weaponWeights);
+    }
+
+    public static Creature createSlime() {
+        String name = "Slime";
+        int health = 25;
+        CreatureModifiers cm = new CreatureModifiers(0.8, 0.25,
+                new LinkedList<>(Arrays.asList(0.8, 1.2, 0.8, 1.0)));
+        Inventory inv = new Inventory(4, 0);
+        inv.setWeapon(0, WeaponFactory.createRatClaws());
+        List<Double> ws = new ArrayList<>();
+        ws.add(1.0);
+        return new Creature(name, health, cm, inv, getIcon(name, false), ws);
     }
 
     public static Creature createBird() {
