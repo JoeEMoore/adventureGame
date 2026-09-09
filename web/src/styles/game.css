@@ -78,7 +78,7 @@ button {
 .splash-screen {
   background:
     linear-gradient(180deg, rgba(14, 16, 32, 0.35), rgba(14, 16, 32, 0.75)),
-    url('/assets/images/backgrounds/selectBackground2.png') center / cover;
+    url('/adventureGame/assets/images/backgrounds/selectBackground2.png') center / cover;
   align-items: center;
   justify-content: center;
 }
@@ -107,7 +107,7 @@ button {
 .select-screen {
   background:
     linear-gradient(180deg, rgba(14, 16, 32, 0.4), rgba(14, 16, 32, 0.7)),
-    url('/assets/images/backgrounds/selectBackground2.png') center / cover;
+    url('/adventureGame/assets/images/backgrounds/selectBackground2.png') center / cover;
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
@@ -164,7 +164,7 @@ button {
 .map-screen {
   background:
     linear-gradient(180deg, rgba(14, 16, 32, 0.45), rgba(14, 16, 32, 0.65)),
-    url('/assets/images/backgrounds/mapBackground.png') center / cover;
+    url('/adventureGame/assets/images/backgrounds/mapBackground.png') center / cover;
   gap: 1rem;
   padding: 1rem;
 }
@@ -339,7 +339,7 @@ button {
 .fight-screen {
   background:
     linear-gradient(180deg, rgba(14, 16, 32, 0.35), rgba(14, 16, 32, 0.55)),
-    url('/assets/images/backgrounds/fightBackground.png') center / cover;
+    url('/adventureGame/assets/images/backgrounds/fightBackground.png') center / cover;
   flex-direction: column;
   align-items: center;
   padding: 1.25rem;
@@ -510,7 +510,7 @@ button {
 .win-screen {
   background:
     linear-gradient(180deg, rgba(14, 16, 32, 0.4), rgba(14, 16, 32, 0.7)),
-    url('/assets/images/backgrounds/WinBackground.png') center / cover;
+    url('/adventureGame/assets/images/backgrounds/WinBackground.png') center / cover;
   align-items: center;
   justify-content: center;
 }

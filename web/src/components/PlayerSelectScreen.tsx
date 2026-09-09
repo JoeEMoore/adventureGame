@@ -1,28 +1,29 @@
 import { useGameStore, type PlayerClass } from '../store/gameStore';
+import { asset } from '../utils/asset';
 
 const CLASSES: { id: PlayerClass; name: string; icon: string; desc: string }[] = [
   {
     id: 'knight',
     name: 'Knight',
-    icon: '/assets/images/creatures/knight2.png',
+    icon: asset('assets/images/creatures/knight2.png'),
     desc: 'Slice resistance. Steel Sword & Wood Club.',
   },
   {
     id: 'mage',
     name: 'Mage',
-    icon: '/assets/images/creatures/mage2.png',
+    icon: asset('assets/images/creatures/mage2.png'),
     desc: 'Magic resistance. Enchanted Staff & Rusty Dagger.',
   },
   {
     id: 'ranger',
     name: 'Ranger',
-    icon: '/assets/images/creatures/Ranger.png',
+    icon: asset('assets/images/creatures/Ranger.png'),
     desc: 'Projectile resistance. Long Bow & Rudimentary Staff.',
   },
   {
     id: 'barbarian',
     name: 'Barbarian',
-    icon: '/assets/images/creatures/Barb2.png',
+    icon: asset('assets/images/creatures/Barb2.png'),
     desc: 'Blunt resistance. Steel Mace & Crude Bow.',
   },
 ];

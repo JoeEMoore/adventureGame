@@ -1,13 +1,15 @@
+import { asset } from '../../utils/asset';
+
 export type IconRef =
   | { type: 'image'; path: string; flip?: boolean }
   | { type: 'sprite'; sheet: string; row: number; col: number; tile?: number; scale?: number }
   | null;
 
-export const ITEMS_SHEET = '/assets/sprites/items/items.png';
-export const POTIONS_SHEET = '/assets/sprites/items/potions.png';
+export const ITEMS_SHEET = asset('assets/sprites/items/items.png');
+export const POTIONS_SHEET = asset('assets/sprites/items/potions.png');
 
 export function creatureIcon(name: string, flip = true): IconRef {
-  return { type: 'image', path: `/assets/images/creatures/${name}.png`, flip };
+  return { type: 'image', path: asset(`assets/images/creatures/${name}.png`), flip };
 }
 
 export function weaponSprite(row: number, col: number): IconRef {
@@ -15,7 +17,7 @@ export function weaponSprite(row: number, col: number): IconRef {
 }
 
 export function weaponNamed(name: string): IconRef {
-  return { type: 'image', path: `/assets/images/Weapons/${name}.png` };
+  return { type: 'image', path: asset(`assets/images/Weapons/${name}.png`) };
 }
 
 export function potionSprite(row: number, col: number): IconRef {

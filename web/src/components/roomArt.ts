@@ -1,5 +1,6 @@
 import type { Room } from '../game/levels/rooms/Room';
 import type { Coordinate } from '../game/levels/Coordinate';
+import { asset } from '../utils/asset';
 
 function hasNeighbor(rooms: (Room | null)[][], r: number, c: number, dr: number, dc: number): boolean {
   const nr = r + dr;
@@ -54,7 +55,7 @@ export function getRoomBird(rooms: (Room | null)[][], pos: Coordinate): RoomBird
 export function getRoomImage(rooms: (Room | null)[][], pos: Coordinate): string | null {
   const { up, down, left, right } = getDoorFlags(rooms, pos);
   const doors = (up ? 1 : 0) + (down ? 1 : 0) + (left ? 1 : 0) + (right ? 1 : 0);
-  const base = '/assets/images/rooms';
+  const base = asset('assets/images/rooms');
 
   if (doors === 1) {
     if (up) return `${base}/oneDoor_Up.png`;

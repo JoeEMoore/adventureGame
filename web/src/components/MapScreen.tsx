@@ -3,6 +3,7 @@ import { ShopRoom } from '../game/levels/rooms/shop/Shop';
 import { Coordinate } from '../game/levels/Coordinate';
 import { ITEMS_SHEET } from '../game/utils/icons';
 import { useGameStore } from '../store/gameStore';
+import { asset } from '../utils/asset';
 import { IconView, SpriteIcon } from './IconView';
 import { getRoomBird, getRoomImage } from './roomArt';
 import { InventoryModal } from './InventoryModal';
@@ -95,7 +96,7 @@ export function MapScreen() {
                     <img src={art} alt="" className="room-art" />
                   ) : (
                     <img
-                      src="/assets/images/rooms/undiscovered.png"
+                      src={asset('assets/images/rooms/undiscovered.png')}
                       alt=""
                       className="room-art fog"
                     />
@@ -105,7 +106,7 @@ export function MapScreen() {
                     room.getDecorations().map((dec, i) => (
                       <img
                         key={`dec-${i}`}
-                        src={`/assets/sprites/debris/${dec.kind}.png`}
+                        src={asset(`assets/sprites/debris/${dec.kind}.png`)}
                         alt=""
                         className="room-debris"
                         style={{
@@ -120,7 +121,7 @@ export function MapScreen() {
                     room.getVines().map((vine, i) => (
                       <img
                         key={`vine-${i}`}
-                        src={`/assets/sprites/roomTextures/${vine.kind}.png`}
+                        src={asset(`assets/sprites/roomTextures/${vine.kind}.png`)}
                         alt=""
                         className={`room-vine${vine.flipX ? ' flip-x' : ''}`}
                       />
@@ -128,7 +129,7 @@ export function MapScreen() {
 
                   {bird && (
                     <img
-                      src="/assets/sprites/debris/audreyBird2.png"
+                      src={asset('assets/sprites/debris/audreyBird2.png')}
                       alt=""
                       className={`room-bird${bird.flipX ? ' flip-x' : ''}`}
                       style={{ left: `${bird.x}%` }}

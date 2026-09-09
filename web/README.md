@@ -2,7 +2,7 @@
 
 React + Vite + TypeScript port of the CPSC 224 Java Swing dungeon crawler.
 
-## Run
+## Run locally
 
 ```bash
 cd web
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Then open the URL Vite prints (usually `http://localhost:5173`).
+Open `http://localhost:5173/adventureGame/` (the `/adventureGame/` base path matches GitHub Pages).
 
 ## Build
 
@@ -19,6 +19,14 @@ cd web
 npm run build
 npm run preview
 ```
+
+## GitHub Pages
+
+Deployed from repo root via `.github/workflows/deploy-pages.yml` on push to `main`.
+
+1. Repo **Settings → Pages → Source: GitHub Actions**
+2. After a successful workflow run, play at:
+   https://JoeEMoore.github.io/adventureGame/
 
 ## Layout
 
