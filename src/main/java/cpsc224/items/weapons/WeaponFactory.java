@@ -23,7 +23,7 @@ public class WeaponFactory {
     }
 
     private static ImageIcon getIcon(String name) {
-        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/weapons/" + name + ".png");
+        BufferedImageBuilder imageBuilder = new BufferedImageBuilder("/images/Weapons/" + name + ".png");
         return imageBuilder
                 .scale(64, 64)
                 .toImageIcon();

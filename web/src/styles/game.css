@@ -1,0 +1,618 @@
+:root {
+  --menu: #9cdbad;
+  --game: #8f93b8;
+  --health: #e02d2d;
+  --poison: #209410;
+  --ink: #1a1c28;
+  --panel: rgba(20, 22, 36, 0.82);
+  --panel-border: rgba(255, 255, 255, 0.18);
+  --btn: #e8eef5;
+  --btn-ink: #1a1c28;
+  font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+  color: #f4f6fb;
+  background: #0e1020;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  height: 100%;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.screen {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+  overflow: auto;
+}
+
+.btn {
+  background: var(--btn);
+  color: var(--btn-ink);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: var(--menu);
+  font-weight: 700;
+}
+
+.btn.danger {
+  background: #c45b5b;
+  color: white;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.btn-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Splash */
+.splash-screen {
+  background:
+    linear-gradient(180deg, rgba(14, 16, 32, 0.35), rgba(14, 16, 32, 0.75)),
+    url('/assets/images/backgrounds/selectBackground2.png') center / cover;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-overlay {
+  text-align: center;
+  padding: 2rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  max-width: 520px;
+}
+
+.brand {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.tagline {
+  margin: 0 0 1.5rem;
+  opacity: 0.9;
+}
+
+/* Select */
+.select-screen {
+  background:
+    linear-gradient(180deg, rgba(14, 16, 32, 0.4), rgba(14, 16, 32, 0.7)),
+    url('/assets/images/backgrounds/selectBackground2.png') center / cover;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.select-panel {
+  width: min(960px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.select-panel h1 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.class-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  color: inherit;
+  text-align: center;
+}
+
+.class-card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.class-card span {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.class-card:hover {
+  background: rgba(156, 219, 173, 0.2);
+}
+
+/* Map */
+.map-screen {
+  background:
+    linear-gradient(180deg, rgba(14, 16, 32, 0.45), rgba(14, 16, 32, 0.65)),
+    url('/assets/images/backgrounds/mapBackground.png') center / cover;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.hud {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: fit-content;
+}
+
+.hud-stats {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.map-grid-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: 0.5rem;
+}
+
+.map-grid {
+  display: grid;
+  gap: 0;
+  max-width: 720px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.room-cell {
+  position: relative;
+  aspect-ratio: 1;
+  border: none;
+  background: transparent;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px transparent;
+}
+
+.room-cell.has-bird {
+  overflow: visible;
+  z-index: 3;
+}
+
+.room-move-hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.room-cell.empty {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.room-cell.movable {
+  box-shadow: inset 0 0 0 2px var(--menu);
+}
+
+.room-cell.here {
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+.room-cell.here.movable {
+  box-shadow: inset 0 0 0 2px #fff, 0 0 0 2px var(--menu);
+}
+
+.room-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  pointer-events: none;
+}
+
+.room-debris {
+  position: absolute;
+  width: 22%;
+  height: auto;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.92;
+}
+
+.room-vine {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.room-vine.flip-x {
+  transform: scaleX(-1);
+}
+
+.room-bird {
+  position: absolute;
+  top: 0;
+  width: 26%;
+  max-width: 34px;
+  height: auto;
+  image-rendering: auto;
+  pointer-events: none;
+  z-index: 5;
+  transform: translate(-50%, -78%);
+}
+
+.room-bird.flip-x {
+  transform: translate(-50%, -78%) scaleX(-1);
+}
+
+.room-marker,
+.room-player {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.room-marker.loot {
+  align-items: end;
+  justify-items: center;
+  padding: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: end;
+  gap: 2px;
+  inset: auto 4px 4px 4px;
+  top: auto;
+  height: 45%;
+  pointer-events: auto;
+  z-index: 3;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.room-marker.loot:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.room-marker.loot:not(:disabled):hover {
+  filter: brightness(1.15);
+}
+
+/* Fight */
+.fight-screen {
+  background:
+    linear-gradient(180deg, rgba(14, 16, 32, 0.35), rgba(14, 16, 32, 0.55)),
+    url('/assets/images/backgrounds/fightBackground.png') center / cover;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  gap: 1rem;
+}
+
+.inventory-float {
+  align-self: flex-start;
+}
+
+.fight-log {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  min-height: 3.2rem;
+}
+
+.fight-arena {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: min(1000px, 100%);
+}
+
+.creature-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hp-bar {
+  width: 100%;
+  height: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hp-fill {
+  height: 100%;
+  background: var(--health);
+}
+
+.weapon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.weapon-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+.creature-portrait {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+}
+
+.floater {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  font-weight: 800;
+  font-size: 1.6rem;
+  pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+  animation: floater-rise 0.7s ease-out forwards;
+  z-index: 5;
+}
+
+.floater-damage {
+  color: #ff5a5a;
+}
+
+.floater-miss {
+  color: #cfd6e6;
+  font-size: 1.35rem;
+}
+
+.floater-heal {
+  color: #7dff9a;
+}
+
+@keyframes floater-rise {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-48px) scale(1.15);
+  }
+}
+
+.fight-screen.shake {
+  animation: screen-shake 0.35s ease-in-out;
+}
+
+@keyframes screen-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-6px, 2px);
+  }
+  40% {
+    transform: translate(5px, -3px);
+  }
+  60% {
+    transform: translate(-4px, 1px);
+  }
+  80% {
+    transform: translate(3px, -1px);
+  }
+}
+
+.creature-card.hit-flash {
+  animation: hit-pulse 0.35s ease-out;
+}
+
+@keyframes hit-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(224, 45, 45, 0.7);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgba(224, 45, 45, 0);
+  }
+}
+
+.weapon-btn.weapon-flash {
+  animation: weapon-flash 0.45s ease-out;
+}
+
+@keyframes weapon-flash {
+  0% {
+    background: #fff6b0;
+    transform: scale(1.04);
+  }
+  100% {
+    background: var(--btn);
+    transform: scale(1);
+  }
+}
+
+.turn-hint {
+  opacity: 0.85;
+}
+
+/* Win */
+.win-screen {
+  background:
+    linear-gradient(180deg, rgba(14, 16, 32, 0.4), rgba(14, 16, 32, 0.7)),
+    url('/assets/images/backgrounds/WinBackground.png') center / cover;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  padding: 1rem;
+}
+
+.modal {
+  background: #1c2033;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  width: min(640px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  color: #f4f6fb;
+}
+
+.inventory-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 280px;
+  overflow: auto;
+}
+
+.item-list button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid transparent;
+  color: inherit;
+  padding: 0.4rem 0.55rem;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.item-list button.selected,
+.item-list button:hover {
+  border-color: var(--menu);
+}
+
+.shop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.shop-entry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+.shop-info {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 800px) {
+  .map-screen {
+    flex-direction: column;
+  }
+
+  .hud {
+    width: 100%;
+  }
+
+  .fight-arena,
+  .inventory-cols {
+    grid-template-columns: 1fr;
+  }
+}
