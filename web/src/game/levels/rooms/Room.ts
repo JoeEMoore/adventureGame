@@ -1,7 +1,7 @@
 import type { Creature } from '../../creatures/Creature';
 import type { Item } from '../../items/Item';
 
-export type RoomDecorationKind = 'skull' | 'bones';
+export type RoomDecorationKind = 'skull' | 'bones' | 'rock' | 'rock2' | 'barrel';
 
 export interface RoomDecoration {
   kind: RoomDecorationKind;
@@ -10,11 +10,14 @@ export interface RoomDecoration {
   y: number;
   rotation: number;
   scale: number;
+  /** Flip across the vertical axis (left/right). */
+  flipX: boolean;
 }
 
-export type RoomVineKind = 'smallVine' | 'bigVine';
+/** Full-room overlays in `assets/sprites/roomTextures/{kind}.png`. */
+export type RoomVineKind = 'smallVine' | 'bigVine' | 'shop';
 
-/** Full-room overlay vines for the back wall — no rotation, optional horizontal flip. */
+/** Full-room overlay for the back wall — no rotation, optional horizontal flip. */
 export interface RoomVine {
   kind: RoomVineKind;
   flipX: boolean;

@@ -1,0 +1,28 @@
+---
+description: adventureGame architecture and coding conventions
+alwaysApply: true
+---
+
+# adventureGame conventions
+
+## Layout
+
+- **Playable app:** `web/` (React + Vite + TypeScript + Zustand)
+- **Game logic:** `web/src/game/` — pure TS port of combat, levels, factories, pools
+- **UI:** `web/src/components/` + `web/src/styles/game.css`
+- **State:** `web/src/store/gameStore.ts`
+- **Assets:** `web/public/assets/` (base path `/adventureGame/` on Pages)
+- **Java original:** repo root `src/` — reference only unless the user asks for Java changes
+
+## Patterns
+
+- Prefer factories/pools for creatures, items, weapons, moves (`*Factory.ts`, `*Pools.ts`)
+- Keep combat/level logic out of React components when possible
+- Reuse CSS variables from `game.css` (`--menu`, `--game`, `--panel`, etc.)
+- New room/debris art: wire through existing room/decor helpers, not one-off paths
+
+## Agent workflow
+
+- Planning → `.cursor/skills/feature-planner`
+- Implementation → `.cursor/skills/feature-implementer` with an approved plan
+- Visual work → `docs/style-reference/STYLE.md`

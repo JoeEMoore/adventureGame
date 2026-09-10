@@ -1,8 +1,8 @@
 import type { RoomDecoration, RoomDecorationKind, RoomVine } from './rooms/Room';
 
-const KINDS: RoomDecorationKind[] = ['skull', 'bones'];
+const KINDS: RoomDecorationKind[] = ['skull', 'bones', 'rock', 'rock2', 'barrel'];
 
-/** ~45% of rooms get 1–3 scattered skull/bone props. */
+/** ~45% of rooms get 1–3 scattered floor props (skull, bones, rocks, barrel). */
 export function generateRoomDecorations(): RoomDecoration[] {
   if (Math.random() > 0.45) return [];
 
@@ -10,12 +10,20 @@ export function generateRoomDecorations(): RoomDecoration[] {
   const decorations: RoomDecoration[] = [];
 
   for (let i = 0; i < count; i++) {
+    const kind = KINDS[Math.floor(Math.random() * KINDS.length)];
+    const upright = kind === 'barrel' || kind === 'rock' || kind === 'rock2';
     decorations.push({
-      kind: KINDS[Math.floor(Math.random() * KINDS.length)],
+      kind,
       x: 18 + Math.random() * 64,
       y: 22 + Math.random() * 56,
-      rotation: Math.floor(Math.random() * 360),
-      scale: 0.7 + Math.random() * 0.55,
+      // Rocks & barrels stay right-side up; skulls/bones can tumble
+      rotation: upright ? 0 : Math.floor(Math.random() * 360),
+      // Barrel & rock2 ~30% smaller than other debris
+      scale:
+        kind === 'barrel' || kind === 'rock2'
+          ? 0.55 + Math.random() * 0.2
+          : 0.7 + Math.random() * 0.55,
+      flipX: upright ? Math.random() < 0.5 : false,
     });
   }
 

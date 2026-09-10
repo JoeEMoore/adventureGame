@@ -79,7 +79,12 @@ export class DefaultLevelInitializer implements LevelInitializer {
   private addRoom(room: Room): Coordinate {
     const pos = this.randomValidPosition();
     room.setDecorations(generateRoomDecorations());
-    room.setVines(generateRoomVines());
+    const vines = generateRoomVines();
+    // Shop stall overlay on every shop (full-room texture, no flip)
+    if (room instanceof ShopRoom) {
+      vines.unshift({ kind: 'shop', flipX: false });
+    }
+    room.setVines(vines);
     this.rooms[pos.getRow()][pos.getCol()] = room;
     this.updateValidPositions(pos.getRow(), pos.getCol());
     return pos;

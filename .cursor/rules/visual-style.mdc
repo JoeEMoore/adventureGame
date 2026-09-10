@@ -1,0 +1,15 @@
+---
+description: Visual style for adventureGame UI and art
+globs: web/src/**/*.{tsx,css}, web/public/assets/**
+alwaysApply: false
+---
+
+# Visual style
+
+Before changing UI, CSS, or assets:
+
+1. Read `docs/style-reference/STYLE.md`
+2. Check relevant images in `docs/style-reference/ui/`, `rooms/`, `sprites/`
+3. Avoid looks listed under anti-patterns
+
+Match the existing dungeon aesthetic: dark navy panels, soft mint primary actions, pixel/hand-drawn sprites on stone room art. Do not invent a new brand palette or generic “AI purple” UI.

@@ -112,7 +112,7 @@ export function MapScreen() {
                         style={{
                           left: `${dec.x}%`,
                           top: `${dec.y}%`,
-                          transform: `translate(-50%, -50%) rotate(${dec.rotation}deg) scale(${dec.scale})`,
+                          transform: `translate(-50%, -50%) rotate(${dec.rotation}deg) scale(${dec.flipX ? -dec.scale : dec.scale}, ${dec.scale})`,
                         }}
                       />
                     ))}
