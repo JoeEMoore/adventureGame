@@ -21,7 +21,7 @@ export interface RoomDecoration {
 }
 
 /** Full-room overlays in `assets/sprites/roomTextures/{kind}.png`. */
-export type RoomVineKind = 'smallVine' | 'bigVine' | 'shop';
+export type RoomVineKind = 'smallVine' | 'bigVine' | 'shop' | 'forge';
 
 /** Full-room overlay for the back wall — no rotation, optional horizontal flip. */
 export interface RoomVine {

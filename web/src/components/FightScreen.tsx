@@ -12,7 +12,8 @@ import { POT_EFFECTS_SHEET } from '../game/utils/icons';
 import type { Creature } from '../game/creatures/Creature';
 import type { Player } from '../game/creatures/Player';
 import { DamageType, getDamageTypes } from '../game/damagetypes/DamageType';
-import { countEquipped } from '../game/items/accessories/accessoryCombat';
+import { countEquipped, knightBleedStreakThresholds } from '../game/items/accessories/accessoryCombat';
+import type { Fight } from '../game/Fight';
 import type { CombatFx } from '../fx/combatFx';
 import {
   loadFightLayout,
@@ -126,7 +127,7 @@ export function FightScreen() {
   }, [layout]);
 
   if (!player || !fightState) return null;
-  const { enemy, isPlayersTurn, log } = fightState;
+  const { enemy, isPlayersTurn, log, fight } = fightState;
   const weapons = player.getInventory().getWeapons();
 
   return (
@@ -204,7 +205,7 @@ export function FightScreen() {
           <CreatureExtras
             resists={notableResists(player)}
             effects={player.getEffects()}
-            predictionSlot={<PlayerPredictionHud player={player} />}
+            predictionSlot={<PlayerPredictionHud player={player} fight={fight} />}
           />
         </PositionedBox>
 
@@ -437,21 +438,35 @@ function notableResists(creature: Creature): { type: string; kind: 'resist' | 'w
   return out;
 }
 
-function PlayerPredictionHud({ player }: { player: Player }) {
+function PlayerPredictionHud({ player, fight }: { player: Player; fight: Fight }) {
   const cls = player.getPlayerClass();
   const streak = player.getConsecutiveSlashHits();
   const bleedProcced = player.hasSlashBleedProcced();
+  const { chanceAt, guaranteeAt } = knightBleedStreakThresholds(player);
+  const streakMax = guaranteeAt;
 
   let classHint: string | null = null;
   if (cls === 'barbarian') classHint = 'Blunt hits: 20% Knockout';
   else if (cls === 'mage') classHint = 'Magic hits: 10% Burn, 10% Shock, 10% Iced each';
   else if (cls === 'ranger') classHint = 'Projectile +15% accuracy';
   else if (cls === 'knight') {
-    if (streak === 0) classHint = 'Land Slice hits to build Bleed streak';
-    else if (streak === 1) classHint = 'Next Slice: 50% Bleed';
-    else if (streak === 2 && !bleedProcced) classHint = 'Next Slice: guaranteed Bleed';
-    else if (streak === 2 && bleedProcced) classHint = 'Bleed already hit — streak resets next Slice';
-    else classHint = 'Slash streak active';
+    if (streak === 0) {
+      classHint =
+        chanceAt === 1
+          ? 'Next Slice: 50% Bleed (Oath)'
+          : 'Land Slice hits to build Bleed streak';
+    } else if (streak === chanceAt - 1 && chanceAt > 1) {
+      classHint = 'Next Slice: 50% Bleed';
+    } else if (streak === chanceAt && !bleedProcced) {
+      classHint =
+        chanceAt + 1 >= guaranteeAt
+          ? 'Next Slice: guaranteed Bleed'
+          : 'Next Slice: 50% Bleed';
+    } else if (streak === chanceAt && bleedProcced) {
+      classHint = 'Bleed already hit — streak resets next Slice';
+    } else if (streak === guaranteeAt - 1 && !bleedProcced) {
+      classHint = 'Next Slice: guaranteed Bleed';
+    } else classHint = 'Slash streak active';
   }
 
   const accessoryHints: string[] = [];
@@ -463,6 +478,12 @@ function PlayerPredictionHud({ player }: { player: Player }) {
   if (grips > 0) {
     accessoryHints.push(
       `Grips ×${grips} (+${grips * 10}% acc / +${grips * 15}% Blunt acc)`,
+    );
+  }
+  const doubleShot = countEquipped(player, 'doubleShot');
+  if (doubleShot > 0) {
+    accessoryHints.push(
+      `Double Shot ×${doubleShot} (2× Projectile dmg, 2 uses/shot, −${doubleShot * 10}% acc)`,
     );
   }
   const venom = countEquipped(player, 'venomFlask');
@@ -480,23 +501,79 @@ function PlayerPredictionHud({ player }: { player: Player }) {
   const picks = countEquipped(player, 'lockpick');
   if (picks > 0) accessoryHints.push(`Lockpick ×${picks} (−25% gold locks)`);
 
+  if (countEquipped(player, 'echoCharm') > 0) {
+    accessoryHints.push(
+      fight.echoAccuracyPending
+        ? 'Echo Charm primed (+25% acc next attack)'
+        : 'Echo Charm (miss → +25% acc)',
+    );
+  }
+  if (countEquipped(player, 'focusCrystal') > 0) {
+    accessoryHints.push(
+      fight.focusCrystalUsed
+        ? 'Focus Crystal spent'
+        : 'Focus Crystal (first hit +40% dmg)',
+    );
+  }
+  if (countEquipped(player, 'thornCollar') > 0) {
+    const n = countEquipped(player, 'thornCollar');
+    accessoryHints.push(`Thorn Collar ×${n} (reflect ${n * 20}%)`);
+  }
+  if (countEquipped(player, 'vampiricFang') > 0) {
+    const n = countEquipped(player, 'vampiricFang');
+    accessoryHints.push(`Vampiric Fang ×${n} (leech ${n * 10}%)`);
+  }
+  if (countEquipped(player, 'ritualCodex') > 0) {
+    accessoryHints.push('Ritual Codex (extend Burn/Shock/Iced)');
+  }
+  if (countEquipped(player, 'oathMedallion') > 0) {
+    accessoryHints.push('Oath Medallion (Bleed one hit earlier)');
+  }
+  if (countEquipped(player, 'quickstepBoots') > 0) {
+    accessoryHints.push(
+      fight.quickstepDamagePending
+        ? 'Quickstep primed (+25% dmg next attack)'
+        : 'Quickstep Boots (dodge → +25% dmg)',
+    );
+  }
+  if (countEquipped(player, 'emptyQuiverCord') > 0) {
+    accessoryHints.push(
+      fight.emptyQuiverUsed
+        ? 'Empty Quiver spent'
+        : 'Empty Quiver Cord (empty → refill other)',
+    );
+  }
+  const glass = countEquipped(player, 'glassDice');
+  if (glass > 0) {
+    accessoryHints.push(
+      `Glass Dice ×${glass} (+${glass * 20}% dmg / −${glass * 10}% acc)`,
+    );
+  }
+  if (countEquipped(player, 'secondWindBandana') > 0) {
+    accessoryHints.push(
+      fight.secondWindUsed
+        ? 'Second Wind spent'
+        : 'Second Wind (below 25% HP → Resistance)',
+    );
+  }
+
   return (
     <div className="prediction-hud" aria-label="Combat predictions">
       {cls === 'knight' && (
         <div className="streak-meter" title="Knight Slash streak toward Bleed">
           <span className="streak-label">Slash streak</span>
           <div className="streak-pips" aria-hidden>
-            {[1, 2, 3].map((n) => (
+            {Array.from({ length: streakMax }, (_, i) => i + 1).map((n) => (
               <span
                 key={n}
                 className={`streak-pip ${streak >= n ? 'filled' : ''} ${
-                  n === 2 && streak >= 2 && !bleedProcced ? 'bleed-ready' : ''
+                  n === chanceAt && streak >= chanceAt && !bleedProcced ? 'bleed-ready' : ''
                 }`}
               />
             ))}
           </div>
           <span className="streak-count">
-            {Math.min(streak, 3)}/3
+            {Math.min(streak, streakMax)}/{streakMax}
             {bleedProcced ? ' · bled' : ''}
           </span>
         </div>

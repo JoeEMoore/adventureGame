@@ -12,10 +12,26 @@ import {
 } from './effects/effects';
 import {
   applyAccessoryOnHit,
+  applyThornCollarReflect,
+  applyVampiricHeal,
+  armEchoCharmOnMiss,
+  armQuickstepOnEnemyMiss,
+  consumeEchoAccuracyBonus,
+  consumeQuickstepDamageBonus,
+  doubleShotAccuracyPenalty,
+  doubleShotDamageMultiplier,
+  doubleShotExtraUses,
+  focusCrystalDamageMultiplier,
+  glassDiceAccuracyPenalty,
+  glassDiceDamageMultiplier,
   gripsAccuracyBonus,
   ironBandBluntTakenMultiplier,
   isBluntDamage,
+  knightBleedStreakThresholds,
+  markFocusCrystalUsed,
   rollAccessoryBlock,
+  tryEmptyQuiverCord,
+  trySecondWind,
   wrapsBluntMultiplier,
 } from './items/accessories/accessoryCombat';
 import { roundDouble } from './utils/DoubleUtils';
@@ -45,6 +61,16 @@ const MAGE_ICED_TURNS = 3;
 export class Fight {
   player: Player;
   enemy: Creature;
+  /** Echo Charm: next player attack gets accuracy bonus. */
+  echoAccuracyPending = false;
+  /** Focus Crystal: first landed hit bonus already spent. */
+  focusCrystalUsed = false;
+  /** Quickstep Boots: next player attack gets damage bonus. */
+  quickstepDamagePending = false;
+  /** Empty Quiver Cord: already fired this fight. */
+  emptyQuiverUsed = false;
+  /** Second Wind Bandana: already fired this fight. */
+  secondWindUsed = false;
 
   constructor(player: Player, enemy: Creature) {
     this.player = player;
@@ -64,6 +90,17 @@ export class Fight {
 
     if (move.getUses() > 0) {
       move.decrementUses();
+      if (sourceIsPlayer) {
+        const extra = doubleShotExtraUses(this.player, move.getDamageType());
+        for (let i = 0; i < extra; i++) {
+          if (move.getUses() > 0) move.decrementUses();
+        }
+      }
+    }
+
+    let emptyQuiverMsg: string | null = null;
+    if (sourceIsPlayer) {
+      emptyQuiverMsg = tryEmptyQuiverCord(this, this.player, weapon);
     }
 
     if (source !== target) {
@@ -76,7 +113,19 @@ export class Fight {
         accuracy = Math.min(1, accuracy + RANGER_PROJECTILE_ACCURACY_BONUS);
       }
       if (sourceIsPlayer) {
-        accuracy = Math.min(1, accuracy + gripsAccuracyBonus(this.player, move.getDamageType()));
+        accuracy = Math.min(
+          1,
+          accuracy +
+            gripsAccuracyBonus(this.player, move.getDamageType()) +
+            this.player.getDescendAccuracyBonus() +
+            consumeEchoAccuracyBonus(this, this.player),
+        );
+        accuracy = Math.max(
+          0,
+          accuracy -
+            doubleShotAccuracyPenalty(this.player, move.getDamageType()) -
+            glassDiceAccuracyPenalty(this.player),
+        );
       }
 
       const hitChance =
@@ -84,9 +133,16 @@ export class Fight {
         source.getTurnModifiers().getMissChanceBonus();
 
       if (Math.random() > hitChance) {
-        if (sourceIsPlayer) this.player.resetConsecutiveSlashHits();
+        if (sourceIsPlayer) {
+          this.player.resetConsecutiveSlashHits();
+          armEchoCharmOnMiss(this, this.player);
+        } else if (targetIsPlayer) {
+          armQuickstepOnEnemyMiss(this, this.player);
+        }
+        let missMsg = `${source.getName()} used ${move.getName()} on ${target.getName()}. They Missed!`;
+        if (emptyQuiverMsg) missMsg += ` ${emptyQuiverMsg}`;
         return {
-          message: `${source.getName()} used ${move.getName()} on ${target.getName()}. They Missed!`,
+          message: missMsg,
           missed: true,
           damageDealt: 0,
           healed: false,
@@ -101,8 +157,10 @@ export class Fight {
     // Shield: block incoming damage to the player
     if (source !== target && targetIsPlayer && rollAccessoryBlock(this.player)) {
       procs.push('BLOCK');
+      let blockMsg = `${source.getName()} used ${move.getName()} on ${target.getName()}. Blocked by Shield!`;
+      if (emptyQuiverMsg) blockMsg += ` ${emptyQuiverMsg}`;
       return {
-        message: `${source.getName()} used ${move.getName()} on ${target.getName()}. Blocked by Shield!`,
+        message: blockMsg,
         missed: false,
         damageDealt: 0,
         healed: false,
@@ -116,6 +174,15 @@ export class Fight {
     let damage = move.getDamage() * source.getTurnModifiers().getDamage();
     if (sourceIsPlayer && isBluntDamage(move.getDamageType())) {
       damage *= wrapsBluntMultiplier(this.player);
+    }
+    if (sourceIsPlayer) {
+      damage *= doubleShotDamageMultiplier(this.player, move.getDamageType());
+      damage *= this.player.getDescendTypeDamageMultiplier(move.getDamageType());
+      damage *= glassDiceDamageMultiplier(this.player);
+      if (source !== target) {
+        damage *= consumeQuickstepDamageBonus(this, this.player);
+        damage *= focusCrystalDamageMultiplier(this, this.player);
+      }
     }
 
     const resistMult = target.getTurnModifiers().getResistance(move.getDamageType());
@@ -135,6 +202,21 @@ export class Fight {
     const damageDealt = target.applyDamage(damage, move.getDamageType());
     const healed = move.targetsAllies() && source === target;
 
+    const effectMsgs: string[] = [];
+
+    if (sourceIsPlayer && source !== target && damageDealt > 0) {
+      markFocusCrystalUsed(this, this.player);
+      const vamp = applyVampiricHeal(this.player, damageDealt, procs);
+      if (vamp) effectMsgs.push(vamp);
+    }
+
+    if (source !== target && targetIsPlayer && damageDealt > 0) {
+      const thorn = applyThornCollarReflect(this.player, source, damageDealt, procs);
+      if (thorn) effectMsgs.push(thorn);
+      const secondWind = trySecondWind(this, this.player, procs);
+      if (secondWind) effectMsgs.push(secondWind);
+    }
+
     let result = `${source.getName()} used ${move.getName()} on ${target.getName()}.`;
     if (damageDealt > 0) {
       result += ` Dealt ${roundDouble(damageDealt)} damage.`;
@@ -142,7 +224,6 @@ export class Fight {
       else if (resistMult > 1.05) result += ` (${move.getDamageType()} weak)`;
     }
 
-    const effectMsgs: string[] = [];
     for (const e of move.createEffects()) {
       effectMsgs.push(target.addEffect(e));
     }
@@ -150,10 +231,14 @@ export class Fight {
     if (sourceIsPlayer && source !== target && damageDealt > 0) {
       const passiveMsgs = this.applyClassPassives(move.getDamageType(), target, procs);
       effectMsgs.push(...passiveMsgs);
-      effectMsgs.push(...applyAccessoryOnHit(this.player, target, procs));
+      effectMsgs.push(
+        ...applyAccessoryOnHit(this.player, target, move.getDamageType(), procs),
+      );
     } else if (sourceIsPlayer && move.getDamageType() !== DamageType.Slice) {
       this.player.resetConsecutiveSlashHits();
     }
+
+    if (emptyQuiverMsg) effectMsgs.push(emptyQuiverMsg);
 
     if (effectMsgs.length) {
       result += ' ' + effectMsgs.filter(Boolean).join(', ');
@@ -184,14 +269,15 @@ export class Fight {
       if (damageType === DamageType.Slice) {
         this.player.setConsecutiveSlashHits(this.player.getConsecutiveSlashHits() + 1);
         const streak = this.player.getConsecutiveSlashHits();
+        const { chanceAt, guaranteeAt } = knightBleedStreakThresholds(this.player);
 
-        if (streak === 2) {
+        if (streak === chanceAt) {
           if (Math.random() < KNIGHT_BLEED_CHANCE) {
             msgs.push(target.addEffect(new BleedEffect(KNIGHT_BLEED_TURNS)));
             procs.push('BLEED');
             this.player.setSlashBleedProcced(true);
           }
-        } else if (streak >= 3) {
+        } else if (streak >= guaranteeAt) {
           if (!this.player.hasSlashBleedProcced()) {
             msgs.push(target.addEffect(new BleedEffect(KNIGHT_BLEED_TURNS)));
             procs.push('BLEED');

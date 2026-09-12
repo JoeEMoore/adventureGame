@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Item } from '../game/items/Item';
+import { Accessory } from '../game/items/accessories/Accessory';
 import { useGameStore } from '../store/gameStore';
 import { IconView } from './IconView';
 
@@ -30,6 +31,8 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
   const dropWeapon = useGameStore((s) => s.dropWeapon);
   const dropConsumable = useGameStore((s) => s.dropConsumable);
   const dropAccessory = useGameStore((s) => s.dropAccessory);
+  const equipAccessory = useGameStore((s) => s.equipAccessory);
+  const unequipAccessory = useGameStore((s) => s.unequipAccessory);
 
   const [category, setCategory] = useState<InventoryCategory>(initialCategory);
   const [selectedIdx, setSelectedIdx] = useState(0);
@@ -41,19 +44,26 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
   const weapons = inv.getWeapons();
   const consumables = inv.getConsumables();
   const accessories = inv.getAccessories();
+  const equippedCount = inv.getEquippedAccessories().length;
   const inFight = screen === 'fight' && !!fightState;
   const canUseItem = !inFight || !!fightState?.isPlayersTurn;
 
   const items: Item[] =
     category === 'weapons' ? weapons : category === 'consumables' ? consumables : accessories;
-  const max =
+  const capacityLabel =
     category === 'weapons'
-      ? inv.getMaxWeapons()
+      ? `${weapons.length}/${inv.getMaxWeapons()}`
       : category === 'consumables'
-        ? inv.getMaxConsumables()
-        : inv.getMaxAccessories();
+        ? `${consumables.length}/${inv.getMaxConsumables()}`
+        : `${equippedCount}/${inv.getMaxAccessories()} equipped · ${accessories.length} carried`;
   const safeIdx = clampIndex(selectedIdx, items.length);
   const selected = items[safeIdx] ?? null;
+  const selectedAccessory =
+    category === 'accessories' && selected instanceof Accessory ? selected : null;
+  const selectedIsEquipped = selectedAccessory ? inv.isAccessoryEquipped(selectedAccessory) : false;
+  const canEquip =
+    !!selectedAccessory && !selectedIsEquipped && equippedCount < inv.getMaxAccessories();
+  const canUnequip = !!selectedAccessory && selectedIsEquipped;
 
   const selectCategory = (next: InventoryCategory) => {
     setCategory(next);
@@ -79,8 +89,8 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
         {inFight && (
           <p className="inventory-turn-note">
             {canUseItem
-              ? 'Using a consumable spends your turn.'
-              : 'Wait for your turn to use consumables.'}
+              ? 'Using a consumable spends your turn. You can swap accessories freely.'
+              : 'Wait for your turn to use consumables. You can still swap accessories.'}
           </p>
         )}
 
@@ -118,32 +128,41 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
           >
             Accessories
             <span className="tab-cap">
-              {accessories.length}/{inv.getMaxAccessories()}
+              {equippedCount}/{inv.getMaxAccessories()} eq
             </span>
           </button>
         </div>
 
+        {category === 'accessories' && (
+          <p className="inventory-capacity">{capacityLabel}</p>
+        )}
+
         <div className="tome-split">
           <ul className="item-list" role="listbox" aria-label={`${category} list`}>
-            {items.length === 0 && (
-              <li className="empty-slot">
-                Empty — {items.length}/{max}
-              </li>
-            )}
-            {items.map((item, i) => (
-              <li key={i}>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={safeIdx === i}
-                  className={safeIdx === i ? 'selected' : ''}
-                  onClick={() => setSelectedIdx(i)}
-                >
-                  <IconView icon={item.getIcon()} size={28} />
-                  {category === 'weapons' ? item.toString() : item.getName()}
-                </button>
-              </li>
-            ))}
+            {items.length === 0 && <li className="empty-slot">Empty</li>}
+            {items.map((item, i) => {
+              const equipped =
+                category === 'accessories' && item instanceof Accessory
+                  ? inv.isAccessoryEquipped(item)
+                  : false;
+              return (
+                <li key={i}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={safeIdx === i}
+                    className={`${safeIdx === i ? 'selected' : ''}${equipped ? ' equipped' : ''}`}
+                    onClick={() => setSelectedIdx(i)}
+                  >
+                    <IconView icon={item.getIcon()} size={28} />
+                    <span className="item-list-label">
+                      {category === 'weapons' ? item.toString() : item.getName()}
+                      {equipped ? ' · Equipped' : ''}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="detail-pane">
@@ -160,7 +179,9 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
                     ? 'Weapon'
                     : category === 'consumables'
                       ? 'Consumable'
-                      : 'Accessory'}
+                      : selectedIsEquipped
+                        ? 'Equipped'
+                        : 'Carried'}
                 </span>
                 <p className="detail-text">{selected.getToolTipText()}</p>
               </>
@@ -187,6 +208,33 @@ export function InventoryModal({ initialCategory = 'weapons' }: Props) {
             >
               Use{inFight ? ' (turn)' : ''}
             </button>
+          )}
+          {category === 'accessories' && (
+            <>
+              <button
+                type="button"
+                className="btn primary"
+                disabled={!canEquip}
+                title={
+                  selectedIsEquipped
+                    ? 'Already equipped'
+                    : equippedCount >= inv.getMaxAccessories()
+                      ? 'No free equip slots'
+                      : 'Equip this accessory'
+                }
+                onClick={() => equipAccessory(safeIdx)}
+              >
+                Equip
+              </button>
+              <button
+                type="button"
+                className="btn"
+                disabled={!canUnequip}
+                onClick={() => unequipAccessory(safeIdx)}
+              >
+                Unequip
+              </button>
+            </>
           )}
           <button type="button" className="btn" disabled={!selected} onClick={onDrop}>
             Drop

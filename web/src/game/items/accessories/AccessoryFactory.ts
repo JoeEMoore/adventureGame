@@ -17,6 +17,12 @@ const DEFS: Record<AccessoryKind, { name: string; description: string; icon: Ico
     description: '+10% accuracy with all weapons; +15% accuracy with Blunt weapons.',
     icon: weaponSprite(13, 2),
   },
+  doubleShot: {
+    name: 'Double Shot',
+    description:
+      'Projectile weapons deal double damage and cost 2 uses per shot, but have −10% accuracy.',
+    icon: weaponSprite(12, 4),
+  },
   venomFlask: {
     name: 'Venom Flask',
     description: '20% chance on hit to Poison the enemy for 3 turns.',
@@ -57,6 +63,59 @@ const DEFS: Record<AccessoryKind, { name: string; description: string; icon: Ico
     description: 'Gold door costs are reduced by 25% per lockpick (min 1).',
     icon: weaponSprite(14, 2),
   },
+  echoCharm: {
+    name: 'Echo Charm',
+    description: 'After you miss, your next attack has +25% accuracy.',
+    icon: weaponSprite(19, 1),
+  },
+  focusCrystal: {
+    name: 'Focus Crystal',
+    description: 'Your first landed hit each fight deals +40% damage.',
+    icon: weaponSprite(20, 3),
+  },
+  thornCollar: {
+    name: 'Thorn Collar',
+    description: 'When you take a hit, reflect 20% of that damage as Pure.',
+    icon: weaponSprite(16, 2),
+  },
+  vampiricFang: {
+    name: 'Vampiric Fang',
+    description: 'Heal for 10% of damage dealt on hit; max HP −10% while equipped.',
+    icon: weaponSprite(15, 4),
+  },
+  ritualCodex: {
+    name: 'Ritual Codex',
+    description:
+      'If the enemy already has Burn, Shock, or Iced, Magic hits have a 15% chance to extend that status by 1 turn.',
+    icon: weaponSprite(21, 0),
+  },
+  oathMedallion: {
+    name: 'Oath Medallion',
+    description: 'Knight Bleed streak procs one hit earlier.',
+    icon: weaponSprite(22, 1),
+  },
+  quickstepBoots: {
+    name: 'Quickstep Boots',
+    description: 'After an enemy misses you, your next attack deals +25% damage.',
+    icon: weaponSprite(14, 5),
+  },
+  emptyQuiverCord: {
+    name: 'Empty Quiver Cord',
+    description:
+      'Once per fight, when a limited weapon hits 0 uses, restore 1 use to a different spent weapon.',
+    icon: weaponSprite(12, 2),
+  },
+  glassDice: {
+    name: 'Glass Dice',
+    description: '+20% damage dealt, −10% accuracy on all attacks.',
+    icon: weaponSprite(23, 3),
+  },
+  secondWindBandana: {
+    name: 'Second Wind Bandana',
+    description:
+      'Once per fight, when you first drop below 25% HP, gain Damage Resistance for 2 turns.',
+    icon: weaponSprite(13, 4),
+  },
 };
 
 function create(kind: AccessoryKind): Accessory {
@@ -68,6 +127,7 @@ export const ACCESSORY_KINDS: AccessoryKind[] = [
   'shield',
   'wraps',
   'grips',
+  'doubleShot',
   'venomFlask',
   'pirateCoin',
   'ringOfFire',
@@ -76,12 +136,23 @@ export const ACCESSORY_KINDS: AccessoryKind[] = [
   'ironBand',
   'scrapPouch',
   'lockpick',
+  'echoCharm',
+  'focusCrystal',
+  'thornCollar',
+  'vampiricFang',
+  'ritualCodex',
+  'oathMedallion',
+  'quickstepBoots',
+  'emptyQuiverCord',
+  'glassDice',
+  'secondWindBandana',
 ];
 
 export const AccessoryFactory = {
   createShield: () => create('shield'),
   createWraps: () => create('wraps'),
   createGrips: () => create('grips'),
+  createDoubleShot: () => create('doubleShot'),
   createVenomFlask: () => create('venomFlask'),
   createPirateCoin: () => create('pirateCoin'),
   createRingOfFire: () => create('ringOfFire'),
@@ -90,6 +161,16 @@ export const AccessoryFactory = {
   createIronBand: () => create('ironBand'),
   createScrapPouch: () => create('scrapPouch'),
   createLockpick: () => create('lockpick'),
+  createEchoCharm: () => create('echoCharm'),
+  createFocusCrystal: () => create('focusCrystal'),
+  createThornCollar: () => create('thornCollar'),
+  createVampiricFang: () => create('vampiricFang'),
+  createRitualCodex: () => create('ritualCodex'),
+  createOathMedallion: () => create('oathMedallion'),
+  createQuickstepBoots: () => create('quickstepBoots'),
+  createEmptyQuiverCord: () => create('emptyQuiverCord'),
+  createGlassDice: () => create('glassDice'),
+  createSecondWindBandana: () => create('secondWindBandana'),
   create(kind: AccessoryKind): Accessory {
     return create(kind);
   },

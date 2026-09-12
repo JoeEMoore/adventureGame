@@ -71,6 +71,7 @@ export class ShopAccessoryPool extends Pool<Item> {
     this.addObjectCreator(() => AccessoryFactory.createShield(), 1);
     this.addObjectCreator(() => AccessoryFactory.createWraps(), 1);
     this.addObjectCreator(() => AccessoryFactory.createGrips(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createDoubleShot(), 1);
     this.addObjectCreator(() => AccessoryFactory.createVenomFlask(), 1);
     this.addObjectCreator(() => AccessoryFactory.createPirateCoin(), 1);
     this.addObjectCreator(() => AccessoryFactory.createRingOfFire(), 1);
@@ -79,5 +80,15 @@ export class ShopAccessoryPool extends Pool<Item> {
     this.addObjectCreator(() => AccessoryFactory.createIronBand(), 1);
     this.addObjectCreator(() => AccessoryFactory.createScrapPouch(), 1);
     this.addObjectCreator(() => AccessoryFactory.createLockpick(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createEchoCharm(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createFocusCrystal(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createThornCollar(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createVampiricFang(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createRitualCodex(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createOathMedallion(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createQuickstepBoots(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createEmptyQuiverCord(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createGlassDice(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createSecondWindBandana(), 1);
   }
 }

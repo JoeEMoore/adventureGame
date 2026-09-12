@@ -6,10 +6,14 @@ import { Accessory } from './accessories/Accessory';
 export class Inventory {
   private maxWeapons: number;
   private maxConsumables: number;
+  /** Max simultaneously equipped accessories (carry bag is unlimited). */
   private maxAccessories: number;
   private weapons: Weapon[] = [];
   private consumables: Consumable[] = [];
+  /** All owned accessories (unlimited). */
   private accessories: Accessory[] = [];
+  /** Equipped subset of `accessories` (by reference). */
+  private equippedAccessories: Accessory[] = [];
 
   constructor(maxWeapons = 1, maxConsumables = 0, maxAccessories = 0) {
     this.maxWeapons = maxWeapons;
@@ -49,8 +53,14 @@ export class Inventory {
     return this.consumables;
   }
 
+  /** All carried accessories (unlimited bag). */
   getAccessories(): Accessory[] {
     return this.accessories;
+  }
+
+  /** Currently equipped accessories (combat-active). */
+  getEquippedAccessories(): Accessory[] {
+    return this.equippedAccessories;
   }
 
   getWeapon(slot: number): Weapon | null {
@@ -63,6 +73,15 @@ export class Inventory {
 
   getAccessory(slot: number): Accessory | null {
     return this.accessories[slot] ?? null;
+  }
+
+  isAccessoryEquipped(accessory: Accessory): boolean {
+    return this.equippedAccessories.includes(accessory);
+  }
+
+  isAccessoryEquippedAt(bagIndex: number): boolean {
+    const a = this.accessories[bagIndex];
+    return !!a && this.isAccessoryEquipped(a);
   }
 
   setWeapon(slot: number, w: Weapon): Weapon | null {
@@ -87,17 +106,6 @@ export class Inventory {
     return null;
   }
 
-  setAccessory(slot: number, a: Accessory): Accessory | null {
-    if (slot >= this.maxAccessories) return a;
-    if (slot < this.accessories.length) {
-      const old = this.accessories[slot];
-      this.accessories[slot] = a;
-      return old;
-    }
-    this.accessories.push(a);
-    return null;
-  }
-
   addItem(item: Item): boolean {
     if (item instanceof Weapon) {
       this.weapons.push(item);
@@ -117,13 +125,33 @@ export class Inventory {
     }
     if (item instanceof Accessory) {
       this.accessories.push(item);
-      if (this.accessories.length > this.maxAccessories) {
-        this.accessories.pop();
-        return false;
+      // Auto-equip into a free slot when available.
+      if (this.equippedAccessories.length < this.maxAccessories) {
+        this.equippedAccessories.push(item);
       }
       return true;
     }
     return false;
+  }
+
+  /** Equip a carried accessory into an open slot. */
+  equipAccessory(bagIndex: number): boolean {
+    const a = this.accessories[bagIndex];
+    if (!a) return false;
+    if (this.isAccessoryEquipped(a)) return false;
+    if (this.equippedAccessories.length >= this.maxAccessories) return false;
+    this.equippedAccessories.push(a);
+    return true;
+  }
+
+  /** Unequip a carried accessory (stays in bag). */
+  unequipAccessory(bagIndex: number): boolean {
+    const a = this.accessories[bagIndex];
+    if (!a) return false;
+    const eqIdx = this.equippedAccessories.indexOf(a);
+    if (eqIdx < 0) return false;
+    this.equippedAccessories.splice(eqIdx, 1);
+    return true;
   }
 
   removeWeapon(index: number): Weapon | null {
@@ -138,6 +166,9 @@ export class Inventory {
 
   removeAccessory(index: number): Accessory | null {
     if (index < 0 || index >= this.accessories.length) return null;
-    return this.accessories.splice(index, 1)[0];
+    const [removed] = this.accessories.splice(index, 1);
+    const eqIdx = this.equippedAccessories.indexOf(removed);
+    if (eqIdx >= 0) this.equippedAccessories.splice(eqIdx, 1);
+    return removed;
   }
 }

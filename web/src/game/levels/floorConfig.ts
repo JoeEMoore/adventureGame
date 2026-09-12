@@ -1,6 +1,6 @@
 /** Floor pacing & spiral config — situation changes by depth, not raw HP. */
 
-export const TOTAL_FLOORS = 3;
+export const TOTAL_FLOORS = 5;
 
 export interface FloorConfig {
   /** 0-based floor index */
@@ -39,6 +39,22 @@ const FLOORS: FloorConfig[] = [
     displayName: 'Deep Hold',
     maxSanctuaries: 2,
     maxTreasureRooms: 2,
+  },
+  {
+    floorIndex: 3,
+    numRooms: 15,
+    roomLength: 7,
+    displayName: 'Ashen Crypt',
+    maxSanctuaries: 2,
+    maxTreasureRooms: 3,
+  },
+  {
+    floorIndex: 4,
+    numRooms: 16,
+    roomLength: 7,
+    displayName: 'Primordial Depths',
+    maxSanctuaries: 2,
+    maxTreasureRooms: 3,
   },
 ];
 

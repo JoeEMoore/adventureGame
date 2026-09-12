@@ -5,6 +5,7 @@ export type AccessoryKind =
   | 'shield'
   | 'wraps'
   | 'grips'
+  | 'doubleShot'
   | 'venomFlask'
   | 'pirateCoin'
   | 'ringOfFire'
@@ -12,7 +13,17 @@ export type AccessoryKind =
   | 'ringOfElectricity'
   | 'ironBand'
   | 'scrapPouch'
-  | 'lockpick';
+  | 'lockpick'
+  | 'echoCharm'
+  | 'focusCrystal'
+  | 'thornCollar'
+  | 'vampiricFang'
+  | 'ritualCodex'
+  | 'oathMedallion'
+  | 'quickstepBoots'
+  | 'emptyQuiverCord'
+  | 'glassDice'
+  | 'secondWindBandana';
 
 export class Accessory extends Item {
   private kind: AccessoryKind;

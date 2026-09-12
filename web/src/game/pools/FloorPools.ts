@@ -48,6 +48,33 @@ export class Floor2CreaturePool extends Pool<Creature> {
   }
 }
 
+/** Late — heavier brutes / guardians, fewer light kits. */
+export class Floor3CreaturePool extends Pool<Creature> {
+  constructor() {
+    super();
+    this.addObjectCreator(() => CreatureFactory.createWraith(), 2);
+    this.addObjectCreator(() => CreatureFactory.createBrute(), 2.5);
+    this.addObjectCreator(() => CreatureFactory.createCultist(), 2);
+    this.addObjectCreator(() => CreatureFactory.createGuardian(), 2.5);
+    this.addObjectCreator(() => CreatureFactory.createTroll(), 2.5);
+    this.addObjectCreator(() => CreatureFactory.createSorcerer(), 2);
+    this.addObjectCreator(() => CreatureFactory.createBandit(), 0.8);
+  }
+}
+
+/** Final stretch — densest elite mix before the last boss. */
+export class Floor4CreaturePool extends Pool<Creature> {
+  constructor() {
+    super();
+    this.addObjectCreator(() => CreatureFactory.createWraith(), 2.5);
+    this.addObjectCreator(() => CreatureFactory.createBrute(), 3);
+    this.addObjectCreator(() => CreatureFactory.createCultist(), 2);
+    this.addObjectCreator(() => CreatureFactory.createGuardian(), 3);
+    this.addObjectCreator(() => CreatureFactory.createTroll(), 3);
+    this.addObjectCreator(() => CreatureFactory.createSorcerer(), 2.5);
+  }
+}
+
 export class Floor0BossPool extends Pool<Creature> {
   constructor() {
     super();
@@ -69,6 +96,24 @@ export class Floor2BossPool extends Pool<Creature> {
     this.addObjectCreator(() => CreatureFactory.createIceGolem(), 1);
     this.addObjectCreator(() => CreatureFactory.createFireGolem(), 1);
     this.addObjectCreator(() => CreatureFactory.createRockGolem(), 1);
+  }
+}
+
+export class Floor3BossPool extends Pool<Creature> {
+  constructor() {
+    super();
+    this.addObjectCreator(() => CreatureFactory.createIceGolem(), 1.5);
+    this.addObjectCreator(() => CreatureFactory.createFireGolem(), 1.5);
+    this.addObjectCreator(() => CreatureFactory.createRockGolem(), 1);
+  }
+}
+
+export class Floor4BossPool extends Pool<Creature> {
+  constructor() {
+    super();
+    this.addObjectCreator(() => CreatureFactory.createIceGolem(), 2);
+    this.addObjectCreator(() => CreatureFactory.createFireGolem(), 1.5);
+    this.addObjectCreator(() => CreatureFactory.createRockGolem(), 1.5);
   }
 }
 
@@ -98,7 +143,10 @@ export class FloorItemPool extends Pool<Item> {
       this.addObjectCreator(() => ConsumableFactory.createAntidote(), 2.5);
       this.addObjectCreator(() => ConsumableFactory.createResistancePotion(), 2);
       this.addObjectCreator(() => AccessoryFactory.createVenomFlask(), 1);
-    } else {
+      this.addObjectCreator(() => AccessoryFactory.createEchoCharm(), 0.8);
+      this.addObjectCreator(() => AccessoryFactory.createFocusCrystal(), 0.8);
+      this.addObjectCreator(() => AccessoryFactory.createGlassDice(), 0.6);
+    } else if (floorIndex === 2) {
       this.addObjectCreator(() => WeaponFactory.createCrossbow(), 1.5);
       this.addObjectCreator(() => WeaponFactory.createStaffOfPower(), 1.5);
       this.addObjectCreator(() => WeaponFactory.createToxicStaff(), 2);
@@ -111,6 +159,37 @@ export class FloorItemPool extends Pool<Item> {
       this.addObjectCreator(() => ConsumableFactory.createStrengthPotion(), 2);
       this.addObjectCreator(() => AccessoryFactory.createIronBand(), 1);
       this.addObjectCreator(() => AccessoryFactory.createScrapPouch(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createThornCollar(), 0.7);
+      this.addObjectCreator(() => AccessoryFactory.createVampiricFang(), 0.7);
+      this.addObjectCreator(() => AccessoryFactory.createRitualCodex(), 0.7);
+      this.addObjectCreator(() => AccessoryFactory.createOathMedallion(), 0.6);
+      this.addObjectCreator(() => AccessoryFactory.createQuickstepBoots(), 0.7);
+      this.addObjectCreator(() => AccessoryFactory.createEmptyQuiverCord(), 0.7);
+      this.addObjectCreator(() => AccessoryFactory.createSecondWindBandana(), 0.7);
+    } else {
+      // Floors 4–5: scarce refills, premium weapons, denser accessories.
+      this.addObjectCreator(() => WeaponFactory.createCrossbow(), 2);
+      this.addObjectCreator(() => WeaponFactory.createStaffOfPower(), 2);
+      this.addObjectCreator(() => WeaponFactory.createToxicStaff(), 1.5);
+      this.addObjectCreator(() => WeaponFactory.createDrainWand(), 2);
+      this.addObjectCreator(() => WeaponFactory.createRoyalSword(), 2);
+      this.addObjectCreator(() => ConsumableFactory.createLargeHealthPotion(), 2.5);
+      this.addObjectCreator(() => ConsumableFactory.createWeaponRefillPotion(), 1.5);
+      this.addObjectCreator(() => ConsumableFactory.createLargePoisonPotion(), 2);
+      this.addObjectCreator(() => ConsumableFactory.createResistancePotion(), 2);
+      this.addObjectCreator(() => ConsumableFactory.createStrengthPotion(), 2.5);
+      this.addObjectCreator(() => AccessoryFactory.createIronBand(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createScrapPouch(), 1.2);
+      this.addObjectCreator(() => AccessoryFactory.createThornCollar(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createVampiricFang(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createRitualCodex(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createOathMedallion(), 0.9);
+      this.addObjectCreator(() => AccessoryFactory.createQuickstepBoots(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createEmptyQuiverCord(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createSecondWindBandana(), 1);
+      this.addObjectCreator(() => AccessoryFactory.createGlassDice(), 0.8);
+      this.addObjectCreator(() => AccessoryFactory.createEchoCharm(), 0.8);
+      this.addObjectCreator(() => AccessoryFactory.createFocusCrystal(), 0.8);
     }
   }
 }
@@ -118,15 +197,19 @@ export class FloorItemPool extends Pool<Item> {
 export function creaturePoolForFloor(floorIndex: number): Pool<Creature> {
   if (floorIndex <= 0) return new Floor0CreaturePool();
   if (floorIndex === 1) return new Floor1CreaturePool();
-  return new Floor2CreaturePool();
+  if (floorIndex === 2) return new Floor2CreaturePool();
+  if (floorIndex === 3) return new Floor3CreaturePool();
+  return new Floor4CreaturePool();
 }
 
 export function bossPoolForFloor(floorIndex: number): Pool<Creature> {
   if (floorIndex <= 0) return new Floor0BossPool();
   if (floorIndex === 1) return new Floor1BossPool();
-  return new Floor2BossPool();
+  if (floorIndex === 2) return new Floor2BossPool();
+  if (floorIndex === 3) return new Floor3BossPool();
+  return new Floor4BossPool();
 }
 
 /** Keep legacy names for any leftover imports. */
 export { Floor0CreaturePool as DefaultCreaturePool };
-export { Floor2BossPool as BossCreaturePool };
+export { Floor4BossPool as BossCreaturePool };

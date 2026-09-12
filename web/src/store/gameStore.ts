@@ -18,18 +18,33 @@ import type { Creature } from '../game/creatures/Creature';
 import type { Weapon } from '../game/items/weapons/Weapon';
 import {
   applyScrapPouchOnFightStart,
+  countEquipped,
   lockpickGoldMultiplier,
   pirateCoinGoldMultiplier,
   rollAccessoryDrop,
+  syncVampiricFangAfterInventoryChange,
 } from '../game/items/accessories/accessoryCombat';
 import { eliteHasDraining, taxPlayerAmmo } from '../game/levels/eliteModifiers';
 import { getFloorConfig, isFinalFloor, TOTAL_FLOORS } from '../game/levels/floorConfig';
+import {
+  applyDescendBuff,
+  getDescendBuffOption,
+  type DescendBuffId,
+} from '../game/creatures/descendBuffs';
+import { ForgeRoom } from '../game/levels/rooms/ForgeRoom';
+import {
+  canUpgradeWeaponTier,
+  upgradeWeaponOneTier,
+  weaponGoldCost,
+} from '../game/levels/forge';
+import type { AccessoryKind } from '../game/items/accessories/Accessory';
+import { AccessoryFactory } from '../game/items/accessories/AccessoryFactory';
 import { nextFxId, type CombatFx } from '../fx/combatFx';
 import { sfx } from '../fx/sounds';
 
 export type Screen = 'splash' | 'select' | 'map' | 'fight' | 'win' | 'death';
 export type { PlayerClass } from '../game/creatures/playerClass';
-export type ModalKind = 'none' | 'shop' | 'inventory' | 'roomItems' | 'descend';
+export type ModalKind = 'none' | 'shop' | 'inventory' | 'roomItems' | 'descend' | 'forge';
 
 interface FightState {
   fight: Fight;
@@ -65,12 +80,17 @@ interface GameState {
   dropWeapon: (index: number) => void;
   dropConsumable: (index: number) => void;
   dropAccessory: (index: number) => void;
+  equipAccessory: (index: number) => void;
+  unequipAccessory: (index: number) => void;
   pickupItem: (index: number) => void;
   buyEntry: (entry: ShopEntry) => void;
   exitToSplash: () => void;
   winFight: () => void;
   loseFight: (cause: string) => void;
-  descendFloor: () => void;
+  descendFloor: (buffId: DescendBuffId) => void;
+  openForge: () => void;
+  forgeUpgradeWeapon: (weaponIndex: number) => void;
+  forgeCombineAccessories: (bagIndices: number[], resultKind: AccessoryKind) => void;
 }
 
 function createLevel(floorIndex: number): Level {
@@ -310,6 +330,15 @@ export const useGameStore = create<GameState>((set, get) => ({
       return;
     }
 
+    if (room instanceof ForgeRoom) {
+      set({
+        modal: 'forge',
+        mapMessage: get().mapMessage ?? 'A forge — temper steel or fuse relics.',
+      });
+      get().bump();
+      return;
+    }
+
     if (room.hasCreature()) {
       beginFight(player, room, room.getCreature()!, notes);
       get().bump();
@@ -332,6 +361,52 @@ export const useGameStore = create<GameState>((set, get) => ({
   closeModal: () => set({ modal: 'none' }),
   openInventory: () => set({ modal: 'inventory' }),
   openRoomItems: () => set({ modal: 'roomItems' }),
+  openForge: () => {
+    const room = getCurrentRoom();
+    if (!(room instanceof ForgeRoom)) return;
+    set({ modal: 'forge' });
+  },
+
+  forgeUpgradeWeapon: (weaponIndex) => {
+    const { player } = get();
+    const room = getCurrentRoom();
+    if (!player || !(room instanceof ForgeRoom)) return;
+    const weapon = player.getInventory().getWeapon(weaponIndex);
+    if (!weapon) return;
+    if (room.hasUpgradedWeapon(weapon)) return;
+    if (!canUpgradeWeaponTier(weapon)) return;
+    const cost = weaponGoldCost(weapon);
+    if (player.getGold() < cost) return;
+    player.subractGold(cost);
+    upgradeWeaponOneTier(weapon);
+    room.markWeaponUpgraded(weapon);
+    sfx.shopBuy();
+    get().bump();
+  },
+
+  forgeCombineAccessories: (bagIndices, resultKind) => {
+    const { player } = get();
+    const room = getCurrentRoom();
+    if (!player || !(room instanceof ForgeRoom)) return;
+    const unique = [...new Set(bagIndices)];
+    if (unique.length !== 3) return;
+    const inv = player.getInventory();
+    if (unique.some((i) => i < 0 || i >= inv.getAccessories().length)) return;
+
+    const fangsBefore = countEquipped(player, 'vampiricFang');
+    const sorted = [...unique].sort((a, b) => b - a);
+    for (const i of sorted) {
+      inv.removeAccessory(i);
+    }
+    syncVampiricFangAfterInventoryChange(player, fangsBefore);
+
+    const fangsBeforeAdd = countEquipped(player, 'vampiricFang');
+    inv.addItem(AccessoryFactory.create(resultKind));
+    syncVampiricFangAfterInventoryChange(player, fangsBeforeAdd);
+
+    sfx.shopBuy();
+    get().bump();
+  },
 
   performPlayerMove: (weaponIndex) => {
     const { player, fightState } = get();
@@ -525,8 +600,30 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (!pos) return;
     const room = level.getRoom(pos);
     if (!room) return;
+    const fangsBefore = countEquipped(player, 'vampiricFang');
     const a = player.getInventory().removeAccessory(index);
-    if (a) room.addItem(a);
+    if (a) {
+      room.addItem(a);
+      syncVampiricFangAfterInventoryChange(player, fangsBefore);
+    }
+    get().bump();
+  },
+
+  equipAccessory: (index) => {
+    const { player } = get();
+    if (!player) return;
+    const fangsBefore = countEquipped(player, 'vampiricFang');
+    if (!player.getInventory().equipAccessory(index)) return;
+    syncVampiricFangAfterInventoryChange(player, fangsBefore);
+    get().bump();
+  },
+
+  unequipAccessory: (index) => {
+    const { player } = get();
+    if (!player) return;
+    const fangsBefore = countEquipped(player, 'vampiricFang');
+    if (!player.getInventory().unequipAccessory(index)) return;
+    syncVampiricFangAfterInventoryChange(player, fangsBefore);
     get().bump();
   },
 
@@ -539,8 +636,10 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (!room) return;
     const item = room.getItems()[index];
     if (!item) return;
+    const fangsBefore = countEquipped(player, 'vampiricFang');
     if (player.getInventory().addItem(item)) {
       room.removeItem(item);
+      syncVampiricFangAfterInventoryChange(player, fangsBefore);
     }
     get().bump();
   },
@@ -551,7 +650,9 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (entry.getQuantity() <= 0) return;
     if (player.getGold() < entry.getPrice()) return;
     const item = entry.getItem();
+    const fangsBefore = countEquipped(player, 'vampiricFang');
     if (!player.getInventory().addItem(item)) return;
+    syncVampiricFangAfterInventoryChange(player, fangsBefore);
     player.subractGold(entry.getPrice());
     entry.decreaseQuantity();
     sfx.shopBuy();
@@ -619,9 +720,12 @@ export const useGameStore = create<GameState>((set, get) => ({
     });
   },
 
-  descendFloor: () => {
+  descendFloor: (buffId) => {
     const { player, floorIndex } = get();
     if (!player || isFinalFloor(floorIndex)) return;
+
+    applyDescendBuff(player, buffId);
+    const buffLabel = getDescendBuffOption(buffId).label;
 
     const next = floorIndex + 1;
     const heal = Math.max(1, Math.floor(player.getMaxHealth() * 0.25));
@@ -641,7 +745,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       modal: 'none',
       fightState: null,
       combatFx: null,
-      mapMessage: `Descended to ${cfg.displayName} (Floor ${next + 1}/${TOTAL_FLOORS}). Recovered ${heal} HP. Accessory slots: ${accessorySlots}.`,
+      mapMessage: `Descended to ${cfg.displayName} (Floor ${next + 1}/${TOTAL_FLOORS}). Chose ${buffLabel}. Recovered ${heal} HP. Equip slots: ${accessorySlots}.`,
     });
     get().bump();
   },

@@ -3,6 +3,7 @@ import type { LevelInitializer } from './Level';
 import { BossRoom, Room } from './rooms/Room';
 import type { ShopInitializer } from './rooms/shop/Shop';
 import { ShopRoom } from './rooms/shop/Shop';
+import { ForgeRoom } from './rooms/ForgeRoom';
 import type { Pool } from '../pools/Pool';
 import type { Creature } from '../creatures/Creature';
 import type { Item } from '../items/Item';
@@ -32,6 +33,7 @@ export class DefaultLevelInitializer implements LevelInitializer {
   private validPositions = new Map<string, Coordinate>();
   private startRoom = new Coordinate(0, 0);
   private shopPos: Coordinate | null = null;
+  private forgePos: Coordinate | null = null;
 
   constructor(
     numRooms: number,
@@ -65,6 +67,7 @@ export class DefaultLevelInitializer implements LevelInitializer {
     );
     this.validPositions.clear();
     this.shopPos = null;
+    this.forgePos = null;
 
     const seed = new Coordinate(
       Math.floor(Math.random() * this.roomLength),
@@ -83,6 +86,9 @@ export class DefaultLevelInitializer implements LevelInitializer {
 
     this.shopPos = this.pickMidDistanceFrontier();
     this.addRoomAt(new ShopRoom(this.shopInitializer), this.shopPos);
+
+    this.forgePos = this.pickMidDistanceFrontier();
+    this.addRoomAt(new ForgeRoom(), this.forgePos);
 
     const boss = new BossRoom();
     boss.setCreature(this.bossPool.createNew());
@@ -108,7 +114,12 @@ export class DefaultLevelInitializer implements LevelInitializer {
       const room = this.rooms[p.getRow()][p.getCol()]!;
       const d = dist.get(p.toKey()) ?? 0;
       room.setDepth(d);
-      if (room.getRole() === 'start' || room instanceof ShopRoom || room instanceof BossRoom) {
+      if (
+        room.getRole() === 'start' ||
+        room instanceof ShopRoom ||
+        room instanceof ForgeRoom ||
+        room instanceof BossRoom
+      ) {
         continue;
       }
       assignable.push(p);
@@ -185,7 +196,9 @@ export class DefaultLevelInitializer implements LevelInitializer {
     const setRole = (pos: Coordinate | null, role: RoomRole) => {
       if (!pos) return;
       const room = this.getRoomAt(pos);
-      if (!room || room instanceof ShopRoom || room instanceof BossRoom) return;
+      if (!room || room instanceof ShopRoom || room instanceof ForgeRoom || room instanceof BossRoom) {
+        return;
+      }
       room.setRole(role);
     };
 
@@ -242,9 +255,15 @@ export class DefaultLevelInitializer implements LevelInitializer {
       const room = this.getRoomAt(p);
       if (room?.isLocked()) room.clearLock();
     }
-    // Shop should also stay reachable
+    // Shop and forge should stay reachable
     if (this.shopPos) {
       for (const p of this.shortestPath(this.startRoom, this.shopPos)) {
+        const room = this.getRoomAt(p);
+        if (room?.isLocked()) room.clearLock();
+      }
+    }
+    if (this.forgePos) {
+      for (const p of this.shortestPath(this.startRoom, this.forgePos)) {
         const room = this.getRoomAt(p);
         if (room?.isLocked()) room.clearLock();
       }
@@ -263,7 +282,7 @@ export class DefaultLevelInitializer implements LevelInitializer {
     const donors = this.allRoomPositions().filter((p) => {
       const r = this.getRoomAt(p)!;
       if (r.isLocked()) return false;
-      if (r instanceof BossRoom || r instanceof ShopRoom) return false;
+      if (r instanceof BossRoom || r instanceof ShopRoom || r instanceof ForgeRoom) return false;
       if (r.getRole() === 'start') return false;
       return true;
     });
@@ -324,7 +343,12 @@ export class DefaultLevelInitializer implements LevelInitializer {
 
     for (const p of this.allRoomPositions()) {
       const room = this.getRoomAt(p)!;
-      if (room instanceof ShopRoom || room instanceof BossRoom || room.getRole() === 'start') {
+      if (
+        room instanceof ShopRoom ||
+        room instanceof ForgeRoom ||
+        room instanceof BossRoom ||
+        room.getRole() === 'start'
+      ) {
         continue;
       }
 
@@ -365,7 +389,11 @@ export class DefaultLevelInitializer implements LevelInitializer {
         case 'combat':
         default: {
           // Spiral: deeper = more likely fight + scarcer refills in loot.
-          const fightChance = 0.55 + band * 0.15 + this.floorIndex * 0.05;
+          // Floor 1 (index 0) gets +20% fight chance — it felt too sparse.
+          const fightChance = Math.min(
+            1,
+            0.55 + band * 0.15 + this.floorIndex * 0.05 + (this.floorIndex === 0 ? 0.2 : 0),
+          );
           if (Math.random() < fightChance) {
             room.setCreature(this.creaturePool.createNew());
           }
@@ -401,6 +429,9 @@ export class DefaultLevelInitializer implements LevelInitializer {
     const vines = generateRoomVines();
     if (room instanceof ShopRoom) {
       vines.unshift({ kind: 'shop', flipX: false });
+    }
+    if (room instanceof ForgeRoom) {
+      vines.unshift({ kind: 'forge', flipX: false });
     }
     room.setVines(vines);
     this.rooms[pos.getRow()][pos.getCol()] = room;

@@ -4,6 +4,11 @@ import { Inventory } from '../items/Inventory';
 import type { IconRef } from '../utils/icons';
 import { Coordinate } from '../levels/Coordinate';
 import type { PlayerClass } from './playerClass';
+import type { DamageType } from '../damagetypes/DamageType';
+import {
+  emptyTypeDamageBonuses,
+  type DescendBuffId,
+} from './descendBuffs';
 
 export class Player extends Creature {
   private gold = 0;
@@ -13,6 +18,13 @@ export class Player extends Creature {
   private consecutiveSlashHits = 0;
   /** Knight passive: whether Bleed already procced on this slash streak. */
   private slashBleedProcced = false;
+  /** Permanent run accuracy from descend choices (flat 0–1). */
+  private descendAccuracyBonus = 0;
+  /** Permanent run per-type damage bonuses from descend (additive, e.g. 0.1 = +10%). */
+  private descendTypeDamageBonus = emptyTypeDamageBonuses();
+  private descendBuffsChosen: DescendBuffId[] = [];
+  /** Max-HP cuts applied by each equipped Vampiric Fang (LIFO). */
+  private vampiricMaxHpCuts: number[] = [];
 
   constructor(
     name: string,
@@ -80,5 +92,38 @@ export class Player extends Creature {
   resetConsecutiveSlashHits(): void {
     this.consecutiveSlashHits = 0;
     this.slashBleedProcced = false;
+  }
+
+  getDescendAccuracyBonus(): number {
+    return this.descendAccuracyBonus;
+  }
+
+  addDescendAccuracyBonus(n: number): void {
+    this.descendAccuracyBonus += n;
+  }
+
+  getDescendTypeDamageMultiplier(dt: DamageType): number {
+    return 1 + (this.descendTypeDamageBonus.get(dt) ?? 0);
+  }
+
+  addDescendTypeDamageBonus(dt: DamageType, n: number): void {
+    const prev = this.descendTypeDamageBonus.get(dt) ?? 0;
+    this.descendTypeDamageBonus.set(dt, prev + n);
+  }
+
+  getDescendBuffsChosen(): DescendBuffId[] {
+    return [...this.descendBuffsChosen];
+  }
+
+  recordDescendBuff(id: DescendBuffId): void {
+    this.descendBuffsChosen.push(id);
+  }
+
+  pushVampiricMaxHpCut(cut: number): void {
+    this.vampiricMaxHpCuts.push(cut);
+  }
+
+  popVampiricMaxHpCut(): number {
+    return this.vampiricMaxHpCuts.pop() ?? 0;
   }
 }

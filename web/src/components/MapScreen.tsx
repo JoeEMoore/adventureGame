@@ -1,5 +1,6 @@
 import { BossRoom } from '../game/levels/rooms/Room';
 import { ShopRoom } from '../game/levels/rooms/shop/Shop';
+import { ForgeRoom } from '../game/levels/rooms/ForgeRoom';
 import { Coordinate } from '../game/levels/Coordinate';
 import { getFloorConfig, TOTAL_FLOORS } from '../game/levels/floorConfig';
 import { ITEMS_SHEET } from '../game/utils/icons';
@@ -10,6 +11,7 @@ import { getRoomBird, getRoomImage } from './roomArt';
 import { InventoryModal } from './InventoryModal';
 import { RoomItemsModal } from './RoomItemsModal';
 import { ShopModal } from './ShopModal';
+import { ForgeModal } from './ForgeModal';
 import { DescendModal } from './DescendModal';
 
 export function MapScreen() {
@@ -22,6 +24,7 @@ export function MapScreen() {
   const exploreRoom = useGameStore((s) => s.exploreRoom);
   const openInventory = useGameStore((s) => s.openInventory);
   const openRoomItems = useGameStore((s) => s.openRoomItems);
+  const openForge = useGameStore((s) => s.openForge);
   const exitToSplash = useGameStore((s) => s.exitToSplash);
   const clearMapMessage = useGameStore((s) => s.clearMapMessage);
 
@@ -184,6 +187,20 @@ export function MapScreen() {
                       <SpriteIcon sheet={ITEMS_SHEET} row={24} col={3} size={40} />
                     </span>
                   )}
+                  {discovered && room instanceof ForgeRoom && (
+                    <button
+                      type="button"
+                      className="room-marker forge-mark"
+                      disabled={!isPlayerHere}
+                      title={isPlayerHere ? 'Open forge' : 'Forge'}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isPlayerHere) openForge();
+                      }}
+                    >
+                      <SpriteIcon sheet={ITEMS_SHEET} row={13} col={0} size={40} />
+                    </button>
+                  )}
                   {explored && room.hasItems() && (
                     <button
                       type="button"
@@ -220,6 +237,7 @@ export function MapScreen() {
       {modal === 'inventory' && <InventoryModal />}
       {modal === 'roomItems' && <RoomItemsModal />}
       {modal === 'shop' && <ShopModal />}
+      {modal === 'forge' && <ForgeModal />}
       {modal === 'descend' && <DescendModal />}
     </div>
   );

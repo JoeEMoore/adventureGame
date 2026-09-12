@@ -1387,6 +1387,83 @@ button {
   background: rgba(196, 90, 40, 0.12);
 }
 
+.item-list button.equipped {
+  border-color: #3d6b45;
+}
+
+.item-list button.equipped.selected {
+  border-color: var(--banner);
+}
+
+.item-list-label {
+  flex: 1;
+  text-align: left;
+}
+
+.descend-pick-label {
+  margin: 0.75rem 0 0.35rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.descend-buff-list {
+  margin-bottom: 0.85rem;
+  max-height: 320px;
+}
+
+.descend-buff-desc {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.forge-modal {
+  width: min(860px, 100%);
+}
+
+.forge-fuse-split {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.forge-list-heading {
+  margin: 0 0 0.35rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.forge-status {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+  color: #8a3a2a;
+}
+
+.forge-result-pane {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.room-marker.forge-mark {
+  pointer-events: auto;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.room-marker.forge-mark:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.shop-list .shop-entry.equipped {
+  border-color: #3d6b45;
+}
+
 .shop-list {
   display: flex;
   flex-direction: column;
@@ -1445,6 +1522,10 @@ button {
   }
 
   .tome-split {
+    grid-template-columns: 1fr;
+  }
+
+  .forge-fuse-split {
     grid-template-columns: 1fr;
   }
 

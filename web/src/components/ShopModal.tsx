@@ -82,7 +82,8 @@ export function ShopModal() {
 
         {category === 'accessories' && (
           <p className="shop-section-note">
-            Equip up to {player.getInventory().getMaxAccessories()}. All accessories cost 60 gold.
+            Carry as many as you like; equip up to {player.getInventory().getMaxAccessories()} at a
+            time. All accessories cost 60 gold.
           </p>
         )}
 

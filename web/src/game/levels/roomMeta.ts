@@ -9,6 +9,7 @@ export type RoomRole =
   | 'hazard'
   | 'treasure'
   | 'shop'
+  | 'forge'
   | 'boss';
 
 export type EliteTag = 'armored' | 'venomous' | 'swift' | 'volatile' | 'draining';
@@ -37,6 +38,8 @@ export function frameLabelFor(role: RoomRole, revealed: boolean): string {
       return 'Sealed vault';
     case 'shop':
       return 'Shop';
+    case 'forge':
+      return 'Forge';
     case 'boss':
       return 'Boss lair';
   }
