@@ -1,0 +1,13 @@
+---
+description: Game design principles for adventureGame features and combat
+alwaysApply: true
+---
+
+# Game design
+
+Before planning or changing gameplay systems, combat, loot, pacing, or player-facing mechanics:
+
+1. Read `docs/design/PRINCIPLES.md`
+2. Use its quick-reference checklist when evaluating feature ideas
+
+Prefer prediction/learning loops, situation variety over raw number inflation, complete feedback (verbs → confirm → state change → good/bad), and loot that sets up a choice or challenge.

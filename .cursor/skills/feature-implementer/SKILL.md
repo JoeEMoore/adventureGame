@@ -11,10 +11,11 @@ Implement an **approved** plan for this game. Do not expand scope or redesign th
 ## When invoked
 
 1. Require a plan: pasted text, or a path to a plan doc. If missing, ask for it — do not invent a large plan and code it.
-2. For UI/CSS/assets work, read `docs/style-reference/STYLE.md` and relevant images under `docs/style-reference/` before editing.
-3. Follow the plan steps in order. Prefer small, focused diffs.
-4. Match existing code style and architecture (see project rules).
-5. After changes, summarize what was done vs the acceptance checks.
+2. For gameplay/systems work, skim `docs/design/PRINCIPLES.md` if the plan involves new mechanics, loot, or pacing.
+3. For UI/CSS/assets work, read `docs/style-reference/STYLE.md` and relevant images under `docs/style-reference/` before editing.
+4. Follow the plan steps in order. Prefer small, focused diffs.
+5. Match existing code style and architecture (see project rules).
+6. After changes, summarize what was done vs the acceptance checks.
 
 ## Rules
 

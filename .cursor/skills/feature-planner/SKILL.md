@@ -12,9 +12,10 @@ Plan features for this dungeon-crawler game. **Do not edit code, create files, o
 
 1. Clarify the goal if it is vague (one short question max if blocking).
 2. Explore the relevant code under `web/src/` (and Java sources only if needed for parity).
-3. For UI/art/feel changes, read `docs/style-reference/STYLE.md` and skim images in that folder.
-4. Produce a plan using the template below.
-5. Stop and wait for approval. Do not implement.
+3. For gameplay/systems/loot/pacing changes, read `docs/design/PRINCIPLES.md` and use its checklist.
+4. For UI/art/feel changes, read `docs/style-reference/STYLE.md` and skim images in that folder.
+5. Produce a plan using the template below.
+6. Stop and wait for approval. Do not implement.
 
 ## Plan template
 

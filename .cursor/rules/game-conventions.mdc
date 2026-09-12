@@ -25,4 +25,5 @@ alwaysApply: true
 
 - Planning → `.cursor/skills/feature-planner`
 - Implementation → `.cursor/skills/feature-implementer` with an approved plan
+- Gameplay/design → `docs/design/PRINCIPLES.md`
 - Visual work → `docs/style-reference/STYLE.md`
