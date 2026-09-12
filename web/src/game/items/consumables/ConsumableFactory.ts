@@ -1,4 +1,5 @@
 import {
+  AntidoteEffect,
   DamageEffect,
   HealEffect,
   PoisonEffect,
@@ -45,5 +46,8 @@ export const ConsumableFactory = {
   },
   createWeaponRefillPotion(): Consumable {
     return new Consumable('Weapon Refill Potion', 2, () => [new RefillEffect(1)], true, potionSprite(2, 8));
+  },
+  createAntidote(): Consumable {
+    return new Consumable('Antidote', 1, () => [new AntidoteEffect()], true, potionSprite(8, 1));
   },
 };

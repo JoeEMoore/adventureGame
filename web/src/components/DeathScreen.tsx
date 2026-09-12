@@ -1,19 +1,20 @@
 import { useGameStore } from '../store/gameStore';
 
-export function WinScreen() {
+export function DeathScreen() {
+  const deathCause = useGameStore((s) => s.deathCause);
   const startNewGame = useGameStore((s) => s.startNewGame);
   const exitToSplash = useGameStore((s) => s.exitToSplash);
 
   return (
-    <div className="screen win-screen">
-      <div className="win-panel tome-panel">
+    <div className="screen death-screen">
+      <div className="death-panel tome-panel">
         <div className="tome-header">
-          <h1>You Win!</h1>
+          <h1>You Died</h1>
         </div>
-        <p>All three floors are cleared. The dungeon yields — for now.</p>
+        <p className="death-cause">{deathCause ?? 'You were defeated in the dungeon.'}</p>
         <div className="btn-row">
           <button type="button" className="btn primary" onClick={startNewGame}>
-            Play Again
+            Try Again
           </button>
           <button type="button" className="btn" onClick={exitToSplash}>
             Main Menu

@@ -4,6 +4,12 @@ export class CreatureModifiers {
   damage: number;
   evasion: number;
   resistances: Map<DamageType, number>;
+  /** Guaranteed skip of this creature's action (knockout). */
+  actionBlocked = false;
+  /** Chance (0–1) to fail the action entirely (shock). */
+  actionFailChance = 0;
+  /** Extra miss chance when this creature attacks (iced). */
+  missChanceBonus = 0;
 
   constructor(damage: number, evasion: number, resistanceQueue: number[]) {
     this.damage = damage;
@@ -25,6 +31,30 @@ export class CreatureModifiers {
 
   getResistance(dt: DamageType): number {
     return this.resistances.get(dt) ?? 1.0;
+  }
+
+  isActionBlocked(): boolean {
+    return this.actionBlocked;
+  }
+
+  setActionBlocked(v: boolean): void {
+    this.actionBlocked = v;
+  }
+
+  getActionFailChance(): number {
+    return this.actionFailChance;
+  }
+
+  setActionFailChance(n: number): void {
+    this.actionFailChance = Math.max(this.actionFailChance, n);
+  }
+
+  getMissChanceBonus(): number {
+    return this.missChanceBonus;
+  }
+
+  addMissChanceBonus(n: number): void {
+    this.missChanceBonus += n;
   }
 
   addDamage(n: number): void {
@@ -63,6 +93,10 @@ export class CreatureModifiers {
 
   clone(): CreatureModifiers {
     const queue = getDamageTypes().map((t) => this.getResistance(t));
-    return new CreatureModifiers(this.damage, this.evasion, queue);
+    const copy = new CreatureModifiers(this.damage, this.evasion, queue);
+    copy.actionBlocked = this.actionBlocked;
+    copy.actionFailChance = this.actionFailChance;
+    copy.missChanceBonus = this.missChanceBonus;
+    return copy;
   }
 }

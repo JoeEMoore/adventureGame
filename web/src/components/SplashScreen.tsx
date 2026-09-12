@@ -5,8 +5,10 @@ export function SplashScreen() {
 
   return (
     <div className="screen splash-screen">
-      <div className="splash-overlay">
-        <h1 className="brand">Adventure Game</h1>
+      <div className="splash-overlay tome-panel">
+        <div className="tome-header">
+          <h1>Adventure Game</h1>
+        </div>
         <p className="tagline">A turn-based dungeon crawler</p>
         <div className="btn-row">
           <button type="button" className="btn primary" onClick={startNewGame}>

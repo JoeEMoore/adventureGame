@@ -1,5 +1,6 @@
 import { WeaponFactory } from '../items/weapons/WeaponFactory';
 import { ConsumableFactory } from '../items/consumables/ConsumableFactory';
+import { AccessoryFactory } from '../items/accessories/AccessoryFactory';
 import type { Item } from '../items/Item';
 import { Pool } from './Pool';
 
@@ -25,6 +26,8 @@ export class DefaultItemPool extends Pool<Item> {
     this.addObjectCreator(() => ConsumableFactory.createWeaponRefillPotion(), 8);
     this.addObjectCreator(() => ConsumableFactory.createStrengthPotion(), 5);
     this.addObjectCreator(() => ConsumableFactory.createResistancePotion(), 5);
+    this.addObjectCreator(() => ConsumableFactory.createAntidote(), 3);
+    this.addObjectCreator(() => ConsumableFactory.createSmallPoisonPotion(), 2);
   }
 }
 
@@ -56,5 +59,25 @@ export class ShopConsumablePool extends Pool<Item> {
     this.addObjectCreator(() => ConsumableFactory.createWeaponRefillPotion(), 8);
     this.addObjectCreator(() => ConsumableFactory.createStrengthPotion(), 5);
     this.addObjectCreator(() => ConsumableFactory.createResistancePotion(), 5);
+    this.addObjectCreator(() => ConsumableFactory.createAntidote(), 3);
+    this.addObjectCreator(() => ConsumableFactory.createSmallPoisonPotion(), 2);
+  }
+}
+
+/** Equal weight for every accessory in the shop pool. */
+export class ShopAccessoryPool extends Pool<Item> {
+  constructor() {
+    super();
+    this.addObjectCreator(() => AccessoryFactory.createShield(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createWraps(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createGrips(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createVenomFlask(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createPirateCoin(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createRingOfFire(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createRingOfIce(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createRingOfElectricity(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createIronBand(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createScrapPouch(), 1);
+    this.addObjectCreator(() => AccessoryFactory.createLockpick(), 1);
   }
 }

@@ -122,3 +122,116 @@ export class RefillEffect extends Effect {
     return `${creature.getName()} refilled all of their weapon uses!`;
   }
 }
+
+/** Knight passive: 5% max HP Pure damage each turn. */
+export class BleedEffect extends Effect {
+  static PERCENT_DAMAGE = 0.05;
+
+  constructor(turns: number) {
+    super(turns, false);
+    this.name = 'Bleed';
+  }
+
+  multiplyEffect(multiplier: number): void {
+    this.turns = Math.floor(this.turns * multiplier);
+  }
+
+  protected apply(creature: Creature): string {
+    const dealt = creature.applyPercentDamage(BleedEffect.PERCENT_DAMAGE, DamageType.Pure);
+    return `${creature.getName()} is bleeding for ${roundDouble(dealt)} damage`;
+  }
+}
+
+/** Mage passive: flat Pure damage each turn. */
+export class BurnEffect extends Effect {
+  damagePerTurn: number;
+
+  constructor(turns: number, damagePerTurn = 10) {
+    super(turns, false);
+    this.damagePerTurn = damagePerTurn;
+    this.name = 'Burn';
+  }
+
+  multiplyEffect(multiplier: number): void {
+    this.damagePerTurn *= multiplier;
+  }
+
+  protected apply(creature: Creature): string {
+    const dealt = creature.applyDamage(this.damagePerTurn, DamageType.Pure);
+    return `${creature.getName()} is burning for ${roundDouble(dealt)} damage`;
+  }
+}
+
+/** Barbarian passive: skip the next action. */
+export class KnockoutEffect extends Effect {
+  constructor(turns: number) {
+    super(turns, false);
+    this.name = 'Knockout';
+  }
+
+  multiplyEffect(multiplier: number): void {
+    this.turns = Math.floor(this.turns * multiplier);
+  }
+
+  protected apply(creature: Creature): string {
+    creature.getTurnModifiers().setActionBlocked(true);
+    return `${creature.getName()} is knocked out and cannot act`;
+  }
+}
+
+/** Mage passive: chance to fail the action each turn. */
+export class ShockEffect extends Effect {
+  failChance: number;
+
+  constructor(turns: number, failChance = 0.5) {
+    super(turns, false);
+    this.failChance = failChance;
+    this.name = 'Shock';
+  }
+
+  multiplyEffect(multiplier: number): void {
+    this.turns = Math.floor(this.turns * multiplier);
+  }
+
+  protected apply(creature: Creature): string {
+    creature.getTurnModifiers().setActionFailChance(this.failChance);
+    return `${creature.getName()} is shocked (${Math.round(this.failChance * 100)}% chance to fail attacks)`;
+  }
+}
+
+/** Mage passive: extra miss chance when attacking. */
+export class IcedEffect extends Effect {
+  missBonus: number;
+
+  constructor(turns: number, missBonus = 0.25) {
+    super(turns, false);
+    this.missBonus = missBonus;
+    this.name = 'Iced';
+  }
+
+  multiplyEffect(multiplier: number): void {
+    this.turns = Math.floor(this.turns * multiplier);
+  }
+
+  protected apply(creature: Creature): string {
+    creature.getTurnModifiers().addMissChanceBonus(this.missBonus);
+    return `${creature.getName()} is iced (+${Math.round(this.missBonus * 100)}% miss chance)`;
+  }
+}
+
+/** Clears Poison status. */
+export class AntidoteEffect extends Effect {
+  constructor() {
+    super(1, true);
+    this.name = 'Antidote';
+  }
+
+  multiplyEffect(_multiplier: number): void {}
+
+  protected apply(creature: Creature): string {
+    const n = creature.removeEffectsByName('Poison');
+    return n > 0
+      ? `${creature.getName()} cured ${n} Poison`
+      : `${creature.getName()} had no Poison to cure`;
+  }
+}

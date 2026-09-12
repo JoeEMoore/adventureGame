@@ -1,6 +1,7 @@
 import { BossRoom } from '../game/levels/rooms/Room';
 import { ShopRoom } from '../game/levels/rooms/shop/Shop';
 import { Coordinate } from '../game/levels/Coordinate';
+import { getFloorConfig, TOTAL_FLOORS } from '../game/levels/floorConfig';
 import { ITEMS_SHEET } from '../game/utils/icons';
 import { useGameStore } from '../store/gameStore';
 import { asset } from '../utils/asset';
@@ -9,36 +10,48 @@ import { getRoomBird, getRoomImage } from './roomArt';
 import { InventoryModal } from './InventoryModal';
 import { RoomItemsModal } from './RoomItemsModal';
 import { ShopModal } from './ShopModal';
+import { DescendModal } from './DescendModal';
 
 export function MapScreen() {
   const tick = useGameStore((s) => s.tick);
   const player = useGameStore((s) => s.player);
   const level = useGameStore((s) => s.level);
+  const floorIndex = useGameStore((s) => s.floorIndex);
+  const mapMessage = useGameStore((s) => s.mapMessage);
   const modal = useGameStore((s) => s.modal);
   const exploreRoom = useGameStore((s) => s.exploreRoom);
   const openInventory = useGameStore((s) => s.openInventory);
   const openRoomItems = useGameStore((s) => s.openRoomItems);
   const exitToSplash = useGameStore((s) => s.exitToSplash);
+  const clearMapMessage = useGameStore((s) => s.clearMapMessage);
 
   void tick;
   if (!player || !level) return null;
 
   const rooms = level.getRooms();
   const playerPos = player.getCurrentPosition()!;
+  const floor = getFloorConfig(floorIndex);
 
   return (
     <div className="screen map-screen">
-      <aside className="hud">
+      <aside className="hud tome-panel">
+        <div className="tome-header">
+          <h2>Hero</h2>
+        </div>
         <div className="hud-stats">
           <IconView icon={player.getIcon()} size={72} />
           <div>
             <div>
               <strong>{player.getName()}</strong>
             </div>
+            <div className="hud-floor">
+              {floor.displayName} · Floor {floorIndex + 1}/{TOTAL_FLOORS}
+            </div>
             <div>
               HP: {Math.round(player.getHealth())}/{player.getMaxHealth()}
             </div>
             <div>Gold: {player.getGold()}</div>
+            <div>Keys: {player.getKeys()}</div>
           </div>
         </div>
         <div className="btn-col">
@@ -50,6 +63,15 @@ export function MapScreen() {
           </button>
         </div>
       </aside>
+
+      {mapMessage && (
+        <p className="map-message" role="status">
+          {mapMessage}
+          <button type="button" className="map-message-dismiss" onClick={clearMapMessage}>
+            ×
+          </button>
+        </p>
+      )}
 
       <div className="map-grid-wrap">
         <div
@@ -76,19 +98,35 @@ export function MapScreen() {
 
               const art = explored ? getRoomImage(rooms, pos) : null;
               const bird = explored ? getRoomBird(rooms, pos) : null;
+              const role = room.getRole();
+              const lock = room.getLock();
+              const title = [
+                room.getFrameLabel(),
+                lock
+                  ? lock.kind === 'key'
+                    ? 'Locked (key)'
+                    : lock.kind === 'gold'
+                      ? `Locked (${lock.amount}g)`
+                      : `Locked (${lock.amount} HP)`
+                  : null,
+              ]
+                .filter(Boolean)
+                .join(' — ');
 
               return (
                 <div
                   key={`${r}-${c}`}
-                  className={`room-cell ${canMove ? 'movable' : ''} ${isPlayerHere ? 'here' : ''}${bird ? ' has-bird' : ''}`}
-                  title={`Room (${r},${c})`}
+                  className={`room-cell ${canMove ? 'movable' : ''} ${isPlayerHere ? 'here' : ''}${
+                    bird ? ' has-bird' : ''
+                  } role-${role}${lock ? ' locked' : ''}`}
+                  title={title}
                 >
                   {canMove ? (
                     <button
                       type="button"
                       className="room-move-hit"
                       onClick={() => exploreRoom(pos)}
-                      aria-label={`Enter room ${r},${c}`}
+                      aria-label={`Enter ${room.getFrameLabel()}`}
                     />
                   ) : null}
 
@@ -137,12 +175,12 @@ export function MapScreen() {
                   )}
 
                   {discovered && room instanceof BossRoom && (
-                    <span className="room-marker">
+                    <span className="room-marker" title="Boss lair">
                       <SpriteIcon sheet={ITEMS_SHEET} row={15} col={6} size={40} />
                     </span>
                   )}
                   {discovered && room instanceof ShopRoom && (
-                    <span className="room-marker">
+                    <span className="room-marker" title="Shop">
                       <SpriteIcon sheet={ITEMS_SHEET} row={24} col={3} size={40} />
                     </span>
                   )}
@@ -182,6 +220,7 @@ export function MapScreen() {
       {modal === 'inventory' && <InventoryModal />}
       {modal === 'roomItems' && <RoomItemsModal />}
       {modal === 'shop' && <ShopModal />}
+      {modal === 'descend' && <DescendModal />}
     </div>
   );
 }

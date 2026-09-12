@@ -1,5 +1,11 @@
 import type { Creature } from '../../creatures/Creature';
 import type { Item } from '../../items/Item';
+import {
+  frameLabelFor,
+  type EliteTag,
+  type RoomLock,
+  type RoomRole,
+} from '../roomMeta';
 
 export type RoomDecorationKind = 'skull' | 'bones' | 'rock' | 'rock2' | 'barrel';
 
@@ -30,9 +36,96 @@ export class Room {
   protected explored = false;
   protected decorations: RoomDecoration[] = [];
   protected vines: RoomVine[] = [];
+  protected role: RoomRole = 'combat';
+  protected lock: RoomLock | null = null;
+  protected eliteTags: EliteTag[] = [];
+  /** Manhattan distance from floor start (for spiral UI / loot). */
+  protected depth = 0;
+  protected restUsed = false;
+  /** True after trap ambush has been revealed / fought. */
+  protected trapRevealed = false;
+  /** Free key lying in the room (guarantees key locks are solvable). */
+  protected keyPickup = false;
 
   constructor(creature: Creature | null = null) {
     this.creature = creature;
+  }
+
+  getRole(): RoomRole {
+    return this.role;
+  }
+
+  setRole(role: RoomRole): void {
+    this.role = role;
+  }
+
+  getLock(): RoomLock | null {
+    return this.lock;
+  }
+
+  setLock(lock: RoomLock | null): void {
+    this.lock = lock;
+  }
+
+  isLocked(): boolean {
+    return this.lock !== null;
+  }
+
+  clearLock(): void {
+    this.lock = null;
+  }
+
+  getEliteTags(): EliteTag[] {
+    return this.eliteTags;
+  }
+
+  setEliteTags(tags: EliteTag[]): void {
+    this.eliteTags = tags;
+  }
+
+  getDepth(): number {
+    return this.depth;
+  }
+
+  setDepth(depth: number): void {
+    this.depth = depth;
+  }
+
+  isRestUsed(): boolean {
+    return this.restUsed;
+  }
+
+  setRestUsed(v: boolean): void {
+    this.restUsed = v;
+  }
+
+  isTrapRevealed(): boolean {
+    return this.trapRevealed;
+  }
+
+  setTrapRevealed(v: boolean): void {
+    this.trapRevealed = v;
+  }
+
+  hasKeyPickup(): boolean {
+    return this.keyPickup;
+  }
+
+  setKeyPickup(v: boolean): void {
+    this.keyPickup = v;
+  }
+
+  /** Take the free key if present. */
+  takeKeyPickup(): boolean {
+    if (!this.keyPickup) return false;
+    this.keyPickup = false;
+    return true;
+  }
+
+  getFrameLabel(): string {
+    const revealed =
+      this.role === 'trap' ? this.trapRevealed || this.explored : this.explored;
+    return frameLabelFor(this.role, revealed);
   }
 
   getCreature(): Creature | null {
@@ -111,4 +204,9 @@ export class Room {
   }
 }
 
-export class BossRoom extends Room {}
+export class BossRoom extends Room {
+  constructor(creature: Creature | null = null) {
+    super(creature);
+    this.role = 'boss';
+  }
+}

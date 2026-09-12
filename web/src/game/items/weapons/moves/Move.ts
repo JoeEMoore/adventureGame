@@ -70,6 +70,11 @@ export class Move {
     if (this.uses > 0) this.uses--;
   }
 
+  addUses(n: number): void {
+    if (this.maxUses <= 0) return;
+    this.uses = Math.min(this.maxUses, this.uses + n);
+  }
+
   resetUses(): void {
     this.uses = this.maxUses;
   }

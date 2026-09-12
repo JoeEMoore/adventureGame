@@ -6,32 +6,44 @@ Source of truth for UI and art direction. Agents: read this before visual work. 
 
 | Token | Value | Use |
 |-------|--------|-----|
-| Page bg | `#0e1020` | App shell |
-| `--ink` / btn ink | `#1a1c28` | Text on light buttons |
-| `--menu` | `#9cdbad` | Primary / positive actions |
-| `--game` | `#8f93b8` | Secondary accent |
+| Page bg | `#1a1410` | App shell |
+| `--ink` / `--btn-ink` | `#2a1f14` | Text on parchment |
+| `--parchment` | `#e8d9b8` | Modal / panel fill |
+| `--parchment-dark` | `#d4c19a` | Tabs, inset cells |
+| `--leather` | `#5c3d2e` | Outer frame borders |
+| `--leather-dark` | `#3a2418` | Inner stitch / dark edge |
+| `--stitch` | `#c4a574` | Stitched inner line |
+| `--banner` | `#c45a28` | Header bars, active tabs |
+| `--banner-gold` | `#e8c56a` | Accent highlights |
+| `--menu` | `#6fad7a` | Primary / positive actions |
+| `--game` | `#c4a35a` | Secondary accent |
 | `--health` | `#e02d2d` | HP |
 | `--poison` | `#209410` | Poison / nature status |
-| `--panel` | `rgba(20, 22, 36, 0.82)` | Modal / overlay panels |
-| `--panel-border` | `rgba(255, 255, 255, 0.18)` | Panel edges |
-| `--btn` | `#e8eef5` | Default buttons |
-| Body text | `#f4f6fb` | On dark panels |
+| `--cmd-fight` | `#c45b6a` | Fight command button |
+| `--cmd-bag` | `#d4893a` | Bag command button |
+| `--panel` | `#e8d9b8` | Alias for parchment panels |
+| `--panel-border` | `#5c3d2e` | Alias for leather borders |
+| `--btn` | `#f0e6d0` | Default buttons |
 
 Danger actions use roughly `#c45b5b` (see `.btn.danger`).
 
 ## Typography & chrome
 
-- Font stack: `'Segoe UI', 'Trebuchet MS', sans-serif` (keep unless a deliberate redesign)
-- Panels: semi-transparent dark fill, light hairline border, ~12px radius
-- Buttons: ~6px radius, clear primary (mint) vs default (light) vs danger
+- Font stack: `'Segoe UI', 'Trebuchet MS', sans-serif` (chunky labels via weight + letter-spacing)
+- Panels: parchment fill, thick leather border, inset stitch line (`.tome-panel` / `.tome-modal`)
+- Headers: orange banner bar (`.tome-header`)
+- Tabs: category strip (`.tome-tabs` / `.tome-tab`)
+- Detail panes: preview + name + body text (`.detail-pane`)
+- Buttons: leather-bordered parchment; primary mint; danger red
+- Fight commands: bubbly color-coded `.cmd-btn` (fight / bag / back)
 - Screens often sit on full-bleed background images with a dark gradient scrub for readability
 
 ## Screens & atmosphere
 
-- Splash / select: dungeon background + centered panel (see `selectBackground2.png`)
-- Map: room tiles with door configurations; debris and vines as light clutter, not noise
-- Fight: dedicated fight backgrounds; keep HUD readable over art
-- Win: dedicated win background
+- Splash / select: dungeon background + centered tome panel
+- Map: room tiles with door configurations; HUD as tome panel; debris and vines as light clutter
+- Fight: Pokémon-style diagonal battlefield + bottom message/command dock
+- Win / death: dedicated backgrounds with tome end panels
 
 Canonical asset roots:
 
@@ -57,14 +69,15 @@ Canonical asset roots:
 
 **Do**
 
-- Reuse CSS variables and `.btn` / `.screen` patterns
+- Reuse CSS variables and `.btn` / `.tome-*` / `.cmd-*` / `.screen` patterns
 - Match sprite scale and palette to neighboring assets
-- Keep panels readable over busy backgrounds (gradient + `--panel`)
+- Keep panels readable over busy backgrounds (parchment + leather frame)
 
 **Don’t**
 
 - Purple-on-white or generic SaaS gradients
 - Flat single-color pages with no dungeon atmosphere
+- Dark translucent glass panels (replaced by parchment/leather chrome)
 - Oversized debris that blocks exits or UI
 - New fonts/palettes without updating this file
 

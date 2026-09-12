@@ -3,20 +3,33 @@ import { Level } from '../game/levels/Level';
 import { DefaultLevelInitializer } from '../game/levels/DefaultLevelInitializer';
 import { DefaultShopInitializer, ShopRoom, type ShopEntry } from '../game/levels/rooms/shop/Shop';
 import { BossRoom, Room } from '../game/levels/rooms/Room';
-import { DefaultCreaturePool, BossCreaturePool } from '../game/pools/CreaturePools';
-import { DefaultItemPool, ShopWeaponPool, ShopConsumablePool } from '../game/pools/ItemPools';
+import {
+  bossPoolForFloor,
+  creaturePoolForFloor,
+  FloorItemPool,
+} from '../game/pools/FloorPools';
+import { ShopWeaponPool, ShopConsumablePool, ShopAccessoryPool } from '../game/pools/ItemPools';
 import { CreatureFactory } from '../game/creatures/CreatureFactory';
 import type { Player } from '../game/creatures/Player';
+import type { PlayerClass } from '../game/creatures/playerClass';
 import { Coordinate } from '../game/levels/Coordinate';
 import { Fight, type MoveResult } from '../game/Fight';
 import type { Creature } from '../game/creatures/Creature';
 import type { Weapon } from '../game/items/weapons/Weapon';
+import {
+  applyScrapPouchOnFightStart,
+  lockpickGoldMultiplier,
+  pirateCoinGoldMultiplier,
+  rollAccessoryDrop,
+} from '../game/items/accessories/accessoryCombat';
+import { eliteHasDraining, taxPlayerAmmo } from '../game/levels/eliteModifiers';
+import { getFloorConfig, isFinalFloor, TOTAL_FLOORS } from '../game/levels/floorConfig';
 import { nextFxId, type CombatFx } from '../fx/combatFx';
 import { sfx } from '../fx/sounds';
 
-export type Screen = 'splash' | 'select' | 'map' | 'fight' | 'win';
-export type PlayerClass = 'knight' | 'mage' | 'ranger' | 'barbarian';
-export type ModalKind = 'none' | 'shop' | 'inventory' | 'roomItems';
+export type Screen = 'splash' | 'select' | 'map' | 'fight' | 'win' | 'death';
+export type { PlayerClass } from '../game/creatures/playerClass';
+export type ModalKind = 'none' | 'shop' | 'inventory' | 'roomItems' | 'descend';
 
 interface FightState {
   fight: Fight;
@@ -31,11 +44,15 @@ interface GameState {
   modal: ModalKind;
   player: Player | null;
   level: Level | null;
+  floorIndex: number;
+  mapMessage: string | null;
   fightState: FightState | null;
   combatFx: CombatFx | null;
+  deathCause: string | null;
   tick: number;
   bump: () => void;
   clearCombatFx: () => void;
+  clearMapMessage: () => void;
   startNewGame: () => void;
   selectClass: (cls: PlayerClass) => void;
   exploreRoom: (pos: Coordinate) => void;
@@ -47,44 +64,59 @@ interface GameState {
   useConsumable: (index: number) => void;
   dropWeapon: (index: number) => void;
   dropConsumable: (index: number) => void;
+  dropAccessory: (index: number) => void;
   pickupItem: (index: number) => void;
   buyEntry: (entry: ShopEntry) => void;
   exitToSplash: () => void;
   winFight: () => void;
-  loseFight: () => void;
+  loseFight: (cause: string) => void;
+  descendFloor: () => void;
 }
 
-function createLevel(): Level {
+function createLevel(floorIndex: number): Level {
+  const cfg = getFloorConfig(floorIndex);
   const shopInit = new DefaultShopInitializer(
     new ShopWeaponPool(),
     new ShopConsumablePool(),
+    new ShopAccessoryPool(),
     3,
     1,
     3,
     3,
+    2,
+    1,
+    60 + floorIndex * 20,
   );
   const levelInit = new DefaultLevelInitializer(
-    15,
-    6,
-    new DefaultCreaturePool(),
-    new DefaultItemPool(),
-    new BossCreaturePool(),
+    cfg.numRooms,
+    cfg.roomLength,
+    creaturePoolForFloor(floorIndex),
+    new FloorItemPool(floorIndex),
+    bossPoolForFloor(floorIndex),
     shopInit,
+    floorIndex,
   );
-  return new Level(levelInit);
+  return new Level(levelInit, floorIndex);
 }
 
 function createPlayer(cls: PlayerClass): Player {
+  let player: Player;
   switch (cls) {
     case 'knight':
-      return CreatureFactory.createSlashPlayer();
+      player = CreatureFactory.createSlashPlayer();
+      break;
     case 'mage':
-      return CreatureFactory.createMagePlayer();
+      player = CreatureFactory.createMagePlayer();
+      break;
     case 'ranger':
-      return CreatureFactory.createRangePlayer();
+      player = CreatureFactory.createRangePlayer();
+      break;
     case 'barbarian':
-      return CreatureFactory.createBluntPlayer();
+      player = CreatureFactory.createBluntPlayer();
+      break;
   }
+  player.setPlayerClass(cls);
+  return player;
 }
 
 function fxFromMove(result: MoveResult): CombatFx {
@@ -97,6 +129,7 @@ function fxFromMove(result: MoveResult): CombatFx {
     sourceSide: result.sourceIsPlayer ? 'player' : 'enemy',
     weaponIndex: result.weaponIndex,
     shake: !result.missed && result.damageDealt > 0,
+    procs: result.procs,
   };
 }
 
@@ -105,26 +138,113 @@ function playMoveSfx(result: MoveResult): void {
   else if (result.damageDealt > 0) sfx.hit();
 }
 
+function tryUnlock(
+  player: Player,
+  room: Room,
+  floorIndex: number,
+): { ok: boolean; message: string } {
+  const lock = room.getLock();
+  if (!lock) return { ok: true, message: '' };
+
+  if (lock.kind === 'key') {
+    if (player.spendKey()) {
+      room.clearLock();
+      return { ok: true, message: 'Used a key. Door unlocked.' };
+    }
+    // Fallback so a missing key never softlocks optional rooms.
+    const goldCost = 50 + floorIndex * 30;
+    if (player.getGold() >= goldCost) {
+      player.subractGold(goldCost);
+      room.clearLock();
+      return { ok: true, message: `No key — bribed the lock for ${goldCost} gold.` };
+    }
+    return {
+      ok: false,
+      message: `Locked — need a key (or ${goldCost} gold). Explore other rooms for a key.`,
+    };
+  }
+
+  if (lock.kind === 'gold') {
+    const cost = Math.max(1, Math.floor(lock.amount * lockpickGoldMultiplier(player)));
+    if (player.getGold() < cost) {
+      return { ok: false, message: `Locked — need ${cost} gold.` };
+    }
+    player.subractGold(cost);
+    room.clearLock();
+    return { ok: true, message: `Paid ${cost} gold. Door unlocked.` };
+  }
+
+  // hp
+  if (player.getHealth() <= lock.amount) {
+    return { ok: false, message: `Blood lock — need more than ${lock.amount} HP to force it.` };
+  }
+  player.setHealth(player.getHealth() - lock.amount);
+  room.clearLock();
+  return { ok: true, message: `Forced the door — lost ${lock.amount} HP.` };
+}
+
+function beginFight(player: Player, room: Room, enemy: Creature, extraLog: string[] = []): void {
+  const fight = new Fight(player, enemy);
+  const logs = [...extraLog, `Start of fight between ${player.getName()} and ${enemy.getName()}`];
+
+  const scrap = applyScrapPouchOnFightStart(player);
+  if (scrap) logs.push(scrap);
+
+  if (room.getRole() === 'elite' && eliteHasDraining(room.getEliteTags())) {
+    const tax = taxPlayerAmmo(player);
+    if (tax) logs.push(tax);
+  }
+
+  if (room.getRole() === 'trap') {
+    room.setTrapRevealed(true);
+    logs.unshift('Ambush! The sanctuary was a trap.');
+  }
+
+  if (room instanceof BossRoom) {
+    sfx.bossSting();
+  }
+
+  useGameStore.setState({
+    screen: 'fight',
+    fightState: {
+      fight,
+      room,
+      enemy,
+      isPlayersTurn: true,
+      log: logs.filter(Boolean).join(' | '),
+    },
+    modal: 'none',
+    combatFx: null,
+  });
+}
+
 export const useGameStore = create<GameState>((set, get) => ({
   screen: 'splash',
   modal: 'none',
   player: null,
   level: null,
+  floorIndex: 0,
+  mapMessage: null,
   fightState: null,
   combatFx: null,
+  deathCause: null,
   tick: 0,
 
   bump: () => set((s) => ({ tick: s.tick + 1 })),
   clearCombatFx: () => set({ combatFx: null }),
+  clearMapMessage: () => set({ mapMessage: null }),
 
   startNewGame: () => {
     set({
       screen: 'select',
       modal: 'none',
       player: null,
-      level: createLevel(),
+      level: createLevel(0),
+      floorIndex: 0,
+      mapMessage: null,
       fightState: null,
       combatFx: null,
+      deathCause: null,
     });
   },
 
@@ -133,42 +253,74 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (!level) return;
     const player = createPlayer(cls);
     player.setCurrentPosition(level.getStartPosition());
-    set({ player, screen: 'map', modal: 'none' });
+    const cfg = getFloorConfig(0);
+    set({
+      player,
+      screen: 'map',
+      modal: 'none',
+      mapMessage: `${cfg.displayName} (Floor 1/${TOTAL_FLOORS}) — explore wisely.`,
+    });
   },
 
   exploreRoom: (pos) => {
-    const { player, level } = get();
+    const { player, level, floorIndex } = get();
     if (!player || !level) return;
     const room = level.getRoom(pos);
     if (!room) return;
+
+    if (room.isLocked()) {
+      const unlock = tryUnlock(player, room, floorIndex);
+      if (!unlock.ok) {
+        set({ mapMessage: unlock.message });
+        get().bump();
+        return;
+      }
+      set({ mapMessage: unlock.message });
+    }
 
     player.setCurrentPosition(pos);
     level.exploreRoom(pos);
     sfx.doorEnter();
 
+    const notes: string[] = [];
+
+    if (room.takeKeyPickup()) {
+      player.addKeys(1);
+      notes.push('Found a key.');
+    }
+
+    if (room.getRole() === 'rest' && !room.isRestUsed()) {
+      const heal = Math.max(1, Math.floor(player.getMaxHealth() * 0.15));
+      const gained = player.addHealth(heal);
+      room.setRestUsed(true);
+      notes.push(`Rest site — recovered ${Math.round(gained)} HP.`);
+    }
+
+    if (room.getRole() === 'hazard') {
+      notes.push('Looks dangerous… but it is quiet. A cache waits.');
+    }
+
+    if (notes.length) {
+      set({ mapMessage: notes.join(' ') });
+    }
+
     if (room instanceof ShopRoom) {
-      set({ modal: 'shop' });
+      set({ modal: 'shop', mapMessage: get().mapMessage ?? 'A shop — spend carefully, then push on.' });
       get().bump();
       return;
     }
 
     if (room.hasCreature()) {
-      const enemy = room.getCreature()!;
-      const fight = new Fight(player, enemy);
-      if (room instanceof BossRoom) {
-        sfx.bossSting();
-      }
+      beginFight(player, room, room.getCreature()!, notes);
+      get().bump();
+      return;
+    }
+
+    // Boss already cleared — offer stairs again after dismissing "Stay a moment"
+    if (room instanceof BossRoom && !isFinalFloor(floorIndex)) {
       set({
-        screen: 'fight',
-        fightState: {
-          fight,
-          room,
-          enemy,
-          isPlayersTurn: true,
-          log: `Start of fight between ${player.getName()} and ${enemy.getName()}`,
-        },
-        modal: 'none',
-        combatFx: null,
+        modal: 'descend',
+        mapMessage: get().mapMessage ?? 'The stairway still waits.',
       });
       get().bump();
       return;
@@ -200,7 +352,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
     if (!player.isAlive()) {
       set({ combatFx: fxFromMove(result) });
-      get().loseFight();
+      get().loseFight(result.message || 'You fell in battle.');
       return;
     }
 
@@ -221,13 +373,44 @@ export const useGameStore = create<GameState>((set, get) => ({
       return;
     }
 
-    const result = fightState.fight.creatureTurn(fightState.enemy, player);
-    playMoveSfx(result);
+    const mods = fightState.enemy.getTurnModifiers();
+    let result: MoveResult;
+    if (mods.isActionBlocked()) {
+      result = {
+        message: `${fightState.enemy.getName()} is knocked out and skips their turn!`,
+        missed: true,
+        damageDealt: 0,
+        healed: false,
+        sourceIsPlayer: false,
+        targetIsPlayer: false,
+        weaponIndex: 0,
+        procs: ['KO'],
+      };
+    } else if (Math.random() < mods.getActionFailChance()) {
+      result = {
+        message: `${fightState.enemy.getName()} is shocked and fails to attack!`,
+        missed: true,
+        damageDealt: 0,
+        healed: false,
+        sourceIsPlayer: false,
+        targetIsPlayer: false,
+        weaponIndex: 0,
+        procs: ['SHOCK'],
+      };
+    } else {
+      result = fightState.fight.creatureTurn(fightState.enemy, player);
+      playMoveSfx(result);
+    }
+
     log = [log, result.message].filter(Boolean).join(' | ');
 
     if (!player.isAlive()) {
       set({ fightState: { ...fightState, log }, combatFx: fxFromMove(result) });
-      get().loseFight();
+      get().loseFight(
+        result.damageDealt > 0
+          ? `${fightState.enemy.getName()} defeated you. ${result.message}`
+          : result.message || `${fightState.enemy.getName()} defeated you.`,
+      );
       return;
     }
 
@@ -236,7 +419,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     if (!player.isAlive()) {
       set({ fightState: { ...fightState, log }, combatFx: fxFromMove(result) });
-      get().loseFight();
+      get().loseFight(playerFx || 'Status effects finished you off.');
       return;
     }
 
@@ -254,25 +437,60 @@ export const useGameStore = create<GameState>((set, get) => ({
     const item = inv.getConsumable(index);
     if (!item) return;
 
+    const inFight = screen === 'fight' && !!fightState;
+    if (inFight && !fightState!.isPlayersTurn) return;
+
     let target: Creature = player;
-    if (!item.getAffectsSelf() && screen === 'fight' && fightState) {
-      target = fightState.enemy;
+    if (!item.getAffectsSelf() && inFight) {
+      target = fightState!.enemy;
     }
 
+    const healthBefore = target.getHealth();
     const msg = item.applyEffects(target);
     inv.removeConsumable(index);
+    const healthAfter = target.getHealth();
 
-    if (fightState) {
-      set({ fightState: { ...fightState, log: msg || fightState.log } });
-      if (!fightState.enemy.isAlive()) {
-        get().winFight();
-        return;
-      }
-      if (!player.isAlive()) {
-        get().loseFight();
-        return;
-      }
+    if (!inFight || !fightState) {
+      get().bump();
+      return;
     }
+
+    const procs: string[] = [];
+    const healed = item.getAffectsSelf() && healthAfter > healthBefore;
+    if (!item.getAffectsSelf()) procs.push('ITEM');
+
+    const fx: CombatFx = {
+      id: nextFxId(),
+      missed: false,
+      damageDealt: Math.max(0, healthBefore - healthAfter),
+      healed,
+      targetSide: target === player ? 'player' : 'enemy',
+      sourceSide: 'player',
+      weaponIndex: 0,
+      shake: healthAfter < healthBefore,
+      procs,
+    };
+
+    if (!fightState.enemy.isAlive()) {
+      set({ combatFx: fx, modal: 'none', fightState: { ...fightState, log: msg || fightState.log } });
+      get().winFight();
+      return;
+    }
+    if (!player.isAlive()) {
+      set({ combatFx: fx, modal: 'none', fightState: { ...fightState, log: msg || fightState.log } });
+      get().loseFight(msg || `The ${item.getName()} killed you.`);
+      return;
+    }
+
+    set({
+      modal: 'none',
+      fightState: {
+        ...fightState,
+        isPlayersTurn: false,
+        log: msg ? `${msg} (used your turn)` : `Used ${item.getName()} (used your turn)`,
+      },
+      combatFx: fx,
+    });
     get().bump();
   },
 
@@ -297,6 +515,18 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (!room) return;
     const c = player.getInventory().removeConsumable(index);
     if (c) room.addItem(c);
+    get().bump();
+  },
+
+  dropAccessory: (index) => {
+    const { player, level } = get();
+    if (!player || !level) return;
+    const pos = player.getCurrentPosition();
+    if (!pos) return;
+    const room = level.getRoom(pos);
+    if (!room) return;
+    const a = player.getInventory().removeAccessory(index);
+    if (a) room.addItem(a);
     get().bump();
   },
 
@@ -334,36 +564,86 @@ export const useGameStore = create<GameState>((set, get) => ({
       modal: 'none',
       player: null,
       level: null,
+      floorIndex: 0,
+      mapMessage: null,
       fightState: null,
       combatFx: null,
+      deathCause: null,
     });
   },
 
   winFight: () => {
-    const { player, fightState } = get();
+    const { player, fightState, floorIndex } = get();
     if (!player || !fightState) return;
 
-    player.addGold(Math.trunc(fightState.enemy.getMaxHealth()));
+    const baseGold = Math.trunc(fightState.enemy.getMaxHealth());
+    player.addGold(Math.trunc(baseGold * pirateCoinGoldMultiplier(player)));
     player.clearEffects();
     fightState.room.removeCreature();
 
+    if (fightState.room.getRole() === 'elite' || fightState.room.getRole() === 'trap') {
+      player.addKeys(1);
+      set({ mapMessage: 'Found a key!' });
+    }
+
+    const drop = rollAccessoryDrop();
+    if (drop) {
+      fightState.room.addItem(drop);
+    }
+
     if (fightState.room instanceof BossRoom) {
-      set({ screen: 'win', fightState: null, modal: 'none', combatFx: null });
+      if (isFinalFloor(floorIndex)) {
+        set({ screen: 'win', fightState: null, modal: 'none', combatFx: null });
+      } else {
+        set({
+          screen: 'map',
+          fightState: null,
+          modal: 'descend',
+          combatFx: null,
+          mapMessage: 'Floor boss defeated. A stairway opens.',
+        });
+      }
     } else {
       set({ screen: 'map', fightState: null, modal: 'none', combatFx: null });
     }
     get().bump();
   },
 
-  loseFight: () => {
+  loseFight: (cause) => {
     set({
-      screen: 'splash',
+      screen: 'death',
+      deathCause: cause,
       modal: 'none',
-      player: null,
-      level: null,
       fightState: null,
       combatFx: null,
     });
+  },
+
+  descendFloor: () => {
+    const { player, floorIndex } = get();
+    if (!player || isFinalFloor(floorIndex)) return;
+
+    const next = floorIndex + 1;
+    const heal = Math.max(1, Math.floor(player.getMaxHealth() * 0.25));
+    player.addHealth(heal);
+    player.clearEffects();
+    player.getInventory().incrementMaxAccessories();
+    const accessorySlots = player.getInventory().getMaxAccessories();
+
+    const level = createLevel(next);
+    player.setCurrentPosition(level.getStartPosition());
+    const cfg = getFloorConfig(next);
+
+    set({
+      level,
+      floorIndex: next,
+      screen: 'map',
+      modal: 'none',
+      fightState: null,
+      combatFx: null,
+      mapMessage: `Descended to ${cfg.displayName} (Floor ${next + 1}/${TOTAL_FLOORS}). Recovered ${heal} HP. Accessory slots: ${accessorySlots}.`,
+    });
+    get().bump();
   },
 }));
 

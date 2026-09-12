@@ -9,6 +9,8 @@ export type CombatFx = {
   sourceSide: 'player' | 'enemy';
   weaponIndex: number;
   shake: boolean;
+  /** Passive / status proc labels for floaters */
+  procs?: string[];
 };
 
 let fxId = 0;

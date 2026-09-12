@@ -10,7 +10,10 @@ export const WeaponFactory = {
     return new Weapon('Mushroom Cap', 1, MoveFactory.createSporeShotMove(), weaponNamed('Mushroom Cap'));
   },
   createBirdTalons(): Weapon {
-    return new Weapon('Bird Talons', 1, MoveFactory.createScratchMove(), null);
+    return new Weapon('Bird Talons', 1, MoveFactory.createScratchMove(), weaponSprite(2, 4));
+  },
+  createVenomFang(): Weapon {
+    return new Weapon('Venom Fang', 1, MoveFactory.createVenomBiteMove(), weaponSprite(0, 1));
   },
   createCrudeBow(): Weapon {
     return new Weapon('Crude Bow', 1, MoveFactory.createShootMove(), weaponSprite(9, 2));
@@ -20,6 +23,12 @@ export const WeaponFactory = {
   },
   createCrossbow(): Weapon {
     return new Weapon('Crossbow', 3, MoveFactory.createShootMove(), weaponSprite(9, 4));
+  },
+  createJavelin(): Weapon {
+    return new Weapon('Javelin', 2, MoveFactory.createJavelinMove(), weaponSprite(9, 1));
+  },
+  createBoneBow(): Weapon {
+    return new Weapon('Bone Bow', 2, MoveFactory.createPierceMove(), weaponSprite(9, 5));
   },
   createToxicStaff(): Weapon {
     return new Weapon('Toxic Staff', 3, MoveFactory.createToxicBoltMove(), weaponSprite(10, 2));
@@ -36,6 +45,9 @@ export const WeaponFactory = {
   createRoyalSword(): Weapon {
     return new Weapon('Royal Sword', 3, MoveFactory.createSlashMove(), weaponSprite(0, 8));
   },
+  createCleaver(): Weapon {
+    return new Weapon('Cleaver', 2, MoveFactory.createCleaveMove(), weaponSprite(0, 4));
+  },
   createWoodClub(): Weapon {
     return new Weapon('Wood Club', 1, MoveFactory.createSmashMove(), weaponSprite(8, 2));
   },
@@ -45,6 +57,9 @@ export const WeaponFactory = {
   createSteelHammer(): Weapon {
     return new Weapon('Steel Hammer', 3, MoveFactory.createSmashMove(), weaponSprite(4, 4));
   },
+  createStunMace(): Weapon {
+    return new Weapon('Stun Mace', 2, MoveFactory.createStunBashMove(), weaponSprite(5, 2));
+  },
   createRudimentaryStaff(): Weapon {
     return new Weapon('Rudimentary Staff', 1, MoveFactory.createMagicMissileMove(), weaponSprite(10, 0));
   },
@@ -53,6 +68,21 @@ export const WeaponFactory = {
   },
   createStaffOfPower(): Weapon {
     return new Weapon('Staff Of Power', 3, MoveFactory.createMagicMissileMove(), weaponSprite(10, 6));
+  },
+  createFrostWand(): Weapon {
+    return new Weapon('Frost Wand', 2, MoveFactory.createFrostShardMove(), weaponSprite(10, 3));
+  },
+  createSparkRod(): Weapon {
+    return new Weapon('Spark Rod', 2, MoveFactory.createSparkMove(), weaponSprite(10, 4));
+  },
+  createEmberStaff(): Weapon {
+    return new Weapon('Ember Staff', 2, MoveFactory.createEmberMove(), weaponSprite(10, 5));
+  },
+  createDrainWand(): Weapon {
+    return new Weapon('Drain Wand', 2, MoveFactory.createDrainBoltMove(), weaponSprite(10, 8));
+  },
+  createWebCaster(): Weapon {
+    return new Weapon('Web Caster', 1, MoveFactory.createWebShotMove(), weaponSprite(9, 0));
   },
   createRockHeal(): Weapon {
     return new Weapon('Rock heal', 1, MoveFactory.createHealMove(), weaponSprite(10, 6));

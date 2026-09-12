@@ -4,6 +4,7 @@ import { PlayerSelectScreen } from './components/PlayerSelectScreen';
 import { MapScreen } from './components/MapScreen';
 import { FightScreen } from './components/FightScreen';
 import { WinScreen } from './components/WinScreen';
+import { DeathScreen } from './components/DeathScreen';
 import './styles/game.css';
 
 export default function App() {
@@ -20,5 +21,7 @@ export default function App() {
       return <FightScreen />;
     case 'win':
       return <WinScreen />;
+    case 'death':
+      return <DeathScreen />;
   }
 }

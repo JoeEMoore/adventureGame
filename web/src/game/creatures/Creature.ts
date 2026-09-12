@@ -39,12 +39,29 @@ export class Creature {
     return this.name;
   }
 
+  setName(name: string): void {
+    this.name = name;
+  }
+
   getHealth(): number {
     return this.health;
   }
 
+  setHealth(health: number): void {
+    this.health = Math.max(0, Math.min(this.maxHealth, health));
+  }
+
   getMaxHealth(): number {
     return this.maxHealth;
+  }
+
+  setMaxHealth(maxHealth: number): void {
+    this.maxHealth = maxHealth;
+  }
+
+  /** Re-clone turn mods after mutating base resists/stats. */
+  syncTurnModifiersFromBase(): void {
+    this.turnModifiers = this.baseModifiers.clone();
   }
 
   getBaseModifiers(): CreatureModifiers {
@@ -96,6 +113,12 @@ export class Creature {
   clearEffects(): void {
     this.effects = [];
     this.turnModifiers = this.baseModifiers.clone();
+  }
+
+  removeEffectsByName(name: string): number {
+    const before = this.effects.length;
+    this.effects = this.effects.filter((e) => e.getName() !== name);
+    return before - this.effects.length;
   }
 
   calculateEffects(): string {
