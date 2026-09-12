@@ -21,7 +21,7 @@ public class SplashWindow extends JWindow {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setOpaque(false);  
 
-        JLabel title = new JLabel("Adventure Game");
+        JLabel title = new JLabel("KLEPTOMAZEIAC");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         title.setFont(new Font("Dialog", Font.BOLD, 36));
         title.setForeground(Color.WHITE);

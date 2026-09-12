@@ -6,10 +6,9 @@ export function SplashScreen() {
   return (
     <div className="screen splash-screen">
       <div className="splash-overlay tome-panel">
-        <div className="tome-header">
-          <h1>KLEPTOMAZEIAC</h1>
-        </div>
-        <p className="tagline">A turn-based dungeon crawler</p>
+        <p className="splash-eyebrow">Welcome to</p>
+        <h1 className="brand">KLEPTOMAZEIAC</h1>
+        <p className="tagline">Steal loot. Forge power. Descend deeper.</p>
         <div className="btn-row">
           <button type="button" className="btn primary" onClick={startNewGame}>
             New Game
