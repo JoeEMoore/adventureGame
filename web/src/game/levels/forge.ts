@@ -6,6 +6,11 @@ export function weaponGoldCost(weapon: Weapon): number {
   return weapon.getTier() * 60;
 }
 
+/** Sell-back value at the shop (half of buy price). */
+export function weaponSellPrice(weapon: Weapon): number {
+  return Math.max(1, Math.floor(weaponGoldCost(weapon) / 2));
+}
+
 export const MAX_WEAPON_TIER = 3;
 
 export function canUpgradeWeaponTier(weapon: Weapon): boolean {

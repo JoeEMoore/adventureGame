@@ -1448,15 +1448,20 @@ button {
 }
 
 .room-marker.forge-mark {
-  pointer-events: auto;
-  cursor: pointer;
+  /* Don't block room entry while adjacent; only clickable when standing here. */
+  pointer-events: none;
+  cursor: default;
   background: transparent;
   border: none;
   padding: 0;
 }
 
+.room-marker.forge-mark:not(:disabled) {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .room-marker.forge-mark:disabled {
-  cursor: default;
   opacity: 0.85;
 }
 

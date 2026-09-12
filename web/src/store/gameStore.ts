@@ -36,6 +36,7 @@ import {
   canUpgradeWeaponTier,
   upgradeWeaponOneTier,
   weaponGoldCost,
+  weaponSellPrice,
 } from '../game/levels/forge';
 import type { AccessoryKind } from '../game/items/accessories/Accessory';
 import { AccessoryFactory } from '../game/items/accessories/AccessoryFactory';
@@ -84,6 +85,7 @@ interface GameState {
   unequipAccessory: (index: number) => void;
   pickupItem: (index: number) => void;
   buyEntry: (entry: ShopEntry) => void;
+  sellWeapon: (weaponIndex: number) => void;
   exitToSplash: () => void;
   winFight: () => void;
   loseFight: (cause: string) => void;
@@ -647,6 +649,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   buyEntry: (entry) => {
     const { player } = get();
     if (!player) return;
+    if (!(getCurrentRoom() instanceof ShopRoom)) return;
     if (entry.getQuantity() <= 0) return;
     if (player.getGold() < entry.getPrice()) return;
     const item = entry.getItem();
@@ -655,6 +658,20 @@ export const useGameStore = create<GameState>((set, get) => ({
     syncVampiricFangAfterInventoryChange(player, fangsBefore);
     player.subractGold(entry.getPrice());
     entry.decreaseQuantity();
+    sfx.shopBuy();
+    get().bump();
+  },
+
+  sellWeapon: (weaponIndex) => {
+    const { player } = get();
+    if (!player) return;
+    if (!(getCurrentRoom() instanceof ShopRoom)) return;
+    const weapon = player.getInventory().getWeapon(weaponIndex);
+    if (!weapon) return;
+    const price = weaponSellPrice(weapon);
+    const removed = player.getInventory().removeWeapon(weaponIndex);
+    if (!removed) return;
+    player.addGold(price);
     sfx.shopBuy();
     get().bump();
   },
