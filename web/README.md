@@ -1,4 +1,4 @@
-# Adventure Game (Web)
+# KLEPTOMAZEIAC (Web)
 
 React + Vite + TypeScript port of the CPSC 224 Java Swing dungeon crawler.
 

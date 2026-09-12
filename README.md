@@ -1,4 +1,4 @@
-# Adventure Game
+# KLEPTOMAZEIAC
 
 Turn-based dungeon crawler originally built in Java Swing (CPSC 224).  
 The playable web port lives in [`web/`](web/).

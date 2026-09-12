@@ -7,7 +7,7 @@ export function SplashScreen() {
     <div className="screen splash-screen">
       <div className="splash-overlay tome-panel">
         <div className="tome-header">
-          <h1>Adventure Game</h1>
+          <h1>KLEPTOMAZEIAC</h1>
         </div>
         <p className="tagline">A turn-based dungeon crawler</p>
         <div className="btn-row">
